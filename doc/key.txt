@@ -1,4 +1,17 @@
 home
 
-md5��FA:E4:9E:7E:D7:24:C9:85:17:32:CE:82:B1:C4:73:D4
-sha1��CE:8E:87:F3:A0:69:70:4F:A7:D5:3E:4F:EB:2E:AD:E0:3C:FC:D3:C4
+md5:FA:E4:9E:7E:D7:24:C9:85:17:32:CE:82:B1:C4:73:D4
+sha1:CE:8E:87:F3:A0:69:70:4F:A7:D5:3E:4F:EB:2E:AD:E0:3C:FC:D3:C4
+
+sign
+
+MD5:E6:79:7D:95:63:E7:69:19:62:AE:B0:07:3C:D7:2C:83
+SHA1:B5:6A:32:BB:04:F5:8B:CA:E3:C4:2C:A8:4C:6D:61:E4:57:40:85:EF
+
+baidu map
+
+home:zRVZ79xxQBwKTpB2eQ3LHyr7
+work:mGey2cyjj7kl06pexO47EcY6
+
+// 最后做好image滑动加载，有待优化
+// 可以设置view的visible属性（判断view是否可见，回收不显示的View），然后回收图片

@@ -55,7 +55,6 @@
                 android:id="@+id/button_zoom_add"
                 android:layout_width="40dip"
                 android:layout_height="40dip"
-                android:layout_below="@id/button_location"
                 android:background="@drawable/button_zoom_in_style"
                 android:onClick="forZoomMap" />
 

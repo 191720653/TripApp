@@ -194,7 +194,7 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 				for (int i = startIndex; i < endIndex; i++) {
 					ImageView  view = new ImageView(getContext());
 					view.setTag(i);
-//					imageViewList.add(view);//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+					imageViewList.add(view);
 					show(i, view);
 				}
 				page++;
@@ -211,7 +211,11 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 	 * 遍历imageViewList中的每张图片，对图片的可见性进行检查，如果图片已经离开屏幕可见范围，则将图片替换成一张空图。
 	 */
 	public void checkVisibility() {
-		for (int i = 0; i < imageViewList.size(); i++) {
+		int temp = (page-1) * PAGE_SIZE;
+		if(temp>imageViewList.size()){
+			temp = imageViewList.size() - PAGE_SIZE;
+		}
+		for (int i = 0; i < temp; i++) {
 			ImageView imageView = imageViewList.get(i);
 			int borderTop = (Integer) imageView.getTag(R.string.border_top);
 			int borderBottom = (Integer) imageView.getTag(R.string.border_bottom);
@@ -238,27 +242,26 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 				int scaledHeight = (int) (arg2.getHeight() / ratio);
 				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(columnWidth,  
 						scaledHeight);
-				ImageView  imageView = (ImageView) arg1;  
-                imageView.setLayoutParams(params);  
-                imageView.setImageBitmap(arg2);  
+				ImageView  imageView = (ImageView) arg1;
+                imageView.setLayoutParams(params);
+                imageView.setImageBitmap(arg2);
                 imageView.setScaleType(ScaleType.FIT_XY);  
                 imageView.setPadding(5, 5, 5, 5);
                 
-                Integer position = (Integer) imageView.getTag();          //最后
+                final Integer position = (Integer) imageView.getTag();          //最后
                 imageView.setTag(R.string.image_url, imageUrls[position]); 
-//                imageViewList.remove(position);								// 可以先注释掉测试一下
-//                imageViewList.add(position, imageView);
-                
+//              imageViewList.remove(position);								// 可以先注释掉测试一下
+
                 imageView.setOnClickListener(new OnClickListener() {  
                     @Override  
                     public void onClick(View v) {  
                         Intent intent = new Intent(getContext(), ImagePagerActivity.class);  
-                        intent.putExtra("image_position", 123456789);  
+                        intent.putExtra("image_position", position);  
                         getContext().startActivity(intent);  
                     }  
                 });
                 findColumnToAdd(imageView, scaledHeight).addView(imageView);
-                imageViewList.add(imageView);
+                imageViewList.add(position, imageView);
 			}
 			@Override
 			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
