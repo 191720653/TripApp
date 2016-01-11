@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 通用颜色 -->
+
+	<color name="main_blue">#63B8FF</color>
+	<color name="main_qing">#2ae0c8</color>
+	<color name="main_gray">#D1D1D1</color>
+	
+    <color name="white">#FFFFFFFF</color>
+    <color name="line_gray">#D1D1D1</color>
+    <color name="slide_img_black">#33000000</color>
+	
+	
+    <color name="button_before_press_color">#3c98f2</color>
+    <color name="slide_text_bg">#63B8FF</color>
+    <color name="button_after_press_color">#1a76d0</color>
+    <color name="hint_color">#bdbdbd</color>
+    <color name="text_color">#5e5f61</color>
+    <color name="background_color">#f2f3f5</color>
+    <color name="actionbar_color">#2b87e1</color>
+    <color name="divide_color">#c9caca</color>
+    <color name="item_clicked_bg">#dddddd</color>
+	<color name="button_blue_under_color">#8abdef</color>
+
+    <!-- tabbar底部栏颜色 -->
+    <color name="tabbar_background_color">#fcfafa</color>
+    <color name="tabbar_text_color">#bdbdbd</color>
+    <color name="tabbar_text_selected_color">#157bdf</color>
+
+    <!-- 商家模块颜色 -->
+    <color name="seller_gridview_border_color">#c9caca</color>
+    <color name="seller_background_color">#fdfdfd</color>
+    <color name="seller_scroe_num_color">#f52222</color>
+
+    <!-- QRCodeActivity -->
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+    <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#00000000</color>
+    <color name="capture_text_cover_bg">#99535353</color>
+    <color name="seek_bar_text">#fff6f6f6</color>
+
+    <!-- PagerSlidingTabStrip -->
+    <color name="background_tab_pressed">#6633B5E5</color>
+
+    <!-- custom light theme: -->
+    <color name="dialog_message_text">#333333</color>
+    <!-- <color name="dialog_title_text">#f3a71e</color> -->
+    <color name="dialog_title_text">#3c98f2</color>
+    <!-- <color name="dialog_title_separator">#f3a71e</color> -->
+    <color name="dialog_title_separator">#3c98f2</color>
+    <color name="dialog_button_text">#333333</color>
+    <color name="dialog_button_normal">@android:color/transparent</color>
+    <color name="dialog_button_pressed">#99f3a71e</color>
+    <!-- 60 % opacity -->
+    <color name="dialog_button_focused">#4Cf3a71e</color>
+    <!-- 30 % opacity -->
+    <color name="dialog_button_separator">#25000000</color>
+    <!-- 7% opacity -->
+    <color name="background">#FFA500</color>
+
+    <!-- XListView改造版 -->
+    <color name="title_color">#333333</color>
+
+</resources>
