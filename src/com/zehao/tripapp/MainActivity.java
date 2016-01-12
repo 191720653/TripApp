@@ -13,6 +13,7 @@ import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.map.RouteBeforeActivity;
 import com.zehao.tripapp.picture.PictureActivity;
+import com.zehao.tripapp.picture.WaterfallActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -70,7 +71,8 @@ public class MainActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				goActivity(PictureActivity.class);
+//				goActivity(PictureActivity.class);
+				goActivity(WaterfallActivity.class);
 			}
 		});
 	}

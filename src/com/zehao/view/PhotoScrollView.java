@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-@SuppressLint("NewApi")
+@SuppressLint({ "NewApi", "ClickableViewAccessibility" })
 public class PhotoScrollView extends ScrollView implements OnTouchListener {
 
 	/**
@@ -177,6 +177,22 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 		}
 		return false;
 	}
+	
+	/** 
+     * 最小的滑动距离 
+     */  
+    private static final int SCROLLLIMIT = 40; 
+
+	@Override
+	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+		// TODO Auto-generated method stub
+		super.onScrollChanged(l, t, oldl, oldt);
+		if (oldt > t && oldt - t > SCROLLLIMIT) {// 向下
+			
+        } else if (oldt < t && t - oldt > SCROLLLIMIT) {// 向上
+        	
+        }
+	}
 
 	/**
 	 * 开始加载下一页的图片。
@@ -193,7 +209,7 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 				}
 				for (int i = startIndex; i < endIndex; i++) {
 					ImageView  view = new ImageView(getContext());
-					view.setTag(i);
+					view.setTag(R.string.image_position, i);
 					imageViewList.add(view);
 					show(i, view);
 				}
@@ -211,17 +227,14 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
 	 * 遍历imageViewList中的每张图片，对图片的可见性进行检查，如果图片已经离开屏幕可见范围，则将图片替换成一张空图。
 	 */
 	public void checkVisibility() {
-		int temp = (page-1) * PAGE_SIZE;
-		if(temp>imageViewList.size()){
-			temp = imageViewList.size() - PAGE_SIZE;
-		}
-		for (int i = 0; i < temp; i++) {
+		for (int i = 0; i < imageViewList.size(); i++) {
 			ImageView imageView = imageViewList.get(i);
+			if(imageView.getTag(R.string.border_top)==null){break;}
 			int borderTop = (Integer) imageView.getTag(R.string.border_top);
 			int borderBottom = (Integer) imageView.getTag(R.string.border_bottom);
 			if (borderBottom > getScrollY() && borderTop < getScrollY() + scrollViewHeight) {
-//				String imageUrl = (String) imageView.getTag(R.string.image_url);
-				ImageLoader.getInstance().displayImage(imageUrls[i], imageView, options);
+				String imageUrl = (String) imageView.getTag(R.string.image_url);
+				ImageLoader.getInstance().displayImage(imageUrl, imageView, options);
 			} else {
 				imageView.setImageResource(R.drawable.ic_launcher);
 			}
@@ -248,20 +261,18 @@ public class PhotoScrollView extends ScrollView implements OnTouchListener {
                 imageView.setScaleType(ScaleType.FIT_XY);  
                 imageView.setPadding(5, 5, 5, 5);
                 
-                final Integer position = (Integer) imageView.getTag();          //最后
-                imageView.setTag(R.string.image_url, imageUrls[position]); 
-//              imageViewList.remove(position);								// 可以先注释掉测试一下
+                imageView.setTag(R.string.image_url, imageUrls[(Integer) imageView.getTag(R.string.image_position)]); 
 
                 imageView.setOnClickListener(new OnClickListener() {  
                     @Override  
                     public void onClick(View v) {  
                         Intent intent = new Intent(getContext(), ImagePagerActivity.class);  
-                        intent.putExtra("image_position", position);  
+                        intent.putExtra("image_position", (Integer) v.getTag(R.string.image_position));  
                         getContext().startActivity(intent);  
                     }  
                 });
                 findColumnToAdd(imageView, scaledHeight).addView(imageView);
-                imageViewList.add(position, imageView);
+                imageViewList.add((Integer) imageView.getTag(R.string.image_position), imageView);
 			}
 			@Override
 			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {

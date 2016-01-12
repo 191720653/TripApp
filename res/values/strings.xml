@@ -18,6 +18,7 @@
     <string name="border_top" translatable="false">border_top</string>
     <string name="border_bottom" translatable="false">border_bottom</string>
     <string name="image_url" translatable="false">image_url</string>
+    <string name="image_position" translatable="false">image_position</string>
     
     <!-- Content descriptions -->
     <string name="descr_image" translatable="false">Image</string>

@@ -79,6 +79,7 @@
         <!-- 照片墙 -->
         <activity android:name="com.zehao.tripapp.picture.PictureActivity" />
         <activity android:name="com.zehao.tripapp.picture.ImagePagerActivity" />
+        <activity android:name="com.zehao.tripapp.picture.WaterfallActivity" />
         
         <!-- 地图定位 -->
         <!-- <activity android:name="com.zehao.tripapp.map.LocationDemo" /> -->
