@@ -143,7 +143,7 @@ public class WaterfallAdapter extends BaseAdapter {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				Log.i("TAG", "image click");
-				Intent intent = new Intent(context, ImagePagerActivity.class);  
+				Intent intent = new Intent(context, GalleryUrlActivity.class);// ImagePagerActivity.class
                 intent.putExtra("position", (Integer) view.getTag(R.string.image_position));  
                 context.startActivity(intent);
 			}
