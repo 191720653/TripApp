@@ -69,7 +69,6 @@ public class WaterfallAdapter extends BaseAdapter {
 			LayoutInflater inflater = LayoutInflater.from(context);
 			view = inflater.inflate(R.layout.waterfall_image_item, null);
 			holder.ivIcon = (ImageView) view.findViewById(R.id.row_icon);
-			holder.ivIcon.setTag(R.string.image_position, position);
 			holder.pbLoad = (ProgressBar) view.findViewById(R.id.pb_load);
 
 			view.setTag(holder);
@@ -144,7 +143,7 @@ public class WaterfallAdapter extends BaseAdapter {
 				// TODO Auto-generated method stub
 				Log.i("TAG", "image click");
 				Intent intent = new Intent(context, GalleryUrlActivity.class);// ImagePagerActivity.class
-                intent.putExtra("position", (Integer) view.getTag(R.string.image_position));  
+                intent.putExtra("position", position);  
                 context.startActivity(intent);
 			}
 		});
