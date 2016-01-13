@@ -3,17 +3,10 @@ package com.zehao.tripapp.picture;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.huewu.pla.lib.MultiColumnPullToRefreshListView;
 import com.huewu.pla.lib.MultiColumnPullToRefreshListView.OnRefreshListener;
-import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
 
@@ -26,22 +19,6 @@ public class WaterfallActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_waterfall_image_view);
-		
-		 //初始化图片加载库
-		 DisplayImageOptions defaultOptions =
-			        new DisplayImageOptions.Builder()
-			            .cacheOnDisk(true)//图片存本地
-			            .cacheInMemory(true)
-			            .displayer(new FadeInBitmapDisplayer(10))
-			            .bitmapConfig(Bitmap.Config.RGB_565)
-			            .imageScaleType(ImageScaleType.EXACTLY) // default
-			            .build();
-			    ImageLoaderConfiguration config =
-			        new ImageLoaderConfiguration.Builder(getApplicationContext())
-			            .memoryCache(new UsingFreqLimitedMemoryCache(16 * 1024 * 1024))
-			            .defaultDisplayImageOptions(defaultOptions).build();
-			    ImageLoader.getInstance().init(config);
-		
 		
 		waterfallView = (MultiColumnPullToRefreshListView) findViewById(R.id.list);
 		

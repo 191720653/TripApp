@@ -12,7 +12,7 @@ import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.map.RouteBeforeActivity;
-import com.zehao.tripapp.picture.PictureActivity;
+import com.zehao.tripapp.picture.TakePhotoActivity;
 import com.zehao.tripapp.picture.WaterfallActivity;
 
 import android.content.Intent;
@@ -29,7 +29,7 @@ import android.widget.Button;
 public class MainActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>> {
 
-	private Button route, share, image, picture;
+	private Button route, share, image, picture, photo;
 	private String image_path;
 
 	@Override
@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity implements
 		share = (Button) findViewById(R.id.share);
 		image = (Button) findViewById(R.id.image);
 		picture = (Button) findViewById(R.id.picture);
+		photo = (Button) findViewById(R.id.photo);
 		route.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -73,6 +74,13 @@ public class MainActivity extends BaseActivity implements
 				// TODO Auto-generated method stub
 //				goActivity(PictureActivity.class);
 				goActivity(WaterfallActivity.class);
+			}
+		});
+		photo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				goActivity(TakePhotoActivity.class);
 			}
 		});
 	}

@@ -41,7 +41,6 @@ public class ImagePagerActivity extends Activity {
 	private TextView pageText;
 	private String[] imageUrls;
 
-	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_pager);
@@ -60,10 +59,11 @@ public class ImagePagerActivity extends Activity {
 			.showImageForEmptyUri(R.drawable.ic_empty)
 			.showImageOnFail(R.drawable.ic_error)
 			.resetViewBeforeLoading(true)
-			.cacheOnDisc(true)
+			.cacheOnDisk(true)
+			.cacheInMemory(true)
 			.imageScaleType(ImageScaleType.EXACTLY)
 			.bitmapConfig(Bitmap.Config.RGB_565)
-			.displayer(new FadeInBitmapDisplayer(300))
+			.displayer(new FadeInBitmapDisplayer(50))
 			.build();
 
 		pageText = (TextView) findViewById(R.id.page_text);

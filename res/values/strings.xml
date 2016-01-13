@@ -14,11 +14,12 @@
     <string name="menu_main_for_share" translatable="false">Share Info</string>
     <string name="menu_main_for_image" translatable="false">Select Image</string>
     <string name="menu_main_for_picture" translatable="false">Picture Wall</string>
+    <string name="menu_main_for_photo" translatable="false">Take Photo</string>
     
     <string name="border_top" translatable="false">border_top</string>
     <string name="border_bottom" translatable="false">border_bottom</string>
     <string name="image_url" translatable="false">image_url</string>
-    <string name="image_position" translatable="false">image_position</string>
+    <string name="image_position" translatable="false">position</string>
     
     <!-- Content descriptions -->
     <string name="descr_image" translatable="false">Image</string>

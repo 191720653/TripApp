@@ -40,5 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
         android:text="@string/menu_main_for_picture" />
+    
+    <Button
+        android:id="@+id/photo"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/picture"
+        android:text="@string/menu_main_for_photo" />
 
 </RelativeLayout>

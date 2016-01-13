@@ -80,6 +80,7 @@
         <activity android:name="com.zehao.tripapp.picture.PictureActivity" />
         <activity android:name="com.zehao.tripapp.picture.ImagePagerActivity" />
         <activity android:name="com.zehao.tripapp.picture.WaterfallActivity" />
+        <activity android:name="com.zehao.tripapp.picture.TakePhotoActivity" />
         
         <!-- 地图定位 -->
         <!-- <activity android:name="com.zehao.tripapp.map.LocationDemo" /> -->

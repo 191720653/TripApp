@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -16,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.zehao.tripapp.R;
 
@@ -26,6 +29,14 @@ public class WaterfallAdapter extends BaseAdapter {
 	ArrayList<String> list;
 	Context context;
 	private Drawable drawable;
+	//初始化图片加载库
+	DisplayImageOptions defaultOptions =
+		        new DisplayImageOptions.Builder()
+		            .cacheOnDisk(true)//图片存本地
+		            .cacheInMemory(true)
+		            .displayer(new FadeInBitmapDisplayer(10))
+		            .bitmapConfig(Bitmap.Config.RGB_565)
+		            .build();
 
 	public WaterfallAdapter(ArrayList<String> list, Context context) {
 		this.list = list;
@@ -58,6 +69,7 @@ public class WaterfallAdapter extends BaseAdapter {
 			LayoutInflater inflater = LayoutInflater.from(context);
 			view = inflater.inflate(R.layout.waterfall_image_item, null);
 			holder.ivIcon = (ImageView) view.findViewById(R.id.row_icon);
+			holder.ivIcon.setTag(R.string.image_position, position);
 			holder.pbLoad = (ProgressBar) view.findViewById(R.id.pb_load);
 
 			view.setTag(holder);
@@ -66,7 +78,7 @@ public class WaterfallAdapter extends BaseAdapter {
 		}
 
 		String url = list.get(position);
-		ImageLoader.getInstance().displayImage(url, holder.ivIcon,
+		ImageLoader.getInstance().displayImage(url, holder.ivIcon, defaultOptions,
 				new ImageLoadingListener() {
 					@Override
 					public void onLoadingStarted(String imageUri, View view) {
@@ -131,6 +143,9 @@ public class WaterfallAdapter extends BaseAdapter {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				Log.i("TAG", "image click");
+				Intent intent = new Intent(context, ImagePagerActivity.class);  
+                intent.putExtra("position", (Integer) view.getTag(R.string.image_position));  
+                context.startActivity(intent);
 			}
 		});
 		return view;
