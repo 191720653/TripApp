@@ -1,4 +1,4 @@
-package com.zehao.tripapp.picture;
+package com.zehao.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
