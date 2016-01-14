@@ -5,11 +5,11 @@
     android:orientation="vertical">
      
     <ImageView
-        android:id="@+id/imageView_begin"
+        android:id="@+id/imageView_then"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/descr_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/welcome_first" />
+        android:src="@drawable/welcome_second" />
  
 </LinearLayout>

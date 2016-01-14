@@ -5,17 +5,20 @@
     android:orientation="vertical"
     android:gravity="center">
      
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/welcome_guide_end"
-        />
+    <ImageView
+        android:id="@+id/imageView_end"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:contentDescription="@string/descr_image"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_h" />
     
     <Button
         android:id="@+id/btn_close_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_guide_style"
+        android:textColor="@android:color/white"
         android:text="@string/welcome_btn_close_guide"/>
  
 </LinearLayout>

@@ -7,7 +7,7 @@
     
     <string name="welcome_guide_begin" translatable="false">guide_begin</string>
     <string name="welcome_guide_end" translatable="false">guide_end</string>
-    <string name="welcome_btn_close_guide" translatable="false">btn_close_guide</string>
+    <string name="welcome_btn_close_guide" translatable="false">马上开始</string>
     <string name="welcome_splash_text" translatable="false">splash_text</string>
     
     <string name="menu_main_for_route" translatable="false">Route Line</string>
@@ -23,5 +23,6 @@
     
     <!-- Content descriptions -->
     <string name="descr_image" translatable="false">Image</string>
+    <string name="menu_text" translatable="false">中山市南区导览助手</string>
 
 </resources>

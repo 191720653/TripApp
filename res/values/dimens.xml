@@ -7,6 +7,6 @@
     <dimen name="slidingmenu_offset">80dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
     
-    <dimen name="button_width">180dp</dimen>
+    <dimen name="button_width">240dp</dimen>
 
 </resources>
