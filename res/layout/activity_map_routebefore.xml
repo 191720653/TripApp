@@ -2,97 +2,162 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical" >
-    
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="起点：" />
-
-        <EditText
-            android:id="@+id/start"
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:id="@+id/start_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="沙平公园" >
-
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="终点：" />
-
-        <EditText
-            android:id="@+id/end"
+            android:padding="10dip"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
+                android:layout_marginLeft="12dip"
+                android:contentDescription="@string/descr_image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nsdk_drawable_rg_ic_turn_start_s" />
+            <EditText
+                android:id="@+id/start"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="12dip"
+                android:background="@drawable/edittext_route_border"
+                android:ems="10"
+                android:dropDownHorizontalOffset="20dp"
+                android:hint="@string/route_before_start_tv"
+                android:inputType="text"
+                android:text="@string/route_before_start_tv1" >
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+        <View
+            android:id="@+id/middle"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignLeft="@+id/start"
+            android:layout_below="@+id/start_layout"
+            android:layout_marginLeft="22dip"
+            android:layout_marginRight="22dip"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/end_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="中山树木园" >
+            android:padding="10dip"
+            android:layout_below="@+id/middle"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
+                android:layout_marginLeft="12dip"
+                android:contentDescription="@string/descr_image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nsdk_drawable_rg_ic_turn_dest_s" />
+            <EditText
+                android:id="@+id/end"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="12dip"
+                android:background="@drawable/edittext_route_border"
+                android:ems="10"
+                android:hint="@string/route_before_start_tv1"
+                android:inputType="text"
+                android:text="@string/route_before_end_tv1" >
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+    </RelativeLayout>
 
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dip"
         android:layout_marginTop="5dip"
+        android:baselineAligned="false"
         android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/drive"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:layout_weight="1.0"
-            android:background="@drawable/button_style"
-            android:onClick="searchButton"
-            android:text="驾车搜索" />
-
-        <Button
-            android:id="@+id/transit"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+            <ImageButton
+                android:id="@+id/drive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/route_detail_car"
+                android:contentDescription="@string/descr_image"
+                android:onClick="searchButton"
+                android:scaleType="center" />
+        </LinearLayout>
+		<View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dip"
+            android:layout_marginBottom="3dip"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:layout_weight="1.0"
-            android:background="@drawable/button_style"
-            android:onClick="searchButton"
-            android:text="公交搜索" />
-
-        <Button
-            android:id="@+id/walk"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+            <ImageButton
+                android:id="@+id/transit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/route_detail_bus"
+                android:contentDescription="@string/descr_image"
+                android:onClick="searchButton"
+                android:scaleType="center" />
+        </LinearLayout>
+		<View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dip"
+            android:layout_marginBottom="3dip"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:layout_weight="1.0"
-            android:background="@drawable/button_style"
-            android:onClick="searchButton"
-            android:text="步行搜索" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+            <ImageButton
+                android:id="@+id/walk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/route_detail_walk"
+                android:contentDescription="@string/descr_image"
+                android:onClick="searchButton"
+                android:scaleType="center" />
+        </LinearLayout>
     </LinearLayout>
-
+	<TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dip"
+        android:layout_marginRight="22dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="10dip"
+        android:textColor="@android:color/darker_gray"
+        android:text="@string/route_before_tip_tv" >
+	</TextView>
     <ListView
         android:id="@+id/listView_route_history"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:paddingLeft="22dip"
+        android:paddingRight="22dip" >
     </ListView>
 
 </LinearLayout>

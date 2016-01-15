@@ -24,5 +24,11 @@
     <!-- Content descriptions -->
     <string name="descr_image" translatable="false">Image</string>
     <string name="menu_text" translatable="false">中山市南区导览助手</string>
+    <string name="route_before_start_tv" translatable="false">起点</string>
+    <string name="route_before_end_tv" translatable="false">终点</string>
+    <string name="route_before_start_tv1" translatable="false">沙平公园</string>
+    <string name="route_before_end_tv1" translatable="false">中山树木园</string>
+    <string name="route_before_tip_tv" translatable="false">搜索历史</string>
+    <string name="route_before_history_tv" translatable="false">然而并没有搜索历史</string>
 
 </resources>

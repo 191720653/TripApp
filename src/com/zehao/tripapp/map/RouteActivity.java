@@ -2,10 +2,11 @@ package com.zehao.tripapp.map;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,6 @@ import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
@@ -54,6 +54,7 @@ import com.baidu.mapapi.search.share.LocationShareURLOption;
 import com.baidu.mapapi.search.share.OnGetShareUrlResultListener;
 import com.baidu.mapapi.search.share.ShareUrlResult;
 import com.baidu.mapapi.search.share.ShareUrlSearch;
+import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
 
@@ -61,7 +62,7 @@ import com.zehao.tripapp.R;
  * 此demo用来展示如何进行驾车、步行、公交路线搜索并在地图使用RouteOverlay、TransitOverlay绘制
  * 同时展示如何进行节点浏览并弹出泡泡
  */
-public class RouteActivity extends Activity implements
+public class RouteActivity extends BaseActivity implements
 		BaiduMap.OnMapClickListener, OnGetRoutePlanResultListener,
 		OnGetShareUrlResultListener, OnMarkerClickListener,
 		OnGetGeoCoderResultListener{
@@ -93,9 +94,13 @@ public class RouteActivity extends Activity implements
 	private ShareUrlSearch mShareUrlSearch = null;
 	private GeoCoder mGeoCoder = null;
 
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_map_route);
+	@Override
+	protected void initContentView(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		addActionBar();
+		baseSetContentView(savedInstanceState, R.layout.activity_map_route);
+		addLeftMenu(Boolean.TRUE);
+		
 		CharSequence titleLable = "路线规划功能";
 		setTitle(titleLable);
 		// 初始化地图
@@ -122,7 +127,7 @@ public class RouteActivity extends Activity implements
 		getDate(getIntent());
 		
 		//定义Maker坐标点  
-		LatLng point = new LatLng(22.4961990000, 113.3767290000);  
+//		LatLng point = new LatLng(22.4961990000, 113.3767290000);  
 		//构建Marker图标  
 //		BitmapDescriptor bitmap = BitmapDescriptorFactory  
 //		    .fromResource(R.drawable.icon_st);  
@@ -137,8 +142,9 @@ public class RouteActivity extends Activity implements
 		mGeoCoder = GeoCoder.newInstance();
 		mGeoCoder.setOnGetGeoCodeResultListener(this);
 		
-		// 发起反地理编码请求
-		mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(point));
+		// 发起反地理编码请求,成功后在地图上增加marker标记并且触发请求分享URL获取，成功后弹出让用户选择
+		// （实际上，进入Activity后在handler中发起反地理编码请求，成功后在地图上标记景点，用户点击选择分享）
+//		mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(point));
 	}
 
 	public void getDate(Intent intent) {
@@ -672,6 +678,18 @@ public class RouteActivity extends Activity implements
 		mShareUrlSearch.requestLocationShareUrl(new LocationShareURLOption()
 		.location(marker.getPosition()).snippet("测试分享点")
 		.name(marker.getTitle()));
+	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	protected void handler(Message msg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

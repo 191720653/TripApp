@@ -1,12 +1,19 @@
 package com.zehao.tripapp.map;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
 
@@ -14,20 +21,97 @@ import com.zehao.tripapp.R;
  * 跳转到地图导航界面
  * 用Gson存储用户的输入历史，然后放进sharepreference
  */
-public class RouteBeforeActivity extends Activity {
+public class RouteBeforeActivity extends BaseActivity {
     
 	/**
 	 * 用户输入历史
 	 */
     ListView route_history;
+    String[] history_arr = null;
+    
+    private EditText route_start, route_end;
+    // private Button searchbtn;
+    // private ArrayAdapter<String> arr_adapter;
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_routebefore);
+	@Override
+	protected void initContentView(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		addActionBar();
+		baseSetContentView(savedInstanceState, R.layout.activity_map_routebefore);
         CharSequence titleLable = "游览路线规划";
         setTitle(titleLable);
         
+        // 初始化
+        route_start = (EditText) findViewById(R.id.start);
+        route_end = (EditText) findViewById(R.id.end);
         route_history = (ListView) findViewById(R.id.listView_route_history);
+        
+        // 获取搜索记录文件内容
+        SharedPreferences sp = getSharedPreferences("search_history", 0);
+        String history = sp.getString("history", "暂时没有搜索记录,1,2,3,4,5,6,7,8,9");
+
+        // 用逗号分割内容返回数组
+        history_arr = history.split(",");
+
+        // 新建适配器，适配器数据为搜索历史文件内容
+//        arr_adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, history_arr);
+
+        // 保留前20条数据
+        if (history_arr.length > 20) {
+            String[] newArrays = new String[50];
+            // 实现数组之间的复制
+            System.arraycopy(history_arr, 0, newArrays, 0, 50);
+//            arr_adapter = new ArrayAdapter<String>(this,
+//                    android.R.layout.simple_dropdown_item_1line, history_arr);
+        }
+        
+        route_history.setAdapter(new ArrayAdapter<String>(this, R.layout.item_input_history, history_arr));
+        route_history.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				if(route_start.getText()==null||route_start.getText().length()==0){
+					route_start.setText(history_arr[arg2]);
+				}else if(route_end.getText()==null||route_end.getText().length()==0){
+					route_end.setText(history_arr[arg2]);
+				}
+			}
+		});
+
+	}
+	
+	public void save() {
+        // 获取搜索框信息
+        String text = route_start.getText().toString();
+        SharedPreferences mysp = getSharedPreferences("search_history", 0);
+        String old_text = mysp.getString("history", "暂时没有搜索记录");
+        
+        // 利用StringBuilder.append新增内容，逗号便于读取内容时用逗号拆分开
+        StringBuilder builder = new StringBuilder(old_text);
+        builder.append(text + ",");
+
+        // 判断搜索内容是否已经存在于历史文件，已存在则不重复添加
+        if (!old_text.contains(text + ",")) {
+            SharedPreferences.Editor myeditor = mysp.edit();
+            myeditor.putString("history", builder.toString());
+            myeditor.commit();
+            Toast.makeText(this, text + "添加成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, text + "已存在", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    
+    // 清除搜索记录
+    public void cleanHistory(View v){
+        SharedPreferences sp =getSharedPreferences("search_history",0);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.clear();
+        editor.commit();
+        Toast.makeText(this, "清除成功", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 
     /**
@@ -73,5 +157,17 @@ public class RouteBeforeActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	protected void handler(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
