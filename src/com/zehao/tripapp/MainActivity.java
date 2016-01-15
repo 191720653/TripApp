@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 
 public class MainActivity extends BaseActivity implements
@@ -193,6 +194,13 @@ public class MainActivity extends BaseActivity implements
 				shortToastHandler(image_path);
 			}
 		}
+	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		// 不用系统自带ActionBar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 
 }

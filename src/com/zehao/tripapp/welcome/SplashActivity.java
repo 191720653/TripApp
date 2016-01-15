@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.Window;
 
 /**
  * 功能：使用ViewPager实现初次进入应用时的引导页
@@ -28,9 +29,9 @@ public class SplashActivity extends BaseActivity {
 		boolean mFirst = isFirstEnter(SplashActivity.this, SplashActivity.this
 				.getClass().getName());
 		if (mFirst)
-			handler.sendEmptyMessageDelayed(SWITCH_GUIDACTIVITY, 0);
+			handler.sendEmptyMessageDelayed(SWITCH_GUIDACTIVITY, 1000);
 		else
-			handler.sendEmptyMessageDelayed(SWITCH_MAINACTIVITY, 0);
+			handler.sendEmptyMessageDelayed(SWITCH_MAINACTIVITY, 1000);
 	}
 
 	// ****************************************************************
@@ -74,5 +75,12 @@ public class SplashActivity extends BaseActivity {
 			SplashActivity.this.finish();
 			break;
 		}
+	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		// 不用系统自带ActionBar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 }

@@ -199,7 +199,7 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setBaseNoTitle();
+		setBaseNoTitle();
 		setContentView(R.layout.activity_base);
 
 		setHandler();
@@ -230,10 +230,8 @@ public abstract class BaseActivity extends Activity {
 	// 初始化UI，setContentView等
 	protected abstract void initContentView(Bundle savedInstanceState);
 
-	// 可能全屏或者没有ActionBar等
-	// private void setBaseNoTitle() {
-	// requestWindowFeature(Window.FEATURE_NO_TITLE);// 例
-	// }
+	// 可能全屏或者没有ActionBar等，有子类决定
+	public abstract void setBaseNoTitle();
 
 	protected void addLeftMenu(boolean enable) {
 		// 如果你的项目有侧滑栏可以处理此方法

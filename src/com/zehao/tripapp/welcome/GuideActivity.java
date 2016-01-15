@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -43,6 +44,7 @@ public class GuideActivity extends BaseActivity {
 		LayoutInflater inflater = getLayoutInflater();
 		pageViews = new ArrayList<View>();
 		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_begin, null));
+		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_then, null));
 		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_end, null));
 
 		// 创建imageviews数组，大小是要显示的图片的数量
@@ -128,10 +130,10 @@ public class GuideActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			((ViewPager) v).addView(pageViews.get(position));
 
-			// 测试页卡1内的按钮事件
-			if (position == 1) {
-				Button btn = (Button) v.findViewById(R.id.btn_close_guide);
-				btn.setOnClickListener(Button_OnClickListener);
+			// 测试页卡2内的按钮事件
+			if (position == 2) {
+				Button action = (Button) v.findViewById(R.id.btn_close_guide);
+				action.setOnClickListener(Button_OnClickListener);
 			}
 
 			return pageViews.get(position);
@@ -204,7 +206,6 @@ public class GuideActivity extends BaseActivity {
 				// animationSet.addAnimation(swing);
 				// imageViews[position].startAnimation(animationSet);
 			}
-
 		}
 	}
 
@@ -213,4 +214,12 @@ public class GuideActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		// 不用系统自带ActionBar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
 }
