@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity implements
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		addActionBar();
 		baseSetContentView(savedInstanceState, R.layout.activity_main);
 		addLeftMenu(Boolean.TRUE);
 

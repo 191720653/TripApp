@@ -233,6 +233,14 @@ public abstract class BaseActivity extends Activity {
 	// 可能全屏或者没有ActionBar等，有子类决定
 	public abstract void setBaseNoTitle();
 
+	// 增加自定义的ActionBar
+	protected void addActionBar() {
+		LinearLayout content = (LinearLayout) findViewById(R.id.contents);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.action_bar, null);
+		content.addView(view);
+	}
+	
 	protected void addLeftMenu(boolean enable) {
 		// 如果你的项目有侧滑栏可以处理此方法
 		if (enable) { // 是否能有侧滑栏

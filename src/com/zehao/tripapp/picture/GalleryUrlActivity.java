@@ -19,6 +19,8 @@ package com.zehao.tripapp.picture;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.truba.touchgallery.GalleryWidget.BasePagerAdapter.OnItemChangeListener;
@@ -41,6 +43,10 @@ public class GalleryUrlActivity extends Activity {
 	private static final String STATE_POSITION = "STATE_POSITION";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 去掉标题栏以及状态栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags( WindowManager .LayoutParams.FLAG_FULLSCREEN,
+				WindowManager .LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_gallery_image);
         
         List<String> items = new ArrayList<String>();

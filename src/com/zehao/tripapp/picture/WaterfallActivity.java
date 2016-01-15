@@ -2,23 +2,27 @@ package com.zehao.tripapp.picture;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.os.Message;
+import android.view.Window;
 
 import com.huewu.pla.lib.MultiColumnPullToRefreshListView;
 import com.huewu.pla.lib.MultiColumnPullToRefreshListView.OnRefreshListener;
+import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
 
-public class WaterfallActivity extends Activity {
+public class WaterfallActivity extends BaseActivity {
 	
 	private MultiColumnPullToRefreshListView waterfallView;//可以把它当成一个listView
 	//如果不想用下拉刷新这个特性，只是瀑布流，可以用这个：MultiColumnListView 一样的用法
-	
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_waterfall_image_view);
+	protected void initContentView(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		addActionBar();
+		baseSetContentView(savedInstanceState, R.layout.activity_waterfall_image_view);
+		addLeftMenu(Boolean.TRUE);
 		
 		waterfallView = (MultiColumnPullToRefreshListView) findViewById(R.id.list);
 		
@@ -50,6 +54,18 @@ public class WaterfallActivity extends Activity {
 			}
 		});
 		
+	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		// 不用系统自带ActionBar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	protected void handler(Message msg) {
+		// TODO Auto-generated method stub
 	}
 
 }
