@@ -3,6 +3,8 @@
         android:id="@+id/textview_input_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:textColor="@android:color/darker_gray"
-        android:ems="10"
+        android:textSize="18sp"
         android:text="@string/route_before_history_tv" />

@@ -48,7 +48,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mGey2cyjj7kl06pexO47EcY6" >
+            android:value="zRVZ79xxQBwKTpB2eQ3LHyr7" >
         </meta-data>
         <activity
             android:name="com.zehao.tripapp.welcome.SplashActivity"

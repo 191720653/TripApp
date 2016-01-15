@@ -9,7 +9,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,9 +29,9 @@ public class RouteBeforeActivity extends BaseActivity {
     ListView route_history;
     String[] history_arr = null;
     
-    private EditText route_start, route_end;
     // private Button searchbtn;
-    // private ArrayAdapter<String> arr_adapter;
+    private ArrayAdapter<String> arr_adapter;
+    private AutoCompleteTextView route_end,route_start;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -42,29 +42,32 @@ public class RouteBeforeActivity extends BaseActivity {
         setTitle(titleLable);
         
         // 初始化
-        route_start = (EditText) findViewById(R.id.start);
-        route_end = (EditText) findViewById(R.id.end);
+        route_start = (AutoCompleteTextView) findViewById(R.id.start);
+        route_end = (AutoCompleteTextView) findViewById(R.id.end);
         route_history = (ListView) findViewById(R.id.listView_route_history);
         
         // 获取搜索记录文件内容
         SharedPreferences sp = getSharedPreferences("search_history", 0);
-        String history = sp.getString("history", "暂时没有搜索记录,1,2,3,4,5,6,7,8,9");
+        String history = sp.getString("history", "");
 
         // 用逗号分割内容返回数组
         history_arr = history.split(",");
 
         // 新建适配器，适配器数据为搜索历史文件内容
-//        arr_adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, history_arr);
+        arr_adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, history_arr);
 
-        // 保留前20条数据
-        if (history_arr.length > 20) {
-            String[] newArrays = new String[50];
+        // 保留前30条数据
+        if (history_arr.length > 30) {
+            String[] newArrays = new String[30];
             // 实现数组之间的复制
-            System.arraycopy(history_arr, 0, newArrays, 0, 50);
-//            arr_adapter = new ArrayAdapter<String>(this,
-//                    android.R.layout.simple_dropdown_item_1line, history_arr);
+            System.arraycopy(history_arr, 0, newArrays, 0, 30);
+            arr_adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_dropdown_item_1line, history_arr);
         }
+        
+        route_start.setAdapter(arr_adapter);
+        route_end.setAdapter(arr_adapter);
         
         route_history.setAdapter(new ArrayAdapter<String>(this, R.layout.item_input_history, history_arr));
         route_history.setOnItemClickListener(new OnItemClickListener() {
@@ -82,11 +85,12 @@ public class RouteBeforeActivity extends BaseActivity {
 
 	}
 	
-	public void save() {
-        // 获取搜索框信息
-        String text = route_start.getText().toString();
+	public void save(String text) {
         SharedPreferences mysp = getSharedPreferences("search_history", 0);
-        String old_text = mysp.getString("history", "暂时没有搜索记录");
+        String old_text = mysp.getString("history", "");
+        if(old_text.length()>500){
+        	old_text = old_text.substring(old_text.indexOf(","));
+        }
         
         // 利用StringBuilder.append新增内容，逗号便于读取内容时用逗号拆分开
         StringBuilder builder = new StringBuilder(old_text);
@@ -121,8 +125,6 @@ public class RouteBeforeActivity extends BaseActivity {
      */
     public void searchButton(View view) {
         // 处理搜索按钮响应
-        EditText editSt = (EditText) findViewById(R.id.start);
-        EditText editEn = (EditText) findViewById(R.id.end);
 
         Intent intent = new Intent(RouteBeforeActivity.this, RouteActivity.class);
         // 实际使用中请对起点终点城市进行正确的设定
@@ -133,8 +135,12 @@ public class RouteBeforeActivity extends BaseActivity {
         } else if (view.getId() == R.id.walk) {
         	intent.putExtra(CONSTANT.TYPE, CONSTANT.ROUTE_WALK);
         }
-        intent.putExtra(CONSTANT.ROUTE_START, editSt.getText().toString());
-    	intent.putExtra(CONSTANT.ROUTE_END, editEn.getText().toString());
+        String start = route_start.getText().toString();
+        String end = route_end.getText().toString();
+        intent.putExtra(CONSTANT.ROUTE_START, start);
+    	intent.putExtra(CONSTANT.ROUTE_END, end);
+    	save(start);
+    	save(end);
         startActivity(intent);
     }
 

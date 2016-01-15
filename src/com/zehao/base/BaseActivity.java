@@ -7,7 +7,7 @@ import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
 import com.zehao.util.IHandler;
 import com.zehao.util.UIHandler;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,6 +35,7 @@ public abstract class BaseActivity extends Activity {
 
 	protected static Context context;
 	protected SharedPreferences settings;
+	protected SlidingMenu menu = null;
 
 	/**
 	 * 进入指定Actibity并携带Bundle
@@ -234,6 +235,7 @@ public abstract class BaseActivity extends Activity {
 	public abstract void setBaseNoTitle();
 
 	// 增加自定义的ActionBar
+	@SuppressLint("InflateParams")
 	protected void addActionBar() {
 		LinearLayout content = (LinearLayout) findViewById(R.id.contents);
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -245,7 +247,7 @@ public abstract class BaseActivity extends Activity {
 		// 如果你的项目有侧滑栏可以处理此方法
 		if (enable) { // 是否能有侧滑栏
 			// configure the SlidingMenu
-			SlidingMenu menu = new SlidingMenu(this);
+			menu = new SlidingMenu(this);
 			menu.setMode(SlidingMenu.LEFT);
 			// 设置触摸屏幕的模式
 			menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);

@@ -54,6 +54,7 @@ import com.baidu.mapapi.search.share.LocationShareURLOption;
 import com.baidu.mapapi.search.share.OnGetShareUrlResultListener;
 import com.baidu.mapapi.search.share.ShareUrlResult;
 import com.baidu.mapapi.search.share.ShareUrlSearch;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
@@ -100,6 +101,7 @@ public class RouteActivity extends BaseActivity implements
 		addActionBar();
 		baseSetContentView(savedInstanceState, R.layout.activity_map_route);
 		addLeftMenu(Boolean.TRUE);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 		
 		CharSequence titleLable = "路线规划功能";
 		setTitle(titleLable);

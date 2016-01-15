@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical" >
-
+    
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -20,30 +20,33 @@
                 android:id="@+id/imageView1"
                 android:layout_width="10dip"
                 android:layout_height="10dip"
+                android:layout_marginStart="12dip"
                 android:layout_marginLeft="12dip"
                 android:contentDescription="@string/descr_image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/nsdk_drawable_rg_ic_turn_start_s" />
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/start"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dip"
                 android:layout_marginLeft="2dip"
+                android:layout_marginEnd="12dip"
                 android:layout_marginRight="12dip"
                 android:background="@drawable/edittext_route_border"
                 android:ems="10"
-                android:dropDownHorizontalOffset="20dp"
+                android:completionThreshold="1"
+                android:dropDownVerticalOffset="10dp"
                 android:hint="@string/route_before_start_tv"
                 android:inputType="text"
                 android:text="@string/route_before_start_tv1" >
                 <requestFocus />
-            </EditText>
+            </AutoCompleteTextView>
         </LinearLayout>
         <View
             android:id="@+id/middle"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignLeft="@+id/start"
             android:layout_below="@+id/start_layout"
             android:layout_marginLeft="22dip"
             android:layout_marginRight="22dip"
@@ -61,22 +64,26 @@
                 android:layout_width="10dip"
                 android:layout_height="10dip"
                 android:layout_marginLeft="12dip"
+                android:layout_marginStart="12dip"
                 android:contentDescription="@string/descr_image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/nsdk_drawable_rg_ic_turn_dest_s" />
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/end"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
+                android:layout_marginStart="2dip"
                 android:layout_marginRight="12dip"
+                android:layout_marginEnd="12dip"
                 android:background="@drawable/edittext_route_border"
                 android:ems="10"
+                android:completionThreshold="1"
                 android:hint="@string/route_before_start_tv1"
                 android:inputType="text"
                 android:text="@string/route_before_end_tv1" >
                 <requestFocus />
-            </EditText>
+            </AutoCompleteTextView>
         </LinearLayout>
     </RelativeLayout>
 
@@ -149,6 +156,7 @@
         android:layout_marginRight="22dip"
         android:layout_marginTop="10dip"
         android:layout_marginBottom="10dip"
+        android:textSize="18sp"
         android:textColor="@android:color/darker_gray"
         android:text="@string/route_before_tip_tv" >
 	</TextView>
