@@ -11,8 +11,8 @@ import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.login.LoginActivity;
 import com.zehao.tripapp.map.RouteBeforeActivity;
-import com.zehao.tripapp.picture.TakePhotoActivity;
 import com.zehao.tripapp.picture.WaterfallActivity;
 
 import android.content.Intent;
@@ -82,7 +82,8 @@ public class MainActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				goActivity(TakePhotoActivity.class);
+//				goActivity(TakePhotoActivity.class);
+				goActivity(LoginActivity.class);
 			}
 		});
 	}

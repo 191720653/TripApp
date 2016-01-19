@@ -30,5 +30,13 @@
     <string name="route_before_end_tv1" translatable="false">中山树木园</string>
     <string name="route_before_tip_tv" translatable="false">搜索历史</string>
     <string name="route_before_history_tv" translatable="false">然而并没有搜索历史</string>
+    
+    <!-- Login Activity -->
+    <string name="login_editText_account_back" translatable="false">\t帐号</string>
+    <string name="login_editText_password_back" translatable="false">\t密码</string>
+    <string name="login_button" translatable="false">登录</string>
+    <string name="login_checkbox_password" translatable="false">记住密码</string>
+    <string name="login_checkbox_auto" translatable="false">自动登录</string>
+    <string name="login_textView_register" translatable="false">快速注册</string>
 
 </resources>

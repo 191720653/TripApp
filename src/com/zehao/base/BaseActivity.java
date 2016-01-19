@@ -166,12 +166,12 @@ public abstract class BaseActivity extends Activity {
 	 * @param key
 	 * @return
 	 */
-	public Object readXMLBoolean(String name, String key) {
+	public Boolean readXMLBoolean(String name, String key) {
 		settings = getSharedPreferences(name, Context.MODE_PRIVATE);
 		if (settings.contains(key)) {
 			return settings.getBoolean(key, false);
 		} else {
-			return null;
+			return false;
 		}
 	}
 

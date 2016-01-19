@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.zehao.view.CircleImageButton
+        android:id="@+id/user_icon"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
+        android:layout_marginTop="20dip"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_empty" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dip"
+        android:layout_marginRight="12dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/relativelayout_border" >
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="fill_parent"
+            android:layout_height="43dip"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:layout_marginTop="2dip"
+            android:background="@drawable/edittext_route_border"
+            android:hint="@string/login_editText_account_back"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:maxLength="11" />
+
+        <View
+            android:id="@+id/login_line"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_alignTop="@+id/et_password"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@android:color/darker_gray"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="fill_parent"
+            android:layout_height="43dip"
+            android:layout_below="@id/et_account"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:background="@drawable/edittext_route_border"
+            android:hint="@string/login_editText_password_back"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:maxLength="16"
+            android:scrollHorizontally="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/button"
+            android:gravity="center"
+            android:text="@string/login_button"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/cb_rem_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_marginLeft="12dip"
+            android:text="@string/login_checkbox_password"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/cb_auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_marginLeft="12dip"
+            android:layout_toRightOf="@id/cb_rem_password"
+            android:text="@string/login_checkbox_auto"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/login_textView_register"
+            android:textColor="#888"
+            android:textColorLink="#FF0066CC" />
+    </RelativeLayout>
+
+</LinearLayout>
