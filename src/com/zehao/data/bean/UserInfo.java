@@ -1,11 +1,18 @@
 package com.zehao.data.bean;
 
 public class UserInfo {
+	private String userId;
 	private String userIcon;
 	private String userName;
-	private Gender userGender;
-	private String userNote;
-	
+	private String userGender;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public String getUserIcon() {
 		return userIcon;
@@ -23,22 +30,12 @@ public class UserInfo {
 		this.userName = userName;
 	}
 
-	public Gender getUserGender() {
+	public String getUserGender() {
 		return userGender;
 	}
 
-	public void setUserGender(Gender userGender) {
+	public void setUserGender(String userGender) {
 		this.userGender = userGender;
 	}
-
-	public String getUserNote() {
-		return userNote;
-	}
-
-	public void setUserNote(String userNote) {
-		this.userNote = userNote;
-	}
-
-	public static enum Gender {BOY, GIRL}
 
 }

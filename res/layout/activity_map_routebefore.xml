@@ -160,6 +160,12 @@
         android:textColor="@android:color/darker_gray"
         android:text="@string/route_before_tip_tv" >
 	</TextView>
+	<com.zehao.view.HistoryViewGroup
+        android:id="@+id/flow_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp" >
+    </com.zehao.view.HistoryViewGroup>
     <ListView
         android:id="@+id/listView_route_history"
         android:layout_width="match_parent"
