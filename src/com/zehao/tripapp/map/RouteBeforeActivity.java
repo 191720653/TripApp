@@ -5,13 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,15 +27,14 @@ public class RouteBeforeActivity extends BaseActivity {
 	/**
 	 * 用户输入历史
 	 */
-	ListView route_history;
+	private HistoryViewGroup historyViewGroup;
+	private TextView tagView;
+	/*ListView route_history;*/
 	String[] history_arr = null;
 
 	// private Button searchbtn;
 	private ArrayAdapter<String> arr_adapter;
 	private AutoCompleteTextView route_end, route_start;
-
-	private HistoryViewGroup historyViewGroup;
-	private TextView tagView;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class RouteBeforeActivity extends BaseActivity {
 		// 初始化
 		route_start = (AutoCompleteTextView) findViewById(R.id.start);
 		route_end = (AutoCompleteTextView) findViewById(R.id.end);
-		route_history = (ListView) findViewById(R.id.listView_route_history);
+		/*route_history = (ListView) findViewById(R.id.listView_route_history);*/
 
 		// 获取搜索记录文件内容
 		SharedPreferences sp = getSharedPreferences("search_history", 0);
@@ -71,48 +69,47 @@ public class RouteBeforeActivity extends BaseActivity {
 			arr_adapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_dropdown_item_1line, history_arr);
 		}
-
 		route_start.setAdapter(arr_adapter);
 		route_end.setAdapter(arr_adapter);
 
-		route_history.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.item_input_history, history_arr));
-		route_history.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				if (route_start.getText() == null
-						|| route_start.getText().length() == 0) {
-					route_start.setText(history_arr[arg2]);
-				} else if (route_end.getText() == null
-						|| route_end.getText().length() == 0) {
-					route_end.setText(history_arr[arg2]);
-				}
-			}
-		});
-
 		historyViewGroup = (HistoryViewGroup) findViewById(R.id.flow_layout);
-		for (int i = 0; i < 15; i++) {
+		WindowManager wm = this.getWindowManager();
+		@SuppressWarnings("deprecation")
+		int width = (wm.getDefaultDisplay().getWidth() - 88)/3;
+		for (int i = 0; i < history_arr.length; i++) {
 			tagView = (TextView) getLayoutInflater().inflate(
 					R.layout.activity_map_routebefore_textview,
 					historyViewGroup, false);
 			ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
-					ViewGroup.MarginLayoutParams.WRAP_CONTENT,
-					ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-			lp.leftMargin = 10;
-			lp.rightMargin = 10;
+					width*5/6, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+			if(i%3==0){
+				lp.leftMargin = 0;
+			}else{
+				lp.leftMargin = 10;
+			}
+			if(i%3==2){
+				lp.rightMargin = 0;
+			}else{
+				lp.rightMargin = 10;
+			}
 			lp.topMargin = 10;
 			tagView.setLayoutParams(lp);
-			if (i % 3 == 0) {
-				tagView.setText("TextVeiw" + i * 100);
-			} else if (i % 5 == 0) {
-				tagView.setText("abcd");
-			} else if (i % 7 == 0) {
-				tagView.setText("文字");
-			} else {
-				tagView.setText("TextVeiw");
-			}
+			tagView.setText(history_arr[i]);
+			tagView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					System.out.println("click：" + ((TextView)view).getText());
+					shortToastHandler("click：" + ((TextView)view).getText());
+					if (route_start.getText() == null
+							|| route_start.getText().length() == 0) {
+						route_start.setText(((TextView)view).getText());
+					} else if (route_end.getText() == null
+							|| route_end.getText().length() == 0) {
+						route_end.setText(((TextView)view).getText());
+					}
+				}
+			});
 			historyViewGroup.addView(tagView);
 		}
 

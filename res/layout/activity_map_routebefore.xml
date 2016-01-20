@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical" >
     
     <RelativeLayout
@@ -164,14 +163,16 @@
         android:id="@+id/flow_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="10dp" >
+        android:layout_marginLeft="22dip"
+        android:layout_marginRight="22dip"
+        android:layout_marginTop="10dip" >
     </com.zehao.view.HistoryViewGroup>
-    <ListView
+    <!-- <ListView
         android:id="@+id/listView_route_history"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:paddingLeft="22dip"
         android:paddingRight="22dip" >
-    </ListView>
+    </ListView> -->
 
 </LinearLayout>
