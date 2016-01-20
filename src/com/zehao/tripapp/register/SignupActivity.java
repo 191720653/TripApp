@@ -309,12 +309,11 @@ public class SignupActivity extends BaseActivity implements OnClickListener {
 		   intent.putExtra("outputX", 100);
 		   intent.putExtra("outputY", 100);
 		   intent.putExtra("scale", true);
-		//   intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-		   intent.putExtra("return-data", true);//若为false则表示不返回数据
-		//   intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+		   intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		   intent.putExtra("return-data", false);//若为false则表示不返回数据
+		   intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		   intent.putExtra("noFaceDetection", true); 
 		   startActivityForResult(intent, INTENT_ACTION_CROP);
-//		startActivityForResult(intent, INTENT_ACTION_CAREMA);
 	}
 	
 	/**
