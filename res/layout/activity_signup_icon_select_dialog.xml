@@ -34,5 +34,22 @@
         android:text="@string/register_userinfo_picture"
         android:textColor="#ff353535"
         android:textSize="15sp" />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#ffd6d6d6" />
+
+    <TextView
+        android:id="@+id/dialog_crop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dip"
+        android:paddingTop="15dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="@string/register_userinfo_crop"
+        android:textColor="#ff353535"
+        android:textSize="15sp" />
 
 </LinearLayout>

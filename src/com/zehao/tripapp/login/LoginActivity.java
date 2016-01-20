@@ -1,28 +1,33 @@
 package com.zehao.tripapp.login;
 
 import java.util.HashMap;
-import java.util.List;
 
-import org.json.JSONObject;
+import org.apache.http.Header;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zehao.base.BaseActivity;
 import com.zehao.data.bean.Domine;
-import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.data.bean.UserInfo;
+import com.zehao.http.HttpCLient;
+import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.register.SignupActivity;
 import com.zehao.view.CircleImageButton;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,9 +41,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends BaseActivity implements
-		IDataCallback<MData<? extends Domine>>, OnLoginListener {
+		IDataCallback<MData<? extends Domine>> {
 
-	private JSONObject jsonObject = null;
+	private JsonObject jsonObject = null;
 	private EditText et_account, et_password;
 	private TextView tv_register;
 	private CheckBox cb_rem_password, cb_auto_login;
@@ -48,10 +53,31 @@ public class LoginActivity extends BaseActivity implements
 	private ProgressDialog progressDialog;
 
 	public static final String USER_INFO_MODEL = "userInfo";
+	public static final String USER_IS_REGISTER = "is_register";
 	public static final String LOGIN_CHECKBOX_REMPWD = "remember_password";
 	public static final String LOGIN_CHECKBOX_AUTO = "auto_login";
 	public static final String USER_ACCOUNT = "account";
 	public static final String USER_PASSWORD = "password";
+	
+	private static final int MSG_PROGRESS_DIALOG_SHOW = 0;
+	private static final int MSG_PROGRESS_DIALOG_DISMISS = 1;
+	private static final int MSG_AUTH_CANCEL = 2;
+	private static final int MSG_AUTH_ERROR= 3;
+	private static final int MSG_AUTH_COMPLETE = 4;
+	
+	private String platform = null;
+	
+	public boolean onSignin(String userId) {
+		// 在这个方法填写尝试的代码，返回true表示还不能登录，需要注册
+		// 读取sharepreference中的注册标志，是否注册，否返回false
+		readXML(USER_INFO_MODEL, USER_IS_REGISTER);
+		// 此处全部给回需要注册
+		return true;
+	}
+	public boolean onSignUp(UserInfo info) {
+		// 填写处理注册信息的代码，返回true表示数据合法，注册页面可以关闭
+		return true;
+	}
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -113,19 +139,18 @@ public class LoginActivity extends BaseActivity implements
 					Toast.makeText(LoginActivity.this, "请填写好用户名以及密码！",
 							Toast.LENGTH_LONG).show();
 				} else {
-					progressDialog = ProgressDialog.show(LoginActivity.this,
-							"登录", "正在联网登录,请稍候......");
+					handler.sendEmptyMessage(MSG_PROGRESS_DIALOG_SHOW);
 					try {
-						jsonObject = new JSONObject();
-						jsonObject.put("LOGIN_NAME", loginNameValue);
-						jsonObject.put("LOGIN_PASSWORD", passwordValue);
+						jsonObject = new JsonObject();
+						jsonObject.addProperty("LOGIN_NAME", loginNameValue);
+						jsonObject.addProperty("LOGIN_PASSWORD", passwordValue);
 						writeXML(USER_INFO_MODEL, USER_ACCOUNT, loginNameValue);
 						writeXML(USER_INFO_MODEL, USER_PASSWORD, passwordValue);
 						// finish();
 						// Intent intent = new Intent(LoginActivity.this,
 						// MainActivity.class);
 						// LoginActivity.this.startActivity(intent);
-						handler.sendEmptyMessage(1);
+						handler.sendEmptyMessage(MSG_PROGRESS_DIALOG_DISMISS);
 						
 						//移除授权
 						//weibo.removeAccount(true);
@@ -174,6 +199,7 @@ public class LoginActivity extends BaseActivity implements
 		});
 		
 		ShareSDK.initSDK(LoginActivity.this);
+		platform = SinaWeibo.NAME;
 		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 //		if(weibo.isValid()){
 //			weibo.removeAccount();
@@ -182,22 +208,26 @@ public class LoginActivity extends BaseActivity implements
 			@Override
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
 				// TODO Auto-generated method stub
-				shortToastHandler("onError");
+				handler.sendEmptyMessage(MSG_AUTH_ERROR);
 			}
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
 				// TODO Auto-generated method stub
-				System.out.println("asdffghghj");
-//				shortToastHandler("onComplete");
-//				String accessToken = weibo.getDb().getToken(); // 获取授权token
-//				String openId = weibo.getDb().getUserId(); // 获取用户在此平台的ID
-//				String nickname = arg0.getDb().get("nickname"); // 获取用户昵称
-				Log.e("login......", arg0.getDb().exportData() + " " + arg2.toString());
+				Message msg = new Message();
+				msg.what = MSG_AUTH_COMPLETE;
+				UserInfo userInfo = new UserInfo();
+				userInfo.setUserId(arg0.getDb().getUserId());
+				userInfo.setUserGender(arg0.getDb().getUserGender());
+				userInfo.setUserIcon(arg0.getDb().getUserIcon());
+				userInfo.setUserName(arg0.getDb().getUserName());
+				msg.obj = new Gson().toJson(userInfo, UserInfo.class);
+				handler.sendMessage(msg);
+				System.out.println(arg0.getDb().exportData());
 			}
 			@Override
 			public void onCancel(Platform arg0, int arg1) {
 				// TODO Auto-generated method stub
-				shortToastHandler("onCancel");
+				handler.sendEmptyMessage(MSG_AUTH_CANCEL);
 			}
 		});
 		//关闭SSO授权，即关闭客户端授权，通过网页授权
@@ -214,50 +244,76 @@ public class LoginActivity extends BaseActivity implements
 
 	protected void loadData() {
 		// TODO Auto-generated method stub
-		setDataCallback(this);// 设置回调函数
-		// 我们还可以把这个Callback传给其它获取数据的类，比如HTTP获取数据
-		// 比如 HttClient.get(url,this);
+		setDataCallback(this);
 	}
 
 	@Override
 	public void onNewData(Object data) {
 		// TODO Auto-generated method stub
-		// update UI 更新UI数据
-		@SuppressWarnings({ "unchecked", "unused" })
-		final List<Employee> list = (List<Employee>) ((MData<? extends Domine>) data).dataList;
-		handler.post(new Runnable() {
-			public void run() {
-				// 更新UI
-			}
-		});
-		// 或者
-		handler.sendEmptyMessage(0);// 通知Handler
 	}
 
 	@Override
 	public void onError(String msg, int code) {
 		// TODO Auto-generated method stub
-		handler.post(new Runnable() {
-			public void run() {
-				// 通知错误消息
-			}
-		});
-		// 或者
-		handler.sendEmptyMessage(0);// 通知Handler
 	}
 
 	@Override
 	protected void handler(Message msg) { // 我们可以处理数据消息了
-		switch (msg.what) {
-		case 0:
-			break;
-		case 1:
+		switch(msg.what) {
+		case MSG_PROGRESS_DIALOG_SHOW: {
+			progressDialog = ProgressDialog.show(LoginActivity.this,
+					"登录", "正在联网登录,请稍候......");
+		}break;
+		case MSG_PROGRESS_DIALOG_DISMISS: {
 			progressDialog.dismiss();
-			break;
-		case -1:
-			break;
-		default:
-			break;
+		}break;
+		case MSG_AUTH_CANCEL: {
+			//取消授权
+			shortToastHandler("取消授权");
+		} break;
+		case MSG_AUTH_ERROR: {
+			//授权失败
+			shortToastHandler("授权失败");
+		} break;
+		case MSG_AUTH_COMPLETE: {
+			//授权成功
+			shortToastHandler("授权成功");
+			String temp = (String) msg.obj;
+			JsonObject info = new JsonParser().parse(temp).getAsJsonObject();
+			//校验用户Id，是否已经注册
+			RequestParams params = new RequestParams();
+			params.put("userId", info.get("userId"));
+			handler.sendEmptyMessage(MSG_PROGRESS_DIALOG_SHOW);
+			HttpCLient.postJson(this, "/User_checkAction.action", params, new JsonHttpResponseHandler(){
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						String responseString, Throwable throwable) {
+					// TODO Auto-generated method stub
+					longToastHandler("登录失败，请检查网络连接状态！");
+				}
+				@Override
+				public void onSuccess(int statusCode, Header[] headers,
+						org.json.JSONObject response) {
+					// TODO Auto-generated method stub
+					JsonObject json = new JsonParser().parse(response.toString()).getAsJsonObject();
+					if(json.get("code").equals("success")){
+						// 登录成功
+						goActivity(MainActivity.class);
+					}
+					else{
+						// 跳转注册Activity，引导用户注册
+						Bundle bundle = new Bundle();
+						bundle.putString("platform", platform);
+						goActivity(SignupActivity.class, bundle);
+					}
+				}
+				@Override
+				public void onFinish() {
+					// TODO Auto-generated method stub
+					handler.sendEmptyMessage(MSG_PROGRESS_DIALOG_DISMISS);
+				}});
+		} break;
+		default : break;
 		}
 	}
 
@@ -266,21 +322,6 @@ public class LoginActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		// 不用系统自带ActionBar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-	}
-
-	@Override
-	public boolean onSignin(String platform, HashMap<String, Object> res) {
-		// TODO Auto-generated method stub
-		// 在这个方法填写尝试的代码，返回true表示还不能登录，需要注册
-		// 此处全部给回需要注册
-		return true;
-	}
-
-	@Override
-	public boolean onSignUp(UserInfo info) {
-		// TODO Auto-generated method stub
-		// 填写处理注册信息的代码，返回true表示数据合法，注册页面可以关闭
-		return true;
 	}
 
 }

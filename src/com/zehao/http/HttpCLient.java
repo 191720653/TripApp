@@ -14,6 +14,10 @@ import com.zehao.constant.CONSTANT;
 public class HttpCLient {
 
 	private static AsyncHttpClient client = new AsyncHttpClient();
+	static {
+		//设置网络超时时间
+		client.setTimeout(2000);
+	}
 
 	public static void get(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
@@ -28,6 +32,12 @@ public class HttpCLient {
 	public static void postJson(Context context, String url, HttpEntity entity,
 			AsyncHttpResponseHandler responseHandler) {
 		client.post(context, getAbsoluteUrl(url), null, entity,
+				"application/json", responseHandler);
+	}
+	
+	public static void postJson(Context context, String url, RequestParams params,
+			AsyncHttpResponseHandler responseHandler) {
+		client.post(context, getAbsoluteUrl(url), null, params,
 				"application/json", responseHandler);
 	}
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+
+        <!-- 框为矩形 -->
+        <shape android:shape="rectangle" >
+
+            <!-- 用白色来填充里面 -->
+            <solid android:color="#FFFFFF" />
+            <!-- 边框是1dp的线 -->
+            <stroke
+                android:width="0.5dip"
+                android:color="#AEAEAE" />
+            <!-- 边框的圆角的弧度 -->
+            <corners android:radius="4dip" />
+
+            <padding
+                android:bottom="5dip"
+                android:left="15dip"
+                android:right="15dip"
+                android:top="5dip" />
+        </shape>
+    </item>
+
+</layer-list>
