@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="@drawable/image_main_background">
      
     <ImageView
         android:id="@+id/imageView_end"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="fill_parent"
         android:contentDescription="@string/descr_image"
-        android:scaleType="fitXY"
-        android:src="@drawable/logo_h" />
-    
+        android:src="@drawable/image_guide_second" />
+
     <Button
         android:id="@+id/btn_close_guide"
-        android:layout_width="@dimen/button_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/button_guide_style"
-        android:textColor="@android:color/white"
-        android:text="@string/welcome_btn_close_guide"/>
+        android:text="@string/guide_button"
+        android:textColor="@color/main_orange" />
  
-</LinearLayout>
+</RelativeLayout>

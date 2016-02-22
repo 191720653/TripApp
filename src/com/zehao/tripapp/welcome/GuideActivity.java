@@ -44,7 +44,7 @@ public class GuideActivity extends BaseActivity {
 		LayoutInflater inflater = getLayoutInflater();
 		pageViews = new ArrayList<View>();
 		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_begin, null));
-		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_then, null));
+		// pageViews.add(inflater.inflate(R.layout.viewpager_welcome_then, null));
 		pageViews.add(inflater.inflate(R.layout.viewpager_welcome_end, null));
 
 		// 创建imageviews数组，大小是要显示的图片的数量
@@ -61,8 +61,8 @@ public class GuideActivity extends BaseActivity {
 		for (int i = 0; i < pageViews.size(); i++) {
 			imageView = new ImageView(GuideActivity.this);
 			// 设置小圆点imageview的参数
-			LayoutParams layoutParams = new LayoutParams(18, 18);
-			layoutParams.setMargins(5, 0, 5, 0);
+			LayoutParams layoutParams = new LayoutParams(12, 12);
+			layoutParams.setMargins(15, 0, 15, 0);
 			imageView.setLayoutParams(layoutParams);// 创建一个宽高均为20 的布局
 			// 将小圆点layout添加到数组中
 			imageViews[i] = imageView;
@@ -70,9 +70,9 @@ public class GuideActivity extends BaseActivity {
 			// 默认选中的是第一张图片，此时第一个小圆点是选中状态，其他不是
 			if (i == 0) {
 				imageViews[i]
-						.setBackgroundResource(R.drawable.page_indicator_focused);
+						.setBackgroundResource(R.drawable.image_point_white);
 			} else {
-				imageViews[i].setBackgroundResource(R.drawable.page_indicator);
+				imageViews[i].setBackgroundResource(R.drawable.image_point_gray);
 			}
 			// 将imageviews添加到小圆点视图组
 			viewPoints.addView(imageViews[i]);
@@ -131,7 +131,7 @@ public class GuideActivity extends BaseActivity {
 			((ViewPager) v).addView(pageViews.get(position));
 
 			// 测试页卡2内的按钮事件
-			if (position == 2) {
+			if (position == 1) {
 				Button action = (Button) v.findViewById(R.id.btn_close_guide);
 				action.setOnClickListener(Button_OnClickListener);
 			}
@@ -190,11 +190,11 @@ public class GuideActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			for (int i = 0; i < imageViews.length; i++) {
 				imageViews[position]
-						.setBackgroundResource(R.drawable.page_indicator_focused);
+						.setBackgroundResource(R.drawable.image_point_white);
 				// 不是当前选中的page，其小圆点设置为未选中的状态
 				if (position != i) {
 					imageViews[i]
-							.setBackgroundResource(R.drawable.page_indicator);
+							.setBackgroundResource(R.drawable.image_point_gray);
 				}
 				// AnimationSet animationSet = new AnimationSet(true);
 				// TranslateAnimation swing = new TranslateAnimation(

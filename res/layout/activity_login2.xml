@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/image_main_background" >
+
+    <TextView
+		android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/et_account"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login_title"
+        android:textColor="@color/main_orange" />
+    
+    <EditText
+            android:id="@+id/et_account"
+            android:layout_width="fill_parent"
+            android:layout_height="45dip"
+            android:layout_above="@+id/et_password"
+            android:layout_marginLeft="45dip"
+            android:layout_marginRight="45dip"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:background="@drawable/image_login_edittext"
+            android:hint="@string/login_account_hint"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:maxLength="11" />
+        
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="fill_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="45dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="45dip"
+            android:layout_marginRight="45dip"
+            android:gravity="center"
+            android:background="@drawable/image_login_edittext"
+            android:hint="@string/login_pin_hint"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:maxLength="16"
+            android:scrollHorizontally="true" />
+        
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_below="@+id/et_password"
+            android:layout_alignLeft="@+id/et_password"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/button_common_style"
+            android:text="@string/login_button_text"
+            android:textColor="@color/main_orange"/>
+        
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_below="@+id/et_password"
+            android:layout_alignRight="@+id/et_password"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/button_common_style"
+            android:text="@string/login_register_button_text"
+            android:textColor="@color/main_orange"/>
+        
+        <TextView
+		android:id="@+id/login_third_party"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dip"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login_third_patry_text"
+        android:textColor="@color/main_orange" />
+        
+        <com.zehao.view.CircleImageButton
+        android:id="@+id/wechat_button"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/qq_button"
+        android:layout_marginRight="10dip"
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/image_wechat_logo" />
+        
+        <com.zehao.view.CircleImageButton
+        android:id="@+id/qq_button"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/image_qq_logo" />
+        
+        <com.zehao.view.CircleImageButton
+        android:id="@+id/sina_button"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/qq_button"
+        android:layout_marginLeft="10dip"
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/image_weibo_logo" />
+
+</RelativeLayout>

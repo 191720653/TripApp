@@ -2,6 +2,9 @@
 <resources>
 
     <!-- 通用颜色 -->
+    <color name="main_brown">#8B3800</color>
+    <color name="main_orange">#733800</color>
+    <color name="main_yellow">#d5b200</color>
     
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/image_main_background">
      
     <ImageView
         android:id="@+id/imageView_begin"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/descr_image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/welcome_first" />
- 
-</LinearLayout>
+        android:src="@drawable/image_guide_first" />
+
+</RelativeLayout>

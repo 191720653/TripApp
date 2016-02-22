@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dip" >
+
+    <ImageView
+        android:id="@+id/item_main_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="90dip"
+        android:maxHeight="90dip"
+        android:adjustViewBounds="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="6dip"
+        android:contentDescription="@string/descr_image"
+        android:src="@drawable/ic_empty" />
+
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dip"
+        android:layout_toRightOf="@id/item_main_image"
+        android:text="@string/item_view_name"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+    
+    <ImageView
+        android:id="@+id/item_like_image"
+        android:layout_width="12dip"
+        android:layout_height="12dip"
+        android:layout_toLeftOf="@+id/item_like_num"
+        android:layout_alignBottom="@+id/item_title"
+        android:contentDescription="@string/descr_image"
+        android:src="@drawable/image_like_yellow" />
+
+    <TextView
+        android:id="@+id/item_like_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/item_title"
+        android:layout_alignParentRight="true"
+        android:text="@string/item_view_like"
+        android:textSize="12sp" />
+    
+    <TextView
+        android:id="@+id/item_view_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dip"
+        android:layout_marginTop="6dip"
+        android:layout_below="@+id/item_title"
+        android:layout_toRightOf="@+id/item_main_image"
+        android:text="@string/item_view_info"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
+
+</RelativeLayout>

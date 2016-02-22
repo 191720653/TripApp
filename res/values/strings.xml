@@ -61,5 +61,53 @@
     <string name="register_userinfo_user_gender">性别</string>
     <string name="register_userinfo_user_note">备注</string>
     <string name="register_userinfo_sign_user_info">用户信息</string>
+    
+    <string name="button_mine" translatable="false">我的</string>
+    
+    <!-- Guide Text -->
+    <string name="guide_first" translatable="false">寻找古村的记忆</string>
+    <string name="guide_second" translatable="false">寻找古村的记忆</string>
+    <string name="guide_button" translatable="false">立刻体验</string>
+    
+    <!-- Login Text -->
+    <string name="login_title" translatable="false">请输入用户信息注册或登录</string>
+    <string name="login_account_hint" translatable="false">邮箱/手机号</string>
+    <string name="login_pin_hint" translatable="false">密码</string>
+    <string name="login_register_button_text" translatable="false">注册</string>
+    <string name="login_button_text" translatable="false">登录</string>
+    <string name="login_third_patry_text" translatable="false">| 第三方登录 |</string>
+    
+    <!-- Main Text -->
+    <string name="main_title" translatable="false">南区</string>
+    <string name="main_sub_title" translatable="false">旅游导览</string>
+    <string name="main_tv_liangdu" translatable="false">良都</string>
+    <string name="main_tv_chengnan" translatable="false">城南</string>
+    <string name="main_tv_maling" translatable="false">马岭</string>
+    <string name="main_tv_beixi" translatable="false">北溪</string>
+    
+    <!-- ActionBar Text -->
+    <string name="action_bar_check" translatable="false">概览</string>
+    <string name="action_bar_advice" translatable="false">推荐路线</string>
+    
+    <!-- Culture Text -->
+    <string name="culture_build" translatable="false">精典古建</string>
+    <string name="culture_tree" translatable="false">名木古树</string>
+    <string name="culture_hero" translatable="false">名人典故</string>
+    <string name="culture_food" translatable="false">名店美食</string>
+    <string name="culture_custom" translatable="false">名品民俗</string>
+    <string name="culture_advice" translatable="false">推荐路线</string>
+    
+    <!-- ViewArea Text -->
+    <string name="viewarea_name" translatable="false">|良都</string>
+    <string name="viewarea_info" translatable="false">\u3000中山市良都中学位于人杰地灵、名人辈出的中山市重点侨乡——南区。学校初创于1956年，办学历史上经过三次合并和较大规模的布局调整，2003年由原良都初级中学和南区职业中学合并</string>
+    <string name="item_view_name" translatable="false">|马应彪纪念馆</string>
+    <string name="item_view_like" translatable="false">168人赞过</string>
+    <string name="item_view_info" translatable="false">\u3000马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。</string>
+    
+    <!-- ViewDetail Text -->
+    <string name="view_title_person" translatable="false">|人物简介编辑</string>
+    <string name="view_title_activity" translatable="false">|社会活动编辑</string>
+    <string name="view_content_person" translatable="false">\u3000马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。</string>
+    <string name="view_content_activity" translatable="false">\u3000马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。</string>
 
 </resources>
