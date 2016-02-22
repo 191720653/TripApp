@@ -8,22 +8,51 @@ import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.others.OthersActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 
+/**
+ * < TODO：中山市南区App主界面，显示南区的4大景区 >
+ * 
+ * @ClassName: MainActivity
+ * @author pc-hao
+ * @date 2016年2月22日 下午10:21:14
+ * @version V 1.0
+ */
 public class MainActivity extends BaseActivity implements
-		IDataCallback<MData<? extends Domine>> {
+		IDataCallback<MData<? extends Domine>>, OnClickListener {
+
+	// private ImageButton cultureButton;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		
+
 		baseSetContentView(savedInstanceState, R.layout.activity_main);
 
+		// cultureButton = (ImageButton) findViewById(R.id.main_culture);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.main_culture: {
+			// 跳往介绍南区的其它情况
+			goActivity(OthersActivity.class);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -82,7 +111,7 @@ public class MainActivity extends BaseActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 	}
 
 	@Override

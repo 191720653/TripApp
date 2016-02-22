@@ -4,7 +4,8 @@
     android:layout_height="70dip" >
 
     <Button
-        android:id="@+id/action_bar_btn_back"
+        android:id="@+id/action_bar_btn_mine"
+        android:onClick="onClick"
         android:layout_width="wrap_content"
         android:layout_height="51dip"
         android:layout_alignParentBottom="true"
@@ -13,7 +14,8 @@
         android:background="@drawable/image_mine_button" />
 
     <ImageButton
-        android:id="@+id/action_bar_btn_share"
+        android:id="@+id/action_bar_btn_mines"
+        android:onClick="onClick"
         android:layout_width="66dip"
         android:layout_height="38dip"
         android:layout_marginBottom="33dip"

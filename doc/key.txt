@@ -19,3 +19,5 @@ home:wx5e244a3519068d66 3e34283caf265463712d89e5934dac53
 
 // 最后做好image滑动加载，有待优化
 // 可以设置view的visible属性（判断view是否可见，回收不显示的View），然后回收图片
+
+//2016.02.22 所有ActionBar下边阴影
