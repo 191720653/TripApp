@@ -208,6 +208,11 @@ public abstract class BaseActivity extends Activity {
 
 	}
 
+	/**
+	 * 子类添加布局
+	 * @param savedInstanceState
+	 * @param layoutResId
+	 */
 	public void baseSetContentView(Bundle savedInstanceState, int layoutResId) {
 		LinearLayout content = (LinearLayout) findViewById(R.id.contents);
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -215,6 +220,11 @@ public abstract class BaseActivity extends Activity {
 		content.addView(view);
 	}
 
+	/**
+	 * 子类添加布局
+	 * @param savedInstanceState
+	 * @param view
+	 */
 	public void baseSetContentView(Bundle savedInstanceState, View view) {
 		LinearLayout content = (LinearLayout) findViewById(R.id.contents);
 		content.addView(view);
@@ -228,13 +238,20 @@ public abstract class BaseActivity extends Activity {
 		});
 	}
 
-	// 初始化UI，setContentView等
+	/**
+	 * 初始化UI，setContentView等
+	 * @param savedInstanceState
+	 */
 	protected abstract void initContentView(Bundle savedInstanceState);
 
-	// 可能全屏或者没有ActionBar等，有子类决定
+	/**
+	 *  可能全屏或者没有ActionBar等，有子类决定
+	 */
 	public abstract void setBaseNoTitle();
 
-	// 增加自定义的ActionBar
+	/**
+	 *  增加自定义的ActionBar
+	 */
 	@SuppressLint("InflateParams")
 	protected void addActionBar() {
 		LinearLayout content = (LinearLayout) findViewById(R.id.contents);
@@ -243,6 +260,10 @@ public abstract class BaseActivity extends Activity {
 		content.addView(view);
 	}
 	
+	/**
+	 * 是否能有侧滑栏
+	 * @param enable
+	 */
 	protected void addLeftMenu(boolean enable) {
 		// 如果你的项目有侧滑栏可以处理此方法
 		if (enable) { // 是否能有侧滑栏
@@ -270,10 +291,15 @@ public abstract class BaseActivity extends Activity {
 		}
 	}
 
-	// 让子类处理消息
+	/**
+	 * 让子类处理消息
+	 * @param msg
+	 */
 	protected abstract void handler(Message msg);
 
-	// 横竖屏切换，键盘等
+	/**
+	 *  横竖屏切换，键盘等
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);

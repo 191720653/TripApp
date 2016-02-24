@@ -90,6 +90,15 @@
         <activity android:name="com.zehao.tripapp.register.SignupActivity" />
         <activity android:name="com.zehao.tripapp.register.IconActivity" />
         
+        <!-- 景区-->
+        <activity android:name="com.zehao.tripapp.area.AreaActivity" />
+        
+        <!-- 景点-->
+        <activity android:name="com.zehao.tripapp.point.PointActivity" />
+        
+        <!-- 景色-->
+        <activity android:name="com.zehao.tripapp.detail.DetailActivity" />
+        
         <!-- 其它-->
         <activity android:name="com.zehao.tripapp.others.OthersActivity" />
         

@@ -2,59 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="50dip"
-    android:paddingTop="15dip"
+    android:orientation="horizontal"
     android:paddingBottom="15dip"
-    android:orientation="horizontal" >
-    
-    <RelativeLayout 
+    android:paddingTop="15dip" >
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="1" >
+
         <ImageButton
-        android:id="@+id/action_bar_btn_back"
-        android:layout_width="40dip"
-        android:layout_height="20dip"
-        android:layout_marginLeft="15dip"
-        android:src="@drawable/image_back"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/descr_image"
-        android:background="@color/transparent" />
+            android:id="@+id/action_bar_btn_back"
+            android:onClick="onClick"
+            android:layout_width="40dip"
+            android:layout_height="20dip"
+            android:layout_marginLeft="15dip"
+            android:background="@color/transparent"
+            android:contentDescription="@string/descr_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_back" />
     </RelativeLayout>
-    
+
     <TextView
-        android:id="@+id/action_bar_check"
+        android:id="@+id/action_bar_title"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="18sp"
+        android:text="@string/action_bar_check"
         android:textColor="@color/main_yellow"
-        android:text="@string/action_bar_check" />
-    
+        android:textSize="18sp" />
+
     <TextView
         android:id="@+id/action_bar_advice"
+        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="@string/action_bar_advice"
         android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:text="@string/action_bar_advice" />
-    
-    <RelativeLayout 
+        android:textSize="18sp" />
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
-    <ImageButton
-        android:id="@+id/action_bar_btn_share"
-        android:layout_width="15dip"
-        android:layout_height="20dip"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dip"
-        android:src="@drawable/image_share"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/descr_image"
-        android:background="@color/transparent" />
+        android:layout_weight="1" >
+
+        <ImageButton
+            android:id="@+id/action_bar_btn_share"
+            android:onClick="onClick"
+            android:layout_width="15dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip"
+            android:background="@color/transparent"
+            android:contentDescription="@string/descr_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_share" />
     </RelativeLayout>
-    
+
 </LinearLayout>

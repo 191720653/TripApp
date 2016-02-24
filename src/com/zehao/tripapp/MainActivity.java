@@ -8,6 +8,7 @@ import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.area.AreaActivity;
 import com.zehao.tripapp.others.OthersActivity;
 
 import android.content.Intent;
@@ -48,6 +49,26 @@ public class MainActivity extends BaseActivity implements
 		case R.id.main_culture: {
 			// 跳往介绍南区的其它情况
 			goActivity(OthersActivity.class);
+			break;
+		}
+		case R.id.main_liangdu: {
+			// 跳往介绍南区的良都
+			goActivity(AreaActivity.class);
+			break;
+		}
+		case R.id.main_beixi: {
+			// 跳往介绍南区的北溪
+			goActivity(AreaActivity.class);
+			break;
+		}
+		case R.id.main_chengnan: {
+			// 跳往介绍南区的城南
+			goActivity(AreaActivity.class);
+			break;
+		}
+		case R.id.main_maling: {
+			// 跳往介绍南区的马岭
+			goActivity(AreaActivity.class);
 			break;
 		}
 		default:

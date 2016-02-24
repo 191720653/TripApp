@@ -57,6 +57,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_liangdu"
+        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
@@ -95,6 +97,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_beixi"
+        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
@@ -134,6 +138,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_chengnan"
+        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
@@ -171,6 +177,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_maling"
+        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
