@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.zehao.base.BaseActivity;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
@@ -35,7 +40,9 @@ import android.widget.GridView;
  * @version V 1.0
  */
 public class PointActivity extends BaseActivity implements
-		IDataCallback<MData<? extends Domine>>, OnClickListener {
+		IDataCallback<MData<? extends Domine>>, OnClickListener, OnSliderClickListener {
+	
+	private SliderLayout mDemoSlider;
 	
 	private GridView gridView;
 	private GridViewAdapter gridViewAdapter;
@@ -51,6 +58,40 @@ public class PointActivity extends BaseActivity implements
 		baseSetContentView(savedInstanceState, R.layout.activity_view_point);
 		
 		gridView = (GridView) findViewById(R.id.view_point_gridview);
+		
+		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+
+        HashMap<String,String> url_maps = new HashMap<String, String>();
+        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
+        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
+        url_maps.put("House of Cards House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
+        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
+
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Hannibal",R.drawable.image_nanqu);
+        file_maps.put("Big Bang Theory",R.drawable.image_nanqu);
+        file_maps.put("House of Cards House of Cards",R.drawable.image_nanqu);
+        file_maps.put("Game of Thrones", R.drawable.image_nanqu);
+
+        for(String name : url_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(url_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+           mDemoSlider.addSlider(textSliderView);
+        }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
 		
 		Map<String, Object> map = null;
 		for(int i=0;i<array.length;i++){
@@ -169,6 +210,12 @@ public class PointActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		// 不用系统自带ActionBar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
 	}
 
 }

@@ -10,21 +10,25 @@
         android:layout_alignParentTop="true"
         layout="@layout/action_bar_advice" >
     </include>
-
-    <LinearLayout
-        android:id="@+id/contents"
-        android:layout_width="fill_parent"
-        android:layout_height="150dip"
+    
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
         android:layout_below="@+id/action_bar_advice"
-        android:background="@color/main_orange"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="200dp" />
+
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_below="@+id/action_bar_advice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/view_point_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contents"
+        android:layout_below="@+id/slider"
         android:layout_marginLeft="12dip"
         android:layout_marginStart="12dip"
         android:layout_marginTop="12dip"

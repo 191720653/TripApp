@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="50dip"
     android:paddingTop="15dip"
-    android:paddingBottom="15dip"
-    android:background="@color/main_orange" >
+    android:paddingBottom="15dip" >
     
     <ImageButton
         android:id="@+id/action_bar_btn_back"
