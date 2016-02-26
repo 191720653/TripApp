@@ -10,7 +10,6 @@
         android:onClick="onClick"
         android:layout_width="40dip"
         android:layout_height="20dip"
-        android:layout_marginLeft="15dip"
         android:src="@drawable/image_back_white"
         android:scaleType="fitXY"
         android:contentDescription="@string/descr_image"

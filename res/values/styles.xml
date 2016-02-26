@@ -17,6 +17,12 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
+    <!-- Base application header theme. -->
+    <style name="AppHeaderTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
     <!-- dialog -->
     <style name="CommonDialog" parent="@android:style/Theme.Dialog">
        <!--  <item name="android:windowBackground">@drawable/smssdk_dialog_bg</item> -->

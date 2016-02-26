@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.achep.header2actionbar.FadingActionBarHelper;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -19,9 +20,13 @@ import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.point.PointActivity;
 
+import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +45,14 @@ import android.widget.ListView;
  * @version V 1.0
  */
 public class AreaActivity extends BaseActivity implements
-		IDataCallback<MData<? extends Domine>>, OnClickListener, OnSliderClickListener {
+		IDataCallback<MData<? extends Domine>>, OnClickListener,
+		OnSliderClickListener {
+
+	private FadingActionBarHelper mFadingActionBarHelper;
+
+	public FadingActionBarHelper getFadingActionBarHelper() {
+		return mFadingActionBarHelper;
+	}
 
 	private SliderLayout mDemoSlider;
 
@@ -73,64 +85,76 @@ public class AreaActivity extends BaseActivity implements
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		baseSetContentView(savedInstanceState, R.layout.activity_view_area);
+		setActionBarLayout(R.layout.action_bar_like);
+		mFadingActionBarHelper = new FadingActionBarHelper(getActionBar(),
+				getResources().getDrawable(R.drawable.actionbar_bg));
 
-		viewList = (ListView) findViewById(R.id.view_listView);
-		
-		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
-
-        HashMap<String,String> url_maps = new HashMap<String, String>();
-        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
-        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
-        url_maps.put("House of Cards House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
-        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
-
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Hannibal",R.drawable.image_nanqu);
-        file_maps.put("Big Bang Theory",R.drawable.image_nanqu);
-        file_maps.put("House of Cards House of Cards",R.drawable.image_nanqu);
-        file_maps.put("Game of Thrones", R.drawable.image_nanqu);
-
-        for(String name : url_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-           mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-
-		Map<String, Object> map = null;
-		for (int i = 0; i < array.length; i++) {
-			map = new HashMap<String, Object>();
-			map.put("image", array[i][0]);
-			map.put("title", array[i][1]);
-			map.put("likeNum", array[i][2]);
-			map.put("info", array[i][3]);
-			listItems.add(map);
-			System.out.println(map.toString());
+		if (savedInstanceState == null) {
+			getFragmentManager().beginTransaction()
+					.add(R.id.container, new ListViewFragment()).commit();
 		}
 
-		viewListAdapter = new ListViewAdapter(this, listItems);
-		viewList.setAdapter(viewListAdapter);
-		viewList.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				goActivity(PointActivity.class);
-			}
-		});
+		viewList = (ListView) findViewById(R.id.view_listView);
+
+//		mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+//
+//		HashMap<String, String> url_maps = new HashMap<String, String>();
+//		url_maps.put(
+//				"Hannibal",
+//				"http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
+//		url_maps.put("Big Bang Theory",
+//				"http://tvfiles.alphacoders.com/100/hdclearart-10.png");
+//		url_maps.put("House of Cards House of Cards",
+//				"http://cdn3.nflximg.net/images/3093/2043093.jpg");
+//		url_maps.put(
+//				"Game of Thrones",
+//				"http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
+//
+//		HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
+//		file_maps.put("Hannibal", R.drawable.image_nanqu);
+//		file_maps.put("Big Bang Theory", R.drawable.image_nanqu);
+//		file_maps.put("House of Cards House of Cards", R.drawable.image_nanqu);
+//		file_maps.put("Game of Thrones", R.drawable.image_nanqu);
+//
+//		for (String name : url_maps.keySet()) {
+//			TextSliderView textSliderView = new TextSliderView(this);
+//			// initialize a SliderLayout
+//			textSliderView.description(name).image(url_maps.get(name))
+//					.setScaleType(BaseSliderView.ScaleType.Fit)
+//					.setOnSliderClickListener(this);
+//
+//			// add your extra information
+//			textSliderView.getBundle().putString("extra", name);
+//
+//			mDemoSlider.addSlider(textSliderView);
+//		}
+//		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+//		mDemoSlider
+//				.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+//		mDemoSlider.setDuration(4000);
+//
+//		Map<String, Object> map = null;
+//		for (int i = 0; i < array.length; i++) {
+//			map = new HashMap<String, Object>();
+//			map.put("image", array[i][0]);
+//			map.put("title", array[i][1]);
+//			map.put("likeNum", array[i][2]);
+//			map.put("info", array[i][3]);
+//			listItems.add(map);
+//			System.out.println(map.toString());
+//		}
+//
+//		viewListAdapter = new ListViewAdapter(this, listItems);
+//		viewList.setAdapter(viewListAdapter);
+//		viewList.setOnItemClickListener(new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				goActivity(PointActivity.class);
+//			}
+//		});
 
 	}
 
@@ -168,7 +192,7 @@ public class AreaActivity extends BaseActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+//		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -228,13 +252,32 @@ public class AreaActivity extends BaseActivity implements
 	public void setBaseNoTitle() {
 		// TODO Auto-generated method stub
 		// 不用系统自带ActionBar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	/**
+	 * 设置ActionBar的布局
+	 * 
+	 * @param layoutId
+	 */
+	public void setActionBarLayout(int layoutId) {
+		ActionBar actionBar = getActionBar();
+		if (null != actionBar) {
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.setDisplayShowCustomEnabled(true);
+			LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View v = inflator.inflate(layoutId, null);
+			ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			actionBar.setCustomView(v, layout);
+		}
 	}
 
 	@Override
 	public void onSliderClick(BaseSliderView slider) {
 		// TODO Auto-generated method stub
-		Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, slider.getBundle().get("extra") + "",
+				Toast.LENGTH_SHORT).show();
 	}
 
 }
