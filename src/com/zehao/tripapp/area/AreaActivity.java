@@ -1,16 +1,10 @@
 package com.zehao.tripapp.area;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.achep.header2actionbar.FadingActionBarHelper;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.zehao.base.BaseActivity;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
@@ -18,7 +12,6 @@ import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
-import com.zehao.tripapp.point.PointActivity;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -28,13 +21,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 /**
  * < TODO：中山市南区App景区介绍界面，显示南区的4大景区的详细介绍 >
@@ -54,33 +45,36 @@ public class AreaActivity extends BaseActivity implements
 		return mFadingActionBarHelper;
 	}
 
-	private SliderLayout mDemoSlider;
+//	private SliderLayout mDemoSlider;
+//
+//	private ListView viewList;
+//	private ListViewAdapter viewListAdapter;
+//	private List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+//	private String[][] array = {
+//			{
+//					R.drawable.image_beixi + "",
+//					"|良都1",
+//					"1681人赞过",
+//					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
+//			{
+//					R.drawable.image_liangdu + "",
+//					"|良都2",
+//					"1682人赞过",
+//					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
+//			{
+//					R.drawable.image_maling + "",
+//					"|良都3",
+//					"1683人赞过",
+//					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
+//			{
+//					R.drawable.image_chengnan + "",
+//					"|良都4",
+//					"1684人赞过",
+//					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" } };
 
-	private ListView viewList;
-	private ListViewAdapter viewListAdapter;
-	private List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-	private String[][] array = {
-			{
-					R.drawable.image_beixi + "",
-					"|良都1",
-					"1681人赞过",
-					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
-			{
-					R.drawable.image_liangdu + "",
-					"|良都2",
-					"1682人赞过",
-					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
-			{
-					R.drawable.image_maling + "",
-					"|良都3",
-					"1683人赞过",
-					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" },
-			{
-					R.drawable.image_chengnan + "",
-					"|良都4",
-					"1684人赞过",
-					"马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。" } };
-
+	private ImageButton mineImageButton;
+	private int imageButtonY = 0;
+	
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -94,7 +88,8 @@ public class AreaActivity extends BaseActivity implements
 					.add(R.id.container, new ListViewFragment()).commit();
 		}
 
-		viewList = (ListView) findViewById(R.id.view_listView);
+//		viewList = (ListView) findViewById(R.id.view_listView);
+		mineImageButton = (ImageButton) findViewById(R.id.action_bar_btn_mines);
 
 //		mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 //
@@ -263,6 +258,8 @@ public class AreaActivity extends BaseActivity implements
 	public void setActionBarLayout(int layoutId) {
 		ActionBar actionBar = getActionBar();
 		if (null != actionBar) {
+			// 去掉空白
+			actionBar.setTitle("");
 			actionBar.setDisplayShowHomeEnabled(false);
 			actionBar.setDisplayShowCustomEnabled(true);
 			LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -278,6 +275,21 @@ public class AreaActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		Toast.makeText(this, slider.getBundle().get("extra") + "",
 				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		if(imageButtonY<=0){
+			int[] location = new int[2];
+			mineImageButton.getLocationOnScreen(location);
+			imageButtonY = location[1];
+		}
+		if(ev.getY()>=imageButtonY){
+			System.out.println("拦截事件......");
+			return mineImageButton.dispatchTouchEvent(ev);
+		}else
+			return super.dispatchTouchEvent(ev);
 	}
 
 }

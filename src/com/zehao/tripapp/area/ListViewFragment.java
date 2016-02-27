@@ -1,22 +1,6 @@
-/*
- * Copyright (C) 2013 AChep@xda <artemchep@gmail.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.zehao.tripapp.area;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -25,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.achep.header2actionbar.HeaderFragment;
@@ -55,11 +37,14 @@ public class ListViewFragment extends HeaderFragment implements OnSliderClickLis
 
     private AsyncLoadSomething mAsyncLoadSomething;
     private FrameLayout mContentOverlay;
+    
+    private Activity activity;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        this.activity = activity;
         setHeaderBackgroundScrollMode(HEADER_BACKGROUND_SCROLL_PARALLAX);
         setOnHeaderScrollChangedListener(new OnHeaderScrollChangedListener() {
             @Override
@@ -210,12 +195,13 @@ public class ListViewFragment extends HeaderFragment implements OnSliderClickLis
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				System.out.println("jump");
+				Intent intent = new Intent(activity, PointActivity.class);
+				startActivity(intent);
 			}
 		});
     }
 
-    private void cancelAsyncTask(AsyncTask task) {
+    private void cancelAsyncTask(AsyncTask<?, ?, ?> task) {
         if (task != null) task.cancel(false);
     }
 

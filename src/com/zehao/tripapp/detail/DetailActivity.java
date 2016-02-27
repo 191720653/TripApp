@@ -1,13 +1,10 @@
 package com.zehao.tripapp.detail;
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.achep.header2actionbar.FadingActionBarHelper;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.zehao.base.BaseActivity;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
@@ -16,13 +13,18 @@ import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.area.AreaActivity;
 
+import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 /**
@@ -36,46 +38,66 @@ import android.widget.Toast;
 public class DetailActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>>, OnClickListener, OnSliderClickListener {
 	
-	private SliderLayout mDemoSlider;
+	private FadingActionBarHelper mFadingActionBarHelper;
+
+	public FadingActionBarHelper getFadingActionBarHelper() {
+		return mFadingActionBarHelper;
+	}
+	
+	private ImageButton mineImageButton;
+	private int imageButtonY = 0;
+	
+//	private SliderLayout mDemoSlider;
 	
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		baseSetContentView(savedInstanceState, R.layout.activity_view_detail);
 		
-		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+		setActionBarLayout(R.layout.action_bar_like);
+		mFadingActionBarHelper = new FadingActionBarHelper(getActionBar(),
+				getResources().getDrawable(R.drawable.actionbar_bg));
 
-        HashMap<String,String> url_maps = new HashMap<String, String>();
-        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
-        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
-        url_maps.put("House of Cards House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
-        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
-
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Hannibal",R.drawable.image_nanqu);
-        file_maps.put("Big Bang Theory",R.drawable.image_nanqu);
-        file_maps.put("House of Cards House of Cards",R.drawable.image_nanqu);
-        file_maps.put("Game of Thrones", R.drawable.image_nanqu);
-
-        for(String name : url_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-           mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
+		if (savedInstanceState == null) {
+			getFragmentManager().beginTransaction()
+					.add(R.id.container, new ListViewDetailFragment()).commit();
+		}
+		
+		mineImageButton = (ImageButton) findViewById(R.id.action_bar_btn_mines);
+		
+//		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+//
+//        HashMap<String,String> url_maps = new HashMap<String, String>();
+//        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
+//        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
+//        url_maps.put("House of Cards House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
+//        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
+//
+//        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+//        file_maps.put("Hannibal",R.drawable.image_nanqu);
+//        file_maps.put("Big Bang Theory",R.drawable.image_nanqu);
+//        file_maps.put("House of Cards House of Cards",R.drawable.image_nanqu);
+//        file_maps.put("Game of Thrones", R.drawable.image_nanqu);
+//
+//        for(String name : url_maps.keySet()){
+//            TextSliderView textSliderView = new TextSliderView(this);
+//            // initialize a SliderLayout
+//            textSliderView
+//                    .description(name)
+//                    .image(url_maps.get(name))
+//                    .setScaleType(BaseSliderView.ScaleType.Fit)
+//                    .setOnSliderClickListener(this);
+//
+//            //add your extra information
+//            textSliderView.getBundle()
+//                    .putString("extra",name);
+//
+//           mDemoSlider.addSlider(textSliderView);
+//        }
+//        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+//        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+//        mDemoSlider.setDuration(4000);
 
 	}
 
@@ -113,7 +135,7 @@ public class DetailActivity extends BaseActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+//		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -173,13 +195,48 @@ public class DetailActivity extends BaseActivity implements
 	public void setBaseNoTitle() {
 		// TODO Auto-generated method stub
 		// 不用系统自带ActionBar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 
 	@Override
 	public void onSliderClick(BaseSliderView slider) {
 		// TODO Auto-generated method stub
 		Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * 设置ActionBar的布局
+	 * 
+	 * @param layoutId
+	 */
+	public void setActionBarLayout(int layoutId) {
+		ActionBar actionBar = getActionBar();
+		if (null != actionBar) {
+			// 去掉空白
+			actionBar.setTitle("");
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.setDisplayShowCustomEnabled(true);
+			LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View v = inflator.inflate(layoutId, null);
+			ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			actionBar.setCustomView(v, layout);
+		}
+	}
+	
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		if(imageButtonY<=0){
+			int[] location = new int[2];
+			mineImageButton.getLocationOnScreen(location);
+			imageButtonY = location[1];
+		}
+		if(ev.getY()>=imageButtonY){
+			System.out.println("拦截事件......");
+			return mineImageButton.dispatchTouchEvent(ev);
+		}else
+			return super.dispatchTouchEvent(ev);
 	}
 
 }

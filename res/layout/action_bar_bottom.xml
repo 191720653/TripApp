@@ -9,6 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="51dip"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="3dip"
+        android:layout_marginRight="3dip"
         android:text="@string/button_mine"
         android:textSize="14sp"
         android:background="@drawable/image_mine_button" />

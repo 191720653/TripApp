@@ -1,150 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <LinearLayout
-        android:id="@+id/contents"
-        android:layout_width="fill_parent"
-        android:layout_height="200dip"
-        android:layout_alignParentTop="true"
-        android:background="@color/main_orange"
-        android:orientation="vertical" >
-    </LinearLayout>
-
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    <com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/custom_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MergeRootFrame" >
 
     <include
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        layout="@layout/action_bar_like" >
-    </include>
-
-    <TextView
-        android:id="@+id/view_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contents"
-        android:layout_marginLeft="12dip"
-        android:layout_marginTop="12dip"
-        android:text="@string/viewarea_name"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/view_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_name"
-        android:layout_marginLeft="18dip"
-        android:layout_marginRight="12dip"
-        android:layout_marginTop="6dip"
-        android:text="@string/viewarea_info"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <ImageView
-        android:id="@+id/item_like_image"
-        android:layout_width="12dip"
-        android:layout_height="12dip"
-        android:layout_alignBottom="@+id/view_name"
-        android:layout_toLeftOf="@+id/item_like_num"
-        android:contentDescription="@string/descr_image"
-        android:src="@drawable/image_like_yellow" />
-
-    <TextView
-        android:id="@+id/item_like_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/view_name"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="12dip"
-        android:text="@string/item_view_like"
-        android:textSize="12sp" />
-
-    <LinearLayout
-        android:id="@+id/maps"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:layout_below="@+id/view_info"
-        android:layout_margin="12dip"
-        android:background="@color/main_orange"
-        android:orientation="vertical" >
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/break_line"
-        android:layout_width="wrap_content"
-        android:layout_height="6dip"
-        android:layout_below="@+id/maps"
-        android:layout_marginTop="6dip"
-        android:contentDescription="@string/descr_image"
-        android:scaleType="fitXY"
-        android:src="@drawable/image_break_line" />
-
-    <TextView
-        android:id="@+id/view_title_person"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/break_line"
-        android:layout_marginLeft="12dip"
-        android:layout_marginTop="12dip"
-        android:text="@string/view_title_person"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/view_content_person"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_title_person"
-        android:layout_marginLeft="18dip"
-        android:layout_marginRight="12dip"
-        android:layout_marginTop="6dip"
-        android:text="@string/view_content_person"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/view_title_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_content_person"
-        android:layout_marginLeft="12dip"
-        android:layout_marginTop="12dip"
-        android:text="@string/view_title_activity"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/view_content_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_title_activity"
-        android:layout_marginLeft="18dip"
-        android:layout_marginRight="12dip"
-        android:layout_marginTop="6dip"
-        android:text="@string/view_content_activity"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <include
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_height="70dip"
+        android:layout_gravity="bottom|center"
+        android:layout_marginLeft="2dip"
+        android:layout_marginRight="2dip"
         layout="@layout/action_bar_bottom" >
     </include>
 
-</RelativeLayout>
+</FrameLayout>
