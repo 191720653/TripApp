@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    android:paddingTop="15dip"
+    android:paddingBottom="15dip"
+    android:background="@android:color/white" >
+    
+    <ImageButton
+        android:id="@+id/action_bar_btn_back"
+        android:onClick="onClick"
+        android:layout_width="40dip"
+        android:layout_height="20dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginStart="15dip"
+        android:src="@drawable/image_back"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/descr_image"
+        android:background="@color/transparent" />
+    
+    <TextView
+        android:id="@+id/action_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/main_yellow"
+        android:text="@string/register_userinfo_sign_user_info"
+        android:textSize="17sp" />
+    
+    <TextView
+        android:id="@+id/action_bar_register"
+        android:onClick="onClick"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dip"
+		android:layout_alignParentRight="true"
+        android:textColor="@color/main_yellow"
+        android:text="@string/register_userinfo_sign_up"
+        android:textSize="17sp" />
+    
+</RelativeLayout>

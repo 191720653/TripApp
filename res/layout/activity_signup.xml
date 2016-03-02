@@ -2,8 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/image_main_background"
     android:orientation="vertical" >
 
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        layout="@layout/action_bar_signup" >
+    </include>
+    
     <RelativeLayout
         android:id="@+id/rl_icon"
         android:layout_width="match_parent"

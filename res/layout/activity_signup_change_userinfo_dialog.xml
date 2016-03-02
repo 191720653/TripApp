@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@color/main_qing"
+        android:background="@color/main_orange"
         android:padding="16dp" >
 
         <TextView

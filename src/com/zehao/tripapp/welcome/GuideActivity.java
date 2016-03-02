@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.zehao.base.BaseActivity;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.login.LoginActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -93,7 +94,7 @@ public class GuideActivity extends BaseActivity {
 
 			// 跳转
 			Intent mIntent = new Intent();
-			mIntent.setClass(GuideActivity.this, MainActivity.class);
+			mIntent.setClass(GuideActivity.this, LoginActivity.class);
 			GuideActivity.this.startActivity(mIntent);
 			GuideActivity.this.finish();
 		}

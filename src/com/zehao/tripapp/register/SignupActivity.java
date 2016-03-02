@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -62,20 +61,20 @@ public class SignupActivity extends BaseActivity implements OnClickListener {
 	private String picturePath;
 	private UserInfo userInfo = new UserInfo();
 	
-	private Button back,register;
+//	private Button back,register;
 	
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		addActionBar();
-		((TextView)findViewById(R.id.action_bar_title)).setText("用户信息");
+		// addActionBar();
+		// ((TextView)findViewById(R.id.action_bar_title)).setText("用户信息");
 		baseSetContentView(savedInstanceState, R.layout.activity_signup);
-		back = (Button) findViewById(R.id.action_bar_btn_first);
-		back.setText("返回");
-		register = (Button) findViewById(R.id.action_bar_btn_second);
-		register.setText(this.getString(R.string.register_userinfo_sign_up));
-		back.setOnClickListener(this);
-		register.setOnClickListener(this);
+//		back = (Button) findViewById(R.id.action_bar_btn_first);
+//		back.setText("返回");
+//		register = (Button) findViewById(R.id.action_bar_btn_second);
+//		register.setText(this.getString(R.string.register_userinfo_sign_up));
+//		back.setOnClickListener(this);
+//		register.setOnClickListener(this);
 
 		tvUserName = (TextView) findViewById(R.id.tv_user_name);
 		tvUserGender = (TextView) findViewById(R.id.tv_user_gender);
@@ -92,8 +91,12 @@ public class SignupActivity extends BaseActivity implements OnClickListener {
 		findViewById(R.id.rl_account).setOnClickListener(this);
 		findViewById(R.id.rl_password).setOnClickListener(this);
 		
-		setRegisterUserinfoatform(getIntent().getExtras().getString("platform"));
-		initData();		
+		Bundle bundle = getIntent().getExtras();
+		if(bundle!=null){
+			setRegisterUserinfoatform(bundle.getString("platform"));
+			initData();	
+		}
+			
 	}
 
 	public void setRegisterUserinfoatform(String platName) {
@@ -155,10 +158,10 @@ public class SignupActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.action_bar_btn_first:
+		case R.id.action_bar_btn_back:// 返回主界面
 			this.finish();
 			break;
-		case R.id.action_bar_btn_second:
+		case R.id.action_bar_register:// 调用注册方法
 			handler.sendEmptyMessage(MSG_SHOW_TOAST);
 			break;
 		case R.id.rl_icon:
