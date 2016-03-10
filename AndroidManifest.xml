@@ -87,7 +87,7 @@
         <activity android:name="com.zehao.tripapp.login.LoginActivity" />
         
         <!-- 注册-->
-        <activity android:name="com.zehao.tripapp.register.SignupActivity" />
+        <activity android:name="com.zehao.tripapp.register.SigninActivity" />
         <activity android:name="com.zehao.tripapp.register.IconActivity" />
         
         <!-- 景区-->

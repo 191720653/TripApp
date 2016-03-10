@@ -8,35 +8,27 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.tencent.qzone.TencentSSOClientNotInstalledException;
 
 import com.zehao.base.BaseActivity;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
-import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
-import com.zehao.tripapp.area.AreaActivity;
-import com.zehao.tripapp.register.SignupActivity;
+import com.zehao.tripapp.register.SigninActivity;
 import com.zehao.util.Tool;
-import com.zehao.view.CircleImageButton;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * 登录
@@ -51,9 +43,6 @@ public class LoginActivity extends BaseActivity implements
 	private ProgressDialog progressDialog;
 //	private Button signInButton,signButton;
 //	private CircleImageButton qq,sina,wechat;
-	
-	public static String ACTION_SHOW_DIALOG = "ACTION_SHOW_DIALOG";
-	public static String ACTION_DISMISS_DIALOG = "ACTION_DISMISS_DIALOG";
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -79,7 +68,7 @@ public class LoginActivity extends BaseActivity implements
 		}
 		case R.id.btn_register: {
 			// 跳往注册界面
-			goActivity(SignupActivity.class);
+			goActivity(SigninActivity.class);
 			break;
 		}
 		case R.id.qq_button: {
@@ -105,9 +94,9 @@ public class LoginActivity extends BaseActivity implements
 	public void qq_login(){
 		ShareSDK.initSDK(this);
 		final Platform qq = ShareSDK.getPlatform(QZone.NAME);
-//		if(weibo.isValid()){
-//			weibo.removeAccount();
-//		}
+		if(qq.isValid()){
+			qq.removeAccount();
+		}
 		qq.setPlatformActionListener(new PlatformActionListener() {
 			@Override
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
@@ -127,6 +116,10 @@ public class LoginActivity extends BaseActivity implements
 //				Log.e("login......", arg0.getDb().exportData() + " -------- " + arg2.toString());
 				
 				// 获取权限之后，判断用户是否已经注册
+				// 跳转注册Activity，引导用户注册
+				Bundle bundle = new Bundle();
+				bundle.putString("platform", arg0.getName());
+				goActivity(SigninActivity.class, bundle);
 				// 若已经注册直接登录，若没注册则注册后登录
 				login();
 			}
@@ -136,17 +129,17 @@ public class LoginActivity extends BaseActivity implements
 				shortToastHandler("onCancel");
 			}
 		});
-		//关闭SSO授权，即关闭客户端授权，通过网页授权
-		qq.SSOSetting(true);
+		// 关闭SSO授权，即关闭客户端授权，通过网页授权
+		// qq.SSOSetting(true);
 		qq.showUser(null);
 	}
 	
 	public void sina_login(){
 		ShareSDK.initSDK(this);
 		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-//		if(weibo.isValid()){
-//			weibo.removeAccount();
-//		}
+		if(weibo.isValid()){
+			weibo.removeAccount();
+		}
 		weibo.setPlatformActionListener(new PlatformActionListener() {
 			@Override
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
@@ -162,6 +155,13 @@ public class LoginActivity extends BaseActivity implements
 //				String openId = weibo.getDb().getUserId(); // 获取用户在此平台的ID
 //				String nickname = arg0.getDb().get("nickname"); // 获取用户昵称
 				Log.e("login......", arg0.getDb().exportData() + " -------- " + arg2.toString());
+				// 获取权限之后，判断用户是否已经注册
+				// 跳转注册Activity，引导用户注册
+				Bundle bundle = new Bundle();
+				bundle.putString("platform", arg0.getName());
+				goActivity(SigninActivity.class, bundle);
+				// 若已经注册直接登录，若没注册则注册后登录
+				// login();
 			}
 			@Override
 			public void onCancel(Platform arg0, int arg1) {
@@ -169,7 +169,7 @@ public class LoginActivity extends BaseActivity implements
 				shortToastHandler("onCancel");
 			}
 		});
-		//关闭SSO授权，即关闭客户端授权，通过网页授权
+		// 关闭SSO授权，即关闭客户端授权，通过网页授权
 		weibo.SSOSetting(true);
 		weibo.showUser(null);
 	}

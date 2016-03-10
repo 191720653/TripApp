@@ -16,7 +16,7 @@ public class HttpCLient {
 	private static AsyncHttpClient client = new AsyncHttpClient();
 	static {
 		//设置网络超时时间
-		client.setTimeout(2000);
+		client.setTimeout(5000);
 	}
 
 	public static void get(String url, RequestParams params,

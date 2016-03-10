@@ -62,7 +62,7 @@
         AppKey="3125971966"
         AppSecret="e7b0e63746dc00befa72dc6cc08b9752"
         RedirectUrl="http://www.sharesdk.cn"
-        ShareByAppClient="false"
+        ShareByAppClient="true"
         Enable="true" />
 
     <TencentWeibo
@@ -79,7 +79,7 @@
         SortId="3"
         AppId="1105101442"
         AppKey="G3rPDkc1woHGfpcf"
-        ShareByAppClient="false"
+        ShareByAppClient="true"
         Enable="true" />
     
     <!-- 
@@ -99,7 +99,7 @@
         SortId="4"
         AppId="wx5e244a3519068d66"
         AppSecret="3e34283caf265463712d89e5934dac53"
-        BypassApproval="false"
+        BypassApproval="true"
         Enable="true" />
     
     <WechatMoments

@@ -22,7 +22,7 @@ import com.zehao.data.bean.UserInfo;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
-import com.zehao.tripapp.register.SignupActivity;
+import com.zehao.tripapp.register.SigninActivity;
 import com.zehao.view.CircleImageButton;
 
 import android.app.ProgressDialog;
@@ -304,7 +304,7 @@ public class Copy_2_of_LoginActivity extends BaseActivity implements
 						// 跳转注册Activity，引导用户注册
 						Bundle bundle = new Bundle();
 						bundle.putString("platform", platform);
-						goActivity(SignupActivity.class, bundle);
+						goActivity(SigninActivity.class, bundle);
 					}
 				}
 				@Override

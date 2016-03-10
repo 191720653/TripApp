@@ -37,6 +37,7 @@
     <TextView
         android:id="@+id/action_bar_advice"
         android:onClick="onClick"
+        android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
