@@ -63,6 +63,7 @@ public class SplashActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		switch (msg.what) {
 		case SWITCH_MAINACTIVITY:
+			// 在启动页读取本地信息，若有token则跳过登录到主界面，否则先登录（游客用不了，必须注册）
 			Intent mIntent = new Intent();
 			mIntent.setClass(SplashActivity.this, MainActivity.class);
 			SplashActivity.this.startActivity(mIntent);

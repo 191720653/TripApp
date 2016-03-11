@@ -29,7 +29,7 @@
             android:gravity="center"
             android:hint="@string/login_account_hint"
             android:inputType="phone"
-            android:maxLength="11"
+            android:maxLength="12"
             android:singleLine="true" />
 
         <EditText
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:hint="@string/login_pin_hint"
             android:inputType="textPassword"
-            android:maxLength="16"
+            android:maxLength="12"
             android:scrollHorizontally="true"
             android:singleLine="true" />
 

@@ -5,11 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.http.Header;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -157,9 +159,11 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 			users.setNickName(platform.getDb().getUserName());
 			users.setTypeId(platform.getDb().getUserId());
 			users.setType(pname);
-			String acount = System.currentTimeMillis() + "";
-			users.setAccount(acount);
-			users.setPassword(acount);
+			StringBuffer temp = new StringBuffer().append(System.currentTimeMillis());
+			int index = new Random().nextInt(10) + 1;
+			String account = temp.toString().substring(0, index-1) + temp.toString().substring(index);
+			users.setAccount(account);
+			users.setPassword(account);
 		}
 		
 		tvUserName.setText(users.getNickName());
@@ -464,8 +468,6 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
 		
 		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
-//		return compressBmpFromBmp(bitmap);//原来的方法调用了这个方法企图进行二次压缩
-									//其实是无效的,大家尽管尝试
 		return bitmap;
 	}
 
@@ -544,10 +546,20 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 						System.out.println("服务器返回数据：" + json);
 						String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
 						if(CONSTANT.CODE_168.equals(errorCode)){
-							Users user = new Gson().fromJson(json, Users.class);
+							JsonObject info = json.get(CONSTANT.USER_INFO).getAsJsonObject();
+							info.addProperty("createDate", info.get("createDates").getAsString());
+							Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+							Users user = gson.fromJson(info, Users.class);
 							System.out.println("返回结果转Uers：" + user.toString());
-							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, json.toString());
+							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, info.toString());
+							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
+							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
+							shortToastHandler("注册成功！");
 							// 注册成功，跳到登录界面
+							Intent intent = new Intent();
+							intent.putExtra(CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
+							intent.putExtra(CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
+							setResult(RESULT_OK, intent);
 							finish();
 						}else if(CONSTANT.CODE_176.equals(errorCode)){
 							shortToastHandler(CONSTANT.CODE_176_TEXT);

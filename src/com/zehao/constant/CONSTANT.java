@@ -5,7 +5,7 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.25.156.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.22.249.1:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 结果KEY
@@ -110,6 +110,18 @@ public class CONSTANT {
 	 * 本地用户所有信息 key：info_data_users
 	 */
 	public static final String INFO_DATA_USERS = "info_data_users";
+	/**
+	 * 本地用户账号信息 key：info_data_account
+	 */
+	public static final String INFO_DATA_ACCOUNT = "info_data_account";
+	/**
+	 * 本地用户密码信息 key：info_data_password
+	 */
+	public static final String INFO_DATA_PASSWORD = "info_data_password";
+	/**
+	 * 本地用户token信息 key：info_data_token
+	 */
+	public static final String INFO_DATA_TOKEN = "info_data_token";
 	/**
 	 * 处理其它异常 value：other_error
 	 */
@@ -265,7 +277,7 @@ public class CONSTANT {
 	/**
 	 * 用户登录账号密码错误 value：173 TEXT
 	 */
-	public static final String CODE_173_TEXT = "用户登录账号密码错误！";
+	public static final String CODE_173_TEXT = "用户登录账号或密码错误！";
 	/**
 	 * 用户请求的键值不对 value：174
 	 */

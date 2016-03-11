@@ -2,6 +2,9 @@ package com.zehao.tripapp.login;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.http.Header;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -9,21 +12,28 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.data.bean.Users;
+import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.register.SigninActivity;
-import com.zehao.util.Tool;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,18 +41,19 @@ import android.view.Window;
 import android.widget.EditText;
 
 /**
- * 登录
+ * 登录：
+ * 1、用户点击我的按钮跳转过来，读取本地信息，若有则显示账号密码，用户点击登陆，调用登陆方法
+ * 2、用户点击注册按钮，注册回来后，直接在forresult里调用登录方法
+ * 3、用户点击第三方登录按钮，授权后发送Id检查用户是否注册，若是则写入本地后直接跳转到主界面，否则跳转到注册界面，注册回来后，直接在forresult里调用登录方法
  * @author zehao
  *
  */
 public class LoginActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>>, OnClickListener {
 
-	private String account,password;
+	private String account,password,platform;
 	private EditText accountEditText,passwordEditText;
 	private ProgressDialog progressDialog;
-//	private Button signInButton,signButton;
-//	private CircleImageButton qq,sina,wechat;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -54,7 +65,14 @@ public class LoginActivity extends BaseActivity implements
 		passwordEditText = (EditText) findViewById(R.id.et_password);
 		
 		// 读取本地用户信息并显示，用于用户注销后跳转此界面
-		// 在启动页读取本地信息，若有token则跳过登录到主界面
+		account = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_ACCOUNT);
+		password = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD);
+		System.out.println("----->本地数据：account=" + account + " password=" + password);
+		
+		accountEditText.setText(account);
+		passwordEditText.setText(password);
+		
+		// 在启动页读取本地信息，若有token则跳过登录到主界面，否则先登录（游客用不了，必须注册）
 	}
 
 	@Override
@@ -63,12 +81,14 @@ public class LoginActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.btn_login: {
 			// 点击登录，跳出进度对话框
+			account = accountEditText.getText().toString();
+			password = passwordEditText.getText().toString();
 			login();
 			break;
 		}
 		case R.id.btn_register: {
 			// 跳往注册界面
-			goActivity(SigninActivity.class);
+			goActivityForResult(SigninActivity.class, null, 0);
 			break;
 		}
 		case R.id.qq_button: {
@@ -106,22 +126,8 @@ public class LoginActivity extends BaseActivity implements
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
 				// TODO Auto-generated method stub
-				System.out.println("asdffghghj");
-//				shortToastHandler("onComplete");
-				String name = arg0.getDb().getUserName();
-				String accessToken = arg0.getDb().getToken(); // 获取授权token
-				String openId = arg0.getDb().getUserId(); // 获取用户在此平台的ID
-				String nickname = arg0.getDb().get("nickname"); // 获取用户昵称
-				Log.e("login......", accessToken + " -- " + openId +" -- " + nickname + " -- " + name +" -- "+ arg0.getDb().getUserIcon());
-//				Log.e("login......", arg0.getDb().exportData() + " -------- " + arg2.toString());
-				
-				// 获取权限之后，判断用户是否已经注册
-				// 跳转注册Activity，引导用户注册
-				Bundle bundle = new Bundle();
-				bundle.putString("platform", arg0.getName());
-				goActivity(SigninActivity.class, bundle);
-				// 若已经注册直接登录，若没注册则注册后登录
-				login();
+				platform = arg0.getName();
+				checkId(arg0.getDb().getUserId());
 			}
 			@Override
 			public void onCancel(Platform arg0, int arg1) {
@@ -149,19 +155,8 @@ public class LoginActivity extends BaseActivity implements
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
 				// TODO Auto-generated method stub
-				System.out.println("asdffghghj");
-//				shortToastHandler("onComplete");
-//				String accessToken = weibo.getDb().getToken(); // 获取授权token
-//				String openId = weibo.getDb().getUserId(); // 获取用户在此平台的ID
-//				String nickname = arg0.getDb().get("nickname"); // 获取用户昵称
-				Log.e("login......", arg0.getDb().exportData() + " -------- " + arg2.toString());
-				// 获取权限之后，判断用户是否已经注册
-				// 跳转注册Activity，引导用户注册
-				Bundle bundle = new Bundle();
-				bundle.putString("platform", arg0.getName());
-				goActivity(SigninActivity.class, bundle);
-				// 若已经注册直接登录，若没注册则注册后登录
-				// login();
+				platform = arg0.getName();
+				checkId(arg0.getDb().getUserId());
 			}
 			@Override
 			public void onCancel(Platform arg0, int arg1) {
@@ -189,12 +184,8 @@ public class LoginActivity extends BaseActivity implements
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
 				// TODO Auto-generated method stub
-				System.out.println("asdffghghj");
-//				shortToastHandler("onComplete");
-//				String accessToken = weibo.getDb().getToken(); // 获取授权token
-//				String openId = weibo.getDb().getUserId(); // 获取用户在此平台的ID
-//				String nickname = arg0.getDb().get("nickname"); // 获取用户昵称
-				Log.e("login......", arg0.getDb().exportData() + " -------- " + arg2.toString());
+				platform = arg0.getName();
+				checkId(arg0.getDb().getUserId());
 			}
 			@Override
 			public void onCancel(Platform arg0, int arg1) {
@@ -208,18 +199,55 @@ public class LoginActivity extends BaseActivity implements
 	}
 	
 	public void login(){
-		account = accountEditText.getText().toString();
-		password = passwordEditText.getText().toString();
-	
-		if (Tool.NVL(account).length() != 11 || Tool.NVL(password).length() < 6) {
-			shortToastHandler("请填写好用户名以及密码！");
+		if (!Pattern.matches("^[0-9a-zA-Z]{8,12}", account)
+				||!Pattern.matches("^[0-9a-zA-Z]{8,12}", password)) {
+			shortToastHandler("请填写8到12位的纯数字、字母或数字字母组合的账号、密码！");
 		} else {
-			progressDialog = ProgressDialog.show(this, "登录", "正在联网登录,请稍候......");
 			// 联网登录
-			progressDialog.dismiss();
-			// 登录成功，吧用户信息写到本地
-			// writeXML(name, key, value);
-			goActivity(MainActivity.class);
+			JsonObject json = new JsonObject();
+			json.addProperty(CONSTANT.ACCOUNT, account);
+			json.addProperty(CONSTANT.PASSWORD, password);
+			RequestParams params = new RequestParams();
+			params.put(CONSTANT.DATA, json.toString());
+			String url = "/AppLogin_loginAction.action";
+			System.out.println("App发送数据：" + json.toString());
+			handler.sendEmptyMessage(CONSTANT.ACTION_SHOW_DIALOG);
+			HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
+				@Override
+				public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+					// TODO Auto-generated method stub
+					JsonObject json = (JsonObject) new JsonParser().parse(new String(arg2));
+					System.out.println("服务器返回数据：" + json);
+					String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+					if(CONSTANT.CODE_168.equals(errorCode)){
+						JsonObject info = json.get(CONSTANT.USER_INFO).getAsJsonObject();
+						info.addProperty("createDate", info.get("createDates").getAsString());
+						Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+						Users user = gson.fromJson(info, Users.class);
+						System.out.println("返回结果转Uers：" + user.toString());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, info.toString());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_TOKEN, user.getToken());
+						// 登录成功，跳到主界面
+						goActivity(MainActivity.class);
+						// finish();
+					}else if(CONSTANT.CODE_173.equals(errorCode)){
+						shortToastHandler(CONSTANT.CODE_173_TEXT);
+					}else if(CONSTANT.CODE_177.equals(errorCode)){
+						shortToastHandler(CONSTANT.CODE_177_TEXT);
+					}else{
+						shortToastHandler(CONSTANT.OTHER_ERROR);
+					}
+					handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+				}
+				@Override
+				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+					// TODO Auto-generated method stub
+					shortToastHandler(CONSTANT.OTHER_ERROR);
+					handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+				}
+			});
 		}
 	}
 
@@ -267,6 +295,12 @@ public class LoginActivity extends BaseActivity implements
 	@Override
 	protected void handler(Message msg) { // 我们可以处理数据消息了
 		switch (msg.what) {
+		case CONSTANT.ACTION_SHOW_DIALOG: 
+			progressDialog = ProgressDialog.show(this, "登录", "正在联网,请稍候......");
+			break;
+		case CONSTANT.ACTION_DISMISS_DIALOG: 
+			progressDialog.dismiss();
+			break;
 		case 0:
 			break;
 		case -1:
@@ -279,7 +313,67 @@ public class LoginActivity extends BaseActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
+		if(resultCode==RESULT_OK){// 注册回来直接登录
+			account = data.getStringExtra(CONSTANT.INFO_DATA_ACCOUNT);
+			password = data.getStringExtra(CONSTANT.INFO_DATA_PASSWORD);
+			login();
+		}
+	}
+	/**
+	 * 第三方登录Id检查
+	 * @param typeId
+	 */
+	public void checkId(String typeId){
+		String url = "/AppSignIn_checkIdAction.action";
+		JsonObject json = new JsonObject();
+		json.addProperty(CONSTANT.USER_TYPE_ID, typeId);
+		RequestParams params = new RequestParams();
+		params.put(CONSTANT.DATA, json.toString());
+		handler.sendEmptyMessage(CONSTANT.ACTION_SHOW_DIALOG);
+		System.out.println("App发送数据：" + json.toString());
+		HttpCLient.post(url, params, new AsyncHttpResponseHandler(this.getMainLooper()) {
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				// TODO Auto-generated method stub
+				JsonObject json = (JsonObject) new JsonParser().parse(new String(arg2));
+				System.out.println("服务器返回数据：" + json);
+				String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+				if(CONSTANT.CODE_168.equals(errorCode)){
+					String commonCode = json.get(CONSTANT.COMMON_SIGN).getAsString();
+					// 第三方用户是否注册过
+					if(CONSTANT.COMMON_SIGN_HAS.equals(commonCode)){
+						JsonObject info = json.get(CONSTANT.USER_INFO).getAsJsonObject();
+						info.addProperty("createDate", info.get("createDates").getAsString());
+						Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+						Users user = gson.fromJson(info, Users.class);
+						System.out.println("返回结果转Uers：" + user.toString());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, info.toString());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
+						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_TOKEN, user.getToken());
+						// 登录成功，跳到主界面
+						shortToastHandler("登录成功！");
+						goActivity(MainActivity.class);
+						// finish();
+					}else{
+						// 跳往注册界面
+						shortToastHandler("您还没注册，请先注册！");
+						Bundle bundle = new Bundle();
+						bundle.putString("platform", platform);
+						goActivityForResult(SigninActivity.class, bundle, 0);
+					}
+				}else{
+					shortToastHandler(CONSTANT.OTHER_ERROR);
+				}
+				handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+			}
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				// TODO Auto-generated method stub
+				shortToastHandler(CONSTANT.OTHER_ERROR);
+				handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+			}
+		});
 	}
 
 	@Override
