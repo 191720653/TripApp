@@ -6,14 +6,26 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dip"
-        android:layout_centerInParent="true" >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/login_bottom_layout"
+         >
+        
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/login_title"
+        android:scaleType="fitXY"
+        android:src="@drawable/image_main_logo"
+        android:contentDescription="@string/descr_image" />
 
         <TextView
             android:id="@+id/login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_above="@+id/et_account"
             android:text="@string/login_title"
             android:textColor="@color/main_orange" />
 
@@ -21,10 +33,10 @@
             android:id="@+id/et_account"
             android:layout_width="fill_parent"
             android:layout_height="45dip"
-            android:layout_below="@+id/login_title"
             android:layout_marginLeft="45dip"
             android:layout_marginRight="45dip"
             android:layout_marginTop="10dip"
+            android:layout_centerInParent="true"
             android:background="@drawable/image_login_edittext"
             android:gravity="center"
             android:hint="@string/login_account_hint"
@@ -36,10 +48,10 @@
             android:id="@+id/et_password"
             android:layout_width="fill_parent"
             android:layout_height="45dip"
-            android:layout_below="@+id/et_account"
             android:layout_marginLeft="45dip"
             android:layout_marginRight="45dip"
             android:layout_marginTop="10dip"
+            android:layout_below="@+id/et_account"
             android:background="@drawable/image_login_edittext"
             android:gravity="center"
             android:hint="@string/login_pin_hint"
@@ -74,6 +86,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/login_bottom_layout"
         android:layout_width="fill_parent"
         android:layout_height="120dip"
         android:layout_alignParentBottom="true" >

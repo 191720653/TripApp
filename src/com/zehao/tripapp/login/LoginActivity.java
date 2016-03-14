@@ -335,6 +335,7 @@ public class LoginActivity extends BaseActivity implements
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 				// TODO Auto-generated method stub
+				handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
 				JsonObject json = (JsonObject) new JsonParser().parse(new String(arg2));
 				System.out.println("服务器返回数据：" + json);
 				String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
@@ -365,7 +366,6 @@ public class LoginActivity extends BaseActivity implements
 				}else{
 					shortToastHandler(CONSTANT.OTHER_ERROR);
 				}
-				handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
 			}
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {

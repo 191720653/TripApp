@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dip"
     android:padding="5dip" >
 
-    <ImageView
+    <com.zehao.view.RoundCornerImageView
         android:id="@+id/item_main_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="90dip"
-        android:maxHeight="90dip"
+        android:maxWidth="120dip"
+        android:maxHeight="120dip"
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
         android:id="@+id/item_main_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dip"
+        android:layout_marginLeft="3dip"
         android:layout_toRightOf="@id/item_main_image"
         android:text="@string/item_view_name"
         android:textStyle="bold"
@@ -29,9 +29,11 @@
     
     <ImageView
         android:id="@+id/item_like_image"
-        android:layout_width="12dip"
-        android:layout_height="12dip"
+        android:layout_width="14dip"
+        android:layout_height="14dip"
         android:layout_toLeftOf="@+id/item_like_num"
+        android:layout_marginRight="2dip"
+        android:layout_marginBottom="2dip"
         android:layout_alignBottom="@+id/item_main_title"
         android:contentDescription="@string/descr_image"
         android:src="@drawable/image_like_yellow" />
@@ -41,6 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/item_main_title"
+        android:layout_marginBottom="2dip"
+        android:layout_marginRight="6dip"
         android:layout_alignParentRight="true"
         android:text="@string/item_view_like"
         android:textSize="12sp" />
@@ -49,8 +53,8 @@
         android:id="@+id/item_main_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dip"
-        android:layout_marginTop="6dip"
+        android:layout_marginLeft="3dip"
+        android:layout_marginTop="3dip"
         android:layout_below="@+id/item_main_title"
         android:layout_toRightOf="@+id/item_main_image"
         android:text="@string/item_view_info"

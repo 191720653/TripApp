@@ -16,7 +16,6 @@ import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
-import com.zehao.tripapp.area.AreaActivity;
 import com.zehao.tripapp.detail.DetailActivity;
 
 import android.content.Intent;
@@ -125,7 +124,8 @@ public class PointActivity extends BaseActivity implements
 		}
 		case R.id.action_bar_btn_back:{
 			show("返回主界面");
-			goActivity(AreaActivity.class);
+			finish();
+			// goActivity(AreaActivity.class);
 			break;
 			}
 		case R.id.action_bar_btn_share:{

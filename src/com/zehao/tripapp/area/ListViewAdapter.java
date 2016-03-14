@@ -2,9 +2,16 @@ package com.zehao.tripapp.area;
 
 import java.util.List;
 import java.util.Map;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zehao.tripapp.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +19,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+@SuppressLint("ResourceAsColor")
 public class ListViewAdapter extends BaseAdapter {
 	private List<Map<String, Object>> listItems; // 信息集合
 	private LayoutInflater listContainer; // 视图容器
+	private DisplayImageOptions options;
 
 	public final class ListItemView { // 自定义控件集合
 		public ImageView image;
@@ -27,6 +36,16 @@ public class ListViewAdapter extends BaseAdapter {
 		listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
 		this.listItems = listItems;
 		System.out.println("创建视图容器并设置上下文");
+		options = new DisplayImageOptions.Builder()
+		.showImageForEmptyUri(R.drawable.ic_empty)
+		.showImageOnFail(R.drawable.ic_error)
+		.resetViewBeforeLoading(true)
+		.cacheOnDisk(true)
+		.cacheInMemory(true)
+		.imageScaleType(ImageScaleType.EXACTLY)
+		.bitmapConfig(Bitmap.Config.RGB_565)
+		.displayer(new FadeInBitmapDisplayer(50))
+		.build();
 	}
 
 	public int getCount() {
@@ -74,10 +93,10 @@ public class ListViewAdapter extends BaseAdapter {
 		System.out.println("设置文字和图片");
 
 		// 设置文字和图片
-		listItemView.image.setImageResource(Integer.parseInt(listItems.get(position).get("image").toString()));
+		ImageLoader.getInstance().displayImage(listItems.get(position).get("image").toString(), listItemView.image, options);
 		listItemView.title.setText((String) listItems.get(position).get("title"));
 		listItemView.info.setText((String) listItems.get(position).get("info"));
-		listItemView.likeNum.setText((String) listItems.get(position).get("likeNum"));
+		listItemView.likeNum.setText(listItems.get(position).get("likeNum").toString());
 		
 		return convertView;
 	}

@@ -2,16 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     tools:ignore="MergeRootFrame" >
 
-    <include
+    <!-- <include
         android:layout_width="wrap_content"
-        android:layout_height="70dip"
+        android:layout_height="fill_parent"
         android:layout_gravity="bottom|center"
         android:layout_marginLeft="2dip"
         android:layout_marginRight="2dip"
         layout="@layout/action_bar_bottom" >
-    </include>
+    </include> -->
 
 </FrameLayout>

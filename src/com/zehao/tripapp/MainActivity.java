@@ -3,6 +3,7 @@ package com.zehao.tripapp;
 import java.util.List;
 
 import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
@@ -53,22 +54,30 @@ public class MainActivity extends BaseActivity implements
 		}
 		case R.id.main_liangdu: {
 			// 跳往介绍南区的良都
-			goActivity(AreaActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putInt(CONSTANT.MAIN_VIEW_ID, 6);
+			goActivity(AreaActivity.class, bundle);
 			break;
 		}
 		case R.id.main_beixi: {
 			// 跳往介绍南区的北溪
-			goActivity(AreaActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putInt(CONSTANT.MAIN_VIEW_ID, 9);
+			goActivity(AreaActivity.class, bundle);
 			break;
 		}
 		case R.id.main_chengnan: {
 			// 跳往介绍南区的城南
-			goActivity(AreaActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putInt(CONSTANT.MAIN_VIEW_ID, 8);
+			goActivity(AreaActivity.class, bundle);
 			break;
 		}
 		case R.id.main_maling: {
 			// 跳往介绍南区的马岭
-			goActivity(AreaActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putInt(CONSTANT.MAIN_VIEW_ID, 7);
+			goActivity(AreaActivity.class, bundle);
 			break;
 		}
 		default:

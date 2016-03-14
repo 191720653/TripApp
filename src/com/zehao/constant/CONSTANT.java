@@ -5,7 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.22.249.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.28.37.1:8080/TripServer/ZZHPAPP";
+	
+	/**
+	 * 服务器根基本地址
+	 */
+	public static final String BASE_ROOT_URL = "http://172.28.37.1:8080/TripServer";
 	
 	/**
 	 * 结果KEY
@@ -159,6 +164,35 @@ public class CONSTANT {
 	 * 没有的标志 value: common_sign_not
 	 */
 	public static final String COMMON_SIGN_NOT = "common_sign_not";
+	/**
+	 * 获取数据 key: get_data
+	 */
+	public static final String APP_GET_DATA = "get_data";
+	
+	/****************************************************************
+	    *********************** 四大景区  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 获取四大景区列表 value：main_view
+	 */
+	public static final String MAIN_VIEW = "main_view";
+	/**
+	 * 获取四大景区Id key：main_view_id
+	 */
+	public static final String MAIN_VIEW_ID = "main_view_id";
+	/**
+	 * 获取四大景区信息 key：main_view_info
+	 */
+	public static final String MAIN_VIEW_INFO = "main_view_info";
+	/**
+	 * 获取四大景区图片列表 key：main_view_picture
+	 */
+	public static final String MAIN_VIEW_PICTURE = "main_view_picture";
+	/**
+	 * 获取四大景区景点列表 key：main_view_childview
+	 */
+	public static final String MAIN_VIEW_CHILDVIEW = "main_view_childview";
 	
 	
 	/****************************************************************
@@ -310,5 +344,13 @@ public class CONSTANT {
 	 * 用户账号已被冻结 value：177 TEXT
 	 */
 	public static final String CODE_177_TEXT = "账号已被冻结！";
+	/**
+	 * 获取数据的口令不对 value：178
+	 */
+	public static final String CODE_178 = "178";
+	/**
+	 * 获取数据的口令不对 value：178 TEXT
+	 */
+	public static final String CODE_178_TEXT = "获取数据的口令不对！";
 
 }
