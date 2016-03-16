@@ -27,10 +27,9 @@
 	<color name="main_qing">#2ae0c8</color>
 	<color name="main_gray">#D1D1D1</color>
 	
-    <color name="white">#FFFFFFFF</color>
     <color name="line_gray">#D1D1D1</color>
     <color name="black_gray">#3D3D3D</color>
-    <color name="slide_img_black">#33000000</color>
+    <color name="slide_img_black">#55000000</color>
 	
 	
     <color name="button_before_press_color">#3c98f2</color>
@@ -65,7 +64,6 @@
     <color name="result_text">#ffffffff</color>
     <color name="result_view">#b0000000</color>
     <color name="status_text">#ffffffff</color>
-    <color name="transparent">#00000000</color>
     <color name="viewfinder_laser">#ffcc0000</color>
     <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#00000000</color>

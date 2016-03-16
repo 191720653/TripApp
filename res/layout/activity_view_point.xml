@@ -11,18 +11,17 @@
         layout="@layout/action_bar_advice" >
     </include>
     
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
-        android:layout_below="@+id/action_bar_advice"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp" />
-
     <com.daimajia.slider.library.Indicators.PagerIndicator
         android:id="@+id/custom_indicator"
-        android:layout_below="@+id/action_bar_advice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center" />
+    
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/action_bar_advice" />
 
     <TextView
         android:id="@+id/view_point_name"
@@ -61,12 +60,10 @@
     <GridView
         android:id="@+id/view_point_gridview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingLeft="6dip"
         android:paddingRight="6dip"
         android:layout_below="@+id/break_line"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
         android:numColumns="2"
         android:stretchMode="columnWidth" >
     </GridView>

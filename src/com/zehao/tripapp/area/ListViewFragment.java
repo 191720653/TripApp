@@ -17,11 +17,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
 import com.achep.header2actionbar.HeaderFragment;
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -34,27 +36,27 @@ import com.zehao.data.bean.Views;
 import com.zehao.data.bean.Village;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.detail.DetailActivity;
 import com.zehao.tripapp.point.PointActivity;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import org.apache.http.Header;
 
 @SuppressLint("InflateParams")
-public class ListViewFragment extends HeaderFragment implements
-		OnSliderClickListener {
+public class ListViewFragment extends HeaderFragment implements OnSliderClickListener {
 
 	private ListView mListView;
 	private TextView viewName, viewInfo;
 
-	private FrameLayout mContentOverlay;
+	private ProgressBar progressBar;
 
 	private View mainView;
-	
-	private WeakReference<ListViewFragment> weakFragment = null;
-	private ListViewFragment audioFragment = null;
+	private Village village = null;
+	public Integer getVillageId(){
+		return village==null?0:village.getVillageId();
+	}
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -103,7 +105,7 @@ public class ListViewFragment extends HeaderFragment implements
 											.getAsJsonArray(),
 									new TypeToken<List<String>>() {
 									}.getType());
-							Village village = gson.fromJson(
+							village = gson.fromJson(
 									json.get(CONSTANT.MAIN_VIEW_INFO)
 											.getAsJsonObject(), Village.class);
 							List<Views> views = gson.fromJson(
@@ -111,7 +113,7 @@ public class ListViewFragment extends HeaderFragment implements
 											.getAsJsonArray(),
 									new TypeToken<List<Views>>() {
 									}.getType());
-							setListViewTitles(urls, views, village);
+							setListViewTitles(urls, views);
 						} else {
 							Toast.makeText(getActivity(), CONSTANT.OTHER_ERROR,
 									Toast.LENGTH_SHORT).show();
@@ -135,7 +137,7 @@ public class ListViewFragment extends HeaderFragment implements
 		super.onDetach();
 	}
 
-	private SliderLayout mDemoSlider;
+	// private SliderLayout mDemoSlider;
 
 	@Override
 	public View onCreateHeaderView(LayoutInflater inflater, ViewGroup container) {
@@ -143,11 +145,11 @@ public class ListViewFragment extends HeaderFragment implements
 				container, false);
 		viewName = (TextView) mainView.findViewById(R.id.viewa_viewarea_name);
 		viewInfo = (TextView) mainView.findViewById(R.id.viewa_viewarea_info);
-		mDemoSlider = (SliderLayout) mainView.findViewById(R.id.slider);
-		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
-		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-		mDemoSlider.setCustomAnimation(null);
-		mDemoSlider.setDuration(4000);
+		sliderLayout =  (SliderLayout) mainView.findViewById(R.id.slider);
+		sliderLayout.setPresetTransformer(SliderLayout.Transformer.Stack);
+		sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+		sliderLayout.setCustomAnimation(new DescriptionAnimation());
+		sliderLayout.setDuration(4000);
 		System.out.println("onCreateHeaderView");
 		return mainView;
 	}
@@ -156,93 +158,91 @@ public class ListViewFragment extends HeaderFragment implements
 	public View onCreateContentView(LayoutInflater inflater, ViewGroup container) {
 		mListView = (ListView) inflater.inflate(R.layout.fragment_listview,
 				container, false);
-		System.out
-				.println("onCreateContentView mListView = (ListView) inflater.inflate(R)");
+		System.out.println("onCreateContentView mListView = (ListView) inflater.inflate(R)");
+		// mListView.setVisibility(View.GONE);
 		return mListView;
 	}
 
 	@Override
 	public View onCreateContentOverlayView(LayoutInflater inflater,
 			ViewGroup container) {
-		ProgressBar progressBar = new ProgressBar(getActivity());
-		mContentOverlay = new FrameLayout(getActivity());
-		mContentOverlay.addView(progressBar, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+		progressBar = new ProgressBar(getActivity());
+		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+		layoutParams.setMargins(0, 120, 0, 0);
+		getActivity().addContentView(progressBar, layoutParams);
 		System.out.println("onCreateContentOverlayView ProgressBar progressBar = new ProgressBar()");
-		mContentOverlay.setVisibility(View.VISIBLE);
-		return mContentOverlay;
+		return new View(getActivity());
 	}
 
 	private ListViewAdapter viewListAdapter;
-	private List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-
-	private void setListViewTitles(List<String> sList, List<Views> vList,
-			Village village) {
+	private SliderLayout sliderLayout;
+	
+	private void setListViewTitles(List<String> sList, final List<Views> vList) {
 
 		viewName.setText(village.getVillageName());
 		viewInfo.setText(village.getVillageInfo());
 
 		System.out.println("setListViewTitles");
-
 		HashMap<String, String> url_maps = new HashMap<String, String>();
 		for (int i = 0; i < sList.size(); i++) {
 			url_maps.put("" + i, CONSTANT.BASE_ROOT_URL
 					+ sList.get(i).replaceFirst(".", ""));
 		}
 		for (String name : url_maps.keySet()) {
-			TextSliderView textSliderView = new TextSliderView(
-					mainView.getContext());
+			TextSliderView textSliderView = new TextSliderView(getActivity());
 			// initialize a SliderLayout
 			textSliderView.description("").image(url_maps.get(name))
 					.setScaleType(BaseSliderView.ScaleType.Fit)
-					.setOnSliderClickListener(ListViewFragment.this);
+					.setOnSliderClickListener(this);
 			// add your extra information
 			textSliderView.getBundle().putString("extra", name);
-			mDemoSlider.addSlider(textSliderView);
+			sliderLayout.addSlider(textSliderView);
 		}
 		System.out.println(url_maps);
 
-		Map<String, Object> map = null;
-		for (int i = 0; i < vList.size(); i++) {
-			map = new HashMap<String, Object>();
-			map.put("image", CONSTANT.BASE_ROOT_URL
-					+ vList.get(i).getViewLogo().replaceFirst(".", ""));
-			map.put("title", vList.get(i).getViewName());
-			map.put("likeNum", vList.get(i).getLikeNum() + "人赞过");
-			map.put("info", "    " + vList.get(i).getViewInfo());
-			listItems.add(map);
-			System.out.println(map.toString());
-		}
-
-		viewListAdapter = new ListViewAdapter(getActivity(), listItems);
-
-		mListView.setVisibility(View.VISIBLE);
-		setListViewAdapter(mListView, viewListAdapter);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
+		new Handler().postDelayed(new Runnable() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void run() {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(), PointActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-		weakFragment = new WeakReference<ListViewFragment>(this);
-		audioFragment = weakFragment.get();
-		audioFragment.mContentOverlay.setVisibility(View.GONE);
-		
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.action_bar_bottom, null, true);
-		getActivity().addContentView(relativeLayout, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.BOTTOM));
+				viewListAdapter = new ListViewAdapter(getActivity(), vList);
 
+				// mListView.setVisibility(View.VISIBLE);
+				setListViewAdapter(mListView, viewListAdapter);
+				mListView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+							long arg3) {
+						// TODO Auto-generated method stub
+						Views view = (Views) viewListAdapter.getItem(arg2-1);
+						if(CONSTANT.VIEW_SIGN_Y.equals(view.getChildSign())){
+							Intent intent = new Intent(getActivity(), PointActivity.class);
+							intent.putExtra(CONSTANT.VIEW_INFO, view);
+							startActivity(intent);
+						}else{
+							Intent intent = new Intent(getActivity(), DetailActivity.class);
+							Bundle bundle = new Bundle();
+							bundle.putSerializable(CONSTANT.VIEW_INFO, view);
+							intent.putExtras(bundle);
+							startActivity(intent);
+						}
+					}
+				});
+				
+				progressBar.setVisibility(View.GONE);
+				
+				LayoutInflater inflater = getActivity().getLayoutInflater();
+				RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.action_bar_bottom, null, true);
+				getActivity().addContentView(relativeLayout, new FrameLayout.LayoutParams(
+						ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.BOTTOM));
+			}
+		}, 1500);
+		
 	}
 
 	@Override
 	public void onSliderClick(BaseSliderView slider) {
 		// TODO Auto-generated method stub
-		System.out.println(slider.getBundle().get("extra") + "");
+		Toast.makeText(getActivity(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
 	}
+
 }

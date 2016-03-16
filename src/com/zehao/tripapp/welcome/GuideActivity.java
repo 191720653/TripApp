@@ -1,12 +1,10 @@
 package com.zehao.tripapp.welcome;
 
 import java.util.ArrayList;
-
 import com.zehao.base.BaseActivity;
-import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.login.LoginActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -22,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 
+@SuppressLint("InflateParams")
 public class GuideActivity extends BaseActivity {
 	private ViewPager viewPager;
 
@@ -90,7 +89,7 @@ public class GuideActivity extends BaseActivity {
 	private Button.OnClickListener Button_OnClickListener = new Button.OnClickListener() {
 		public void onClick(View v) {
 			// 设置已经引导
-			writeXML(SHAREDPREFERENCES_NAME, KEY_GUIDE_ACTIVITY, "true");// "false"
+			writeXML(SHAREDPREFERENCES_NAME, KEY_GUIDE_ACTIVITY, "false");// "true"
 
 			// 跳转
 			Intent mIntent = new Intent();

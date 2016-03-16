@@ -2,12 +2,20 @@ package com.zehao.tripapp.area;
 
 import java.util.List;
 
+import org.apache.http.Header;
+
 import com.achep.header2actionbar.FadingActionBarHelper;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 
@@ -35,6 +43,7 @@ public class AreaActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>>, OnClickListener {
 
 	private FadingActionBarHelper mFadingActionBarHelper;
+	private ListViewFragment fragment;
 
 	public FadingActionBarHelper getFadingActionBarHelper() {
 		return mFadingActionBarHelper;
@@ -49,8 +58,9 @@ public class AreaActivity extends BaseActivity implements
 				getResources().getDrawable(R.drawable.actionbar_bg));
 
 		if (savedInstanceState == null) {
+			fragment = new ListViewFragment();
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new ListViewFragment()).commit();
+					.add(R.id.container, fragment).commit();
 		}
 
 	}
@@ -60,7 +70,18 @@ public class AreaActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.action_bar_btn_like: {
-			show("中山市南区点赞");
+			// show("中山市南区点赞");
+			String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_LIKE + "village" + fragment.getVillageId());
+			if(temp==null){
+				like();
+			}else{
+				Long sign = Long.parseLong(temp);
+				if((System.currentTimeMillis()-sign)>24*60*60*1000){
+					like();
+				}else{
+					shortToastHandler("亲，你今天已经点过赞了哦！");
+				}
+			}
 			break;
 		}
 		case R.id.action_bar_btn_back: {
@@ -169,6 +190,43 @@ public class AreaActivity extends BaseActivity implements
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			actionBar.setCustomView(v, layout);
 		}
+	}
+	
+	public void like(){
+		String url = "/AppLike_addLikeAction.action";
+		JsonObject json = new JsonObject();
+		json.addProperty(CONSTANT.APP_GET_DATA, CONSTANT.LIKE_ADD);
+		json.addProperty(CONSTANT.LIKE_ID, fragment.getVillageId());
+		json.addProperty(CONSTANT.LIKE_TYPE, CONSTANT.LIKE_TYPE_VILLAGE);
+		json.addProperty(CONSTANT.LIKE_SIGN, System.currentTimeMillis());
+		
+		RequestParams params = new RequestParams();
+		params.put(CONSTANT.DATA, json.toString());
+		
+		System.out.println("App发送数据：" + json.toString());
+		HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				// TODO Auto-generated method stub
+				JsonObject json = (JsonObject) new JsonParser()
+				.parse(new String(arg2));
+				System.out.println("服务器返回数据：" + json);
+				String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+				if (CONSTANT.CODE_168.equals(errorCode)) {
+					String likeNum = json.get(CONSTANT.LIKE_NUM).getAsString();
+					Long sign = json.get(CONSTANT.LIKE_SIGN).getAsLong();
+					writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_LIKE + "village" + fragment.getVillageId(), sign+CONSTANT.NULL_STRING);
+					shortToastHandler("点赞成功，当前点赞数为： " + likeNum);
+				} else {
+					shortToastHandler(CONSTANT.OTHER_ERROR);
+				}
+			}
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				// TODO Auto-generated method stub
+				shortToastHandler(CONSTANT.OTHER_ERROR);
+			}
+		});
 	}
 
 }

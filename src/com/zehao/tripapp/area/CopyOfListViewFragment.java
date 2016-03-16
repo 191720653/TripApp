@@ -22,7 +22,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -106,7 +105,7 @@ public class CopyOfListViewFragment extends HeaderFragment implements OnSliderCl
 			System.out.println(map.toString());
 		}
 
-		viewListAdapter = new ListViewAdapter(activity, listItems);
+		viewListAdapter = new ListViewAdapter(activity, null);
 		
     }
 
@@ -140,7 +139,7 @@ public class CopyOfListViewFragment extends HeaderFragment implements OnSliderCl
 						System.out.println("服务器返回数据：" + json);
 						String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
 						if(CONSTANT.CODE_168.equals(errorCode)){
-							JsonArray url = json.get(CONSTANT.MAIN_VIEW_PICTURE).getAsJsonArray();
+							//JsonArray url = json.get(CONSTANT.MAIN_VIEW_PICTURE).getAsJsonArray();
 							// list
 						}else{
 							Toast.makeText(getActivity(), CONSTANT.OTHER_ERROR, Toast.LENGTH_SHORT).show();

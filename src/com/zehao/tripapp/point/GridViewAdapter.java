@@ -1,10 +1,18 @@
 package com.zehao.tripapp.point;
 
 import java.util.List;
-import java.util.Map;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.Views;
 import com.zehao.tripapp.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GridViewAdapter extends BaseAdapter {
-	private List<Map<String, Object>> listItems; // 信息集合
+	private List<Views> listItems; // 信息集合
 	private LayoutInflater listContainer; // 视图容器
+	private DisplayImageOptions options;
 
 	public final class GridItemView { // 自定义控件集合
 		public ImageView image;
@@ -23,9 +32,19 @@ public class GridViewAdapter extends BaseAdapter {
 		public TextView likeNum;
 	}
 
-	public GridViewAdapter(Context context, List<Map<String, Object>> listItems) {
+	public GridViewAdapter(Context context, List<Views> listItems) {
 		listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
 		this.listItems = listItems;
+		options = new DisplayImageOptions.Builder()
+		.showImageForEmptyUri(R.drawable.ic_empty)
+		.showImageOnFail(R.drawable.ic_error)
+		.resetViewBeforeLoading(true)
+		.cacheOnDisk(true)
+		.cacheInMemory(true)
+		.imageScaleType(ImageScaleType.EXACTLY)
+		.bitmapConfig(Bitmap.Config.RGB_565)
+		.displayer(new FadeInBitmapDisplayer(50))
+		.build();
 	}
 
 	public int getCount() {
@@ -35,7 +54,7 @@ public class GridViewAdapter extends BaseAdapter {
 
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return listItems.get(arg0);
 	}
 
 	public long getItemId(int arg0) {
@@ -70,9 +89,10 @@ public class GridViewAdapter extends BaseAdapter {
 		}
 
 		// 设置文字和图片
-		listItemView.image.setImageResource(Integer.parseInt(listItems.get(position).get("image").toString()));
-		listItemView.title.setText((String) listItems.get(position).get("title"));
-		listItemView.likeNum.setText((String) listItems.get(position).get("likeNum"));
+		ImageLoader.getInstance().displayImage(CONSTANT.BASE_ROOT_URL + listItems.get(position).getViewLogo().replaceFirst(".", ""), listItemView.image, options);
+		// listItemView.image.setImageResource(Integer.parseInt(listItems.get(position).get("image").toString()));
+		listItemView.title.setText((String) listItems.get(position).getViewName());
+		listItemView.likeNum.setText(listItems.get(position).getLikeNum() + "");
 		
 		return convertView;
 	}

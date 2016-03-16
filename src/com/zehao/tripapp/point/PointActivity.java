@@ -1,31 +1,47 @@
 package com.zehao.tripapp.point;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.http.Header;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.data.bean.Views;
+import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.detail.DetailActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -40,16 +56,17 @@ import android.widget.GridView;
  */
 public class PointActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>>, OnClickListener, OnSliderClickListener {
-	
+
 	private SliderLayout mDemoSlider;
 	
 	private GridView gridView;
 	private GridViewAdapter gridViewAdapter;
-	private List<Map<String, Object>> listItems = new ArrayList<Map<String,Object>>();
-	private String[][] array = {{R.drawable.image_beixi + "", "|良都1", "1681人赞过"},
-								{R.drawable.image_beixi + "", "|良都2", "1682人赞过"},
-								{R.drawable.image_beixi + "", "|良都3", "1683人赞过"},
-								{R.drawable.image_beixi + "", "|良都4", "1684人赞过"}};
+	
+	private TextView viewName, viewInfo;
+	
+	private Views views = null;
+	
+	private ProgressBar progressBar;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -57,67 +74,129 @@ public class PointActivity extends BaseActivity implements
 		baseSetContentView(savedInstanceState, R.layout.activity_view_point);
 		
 		gridView = (GridView) findViewById(R.id.view_point_gridview);
+		viewInfo = (TextView) findViewById(R.id.view_point_info);
+		viewName = (TextView) findViewById(R.id.view_point_name);
 		
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
-
-        HashMap<String,String> url_maps = new HashMap<String, String>();
-        url_maps.put("Hannibal", "http://static2.hypable.com/wp-content/uploads/2013/12/hannibal-season-2-release-date.jpg");
-        url_maps.put("Big Bang Theory", "http://tvfiles.alphacoders.com/100/hdclearart-10.png");
-        url_maps.put("House of Cards House of Cards", "http://cdn3.nflximg.net/images/3093/2043093.jpg");
-        url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
-
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Hannibal",R.drawable.image_nanqu);
-        file_maps.put("Big Bang Theory",R.drawable.image_nanqu);
-        file_maps.put("House of Cards House of Cards",R.drawable.image_nanqu);
-        file_maps.put("Game of Thrones", R.drawable.image_nanqu);
-
-        for(String name : url_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-           mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
-		
-		Map<String, Object> map = null;
-		for(int i=0;i<array.length;i++){
-			map = new HashMap<String, Object>();
-			map.put("image", array[i][0]);
-			map.put("title", array[i][1]);
-			map.put("likeNum", array[i][2]);
-			listItems.add(map);
-			System.out.println(map.toString());
-		}
-		
-		gridViewAdapter = new GridViewAdapter(this, listItems);
-		gridView.setAdapter(gridViewAdapter);
-		gridView.setOnItemClickListener(new OnItemClickListener() {
+        
+        views = (Views) getIntent().getSerializableExtra(CONSTANT.VIEW_INFO);
+        
+        progressBar = new ProgressBar(this);
+		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+		layoutParams.setMargins(0, 120, 0, 0);
+		this.addContentView(progressBar, layoutParams);
+        
+        new Handler().post(new Runnable() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void run() {
 				// TODO Auto-generated method stub
-				goActivity(DetailActivity.class);
+				String url = "/AppView_getViewListAction.action";
+				JsonObject json = new JsonObject();
+				json.addProperty(CONSTANT.APP_GET_DATA, CONSTANT.VIEW_LIST);
+				json.addProperty(CONSTANT.VIEW_SIGN, views.getChildSign());
+				json.addProperty(CONSTANT.VIEW_ID, views.getViewId());
+				RequestParams params = new RequestParams();
+				params.add(CONSTANT.DATA, json.toString());
+				System.out.println("App发送数据：" + json.toString());
+				HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						// TODO Auto-generated method stub
+						JsonObject json = (JsonObject) new JsonParser().parse(new String(arg2));
+						System.out.println("服务器返回数据：" + json);
+						String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+						if (CONSTANT.CODE_168.equals(errorCode)) {
+							Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+							List<String> urls = gson.fromJson(json.get(CONSTANT.VIEW_PICTURE)
+									.getAsJsonArray(),new TypeToken<List<String>>() {}.getType());
+							List<Views> views = gson.fromJson(json.get(CONSTANT.VIEW_CHILD)
+									.getAsJsonArray(),new TypeToken<List<Views>>() {}.getType());
+							setGridViewTitles(urls, views);
+						} else {
+							shortToastHandler(CONSTANT.OTHER_ERROR);
+						}
+					}
+					@Override
+					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+							Throwable arg3) {
+						// TODO Auto-generated method stub
+						shortToastHandler(CONSTANT.OTHER_ERROR);
+					}
+				});
 			}
 		});
+        viewInfo.setText(views.getViewInfo());
+        viewName.setText(views.getViewName());
+	}
+	
+	private void setGridViewTitles(List<String> sList, final List<Views> vList) {
+		
+		System.out.println("setListViewTitles");
+
+		HashMap<String, String> url_maps = new HashMap<String, String>();
+		for (int i = 0; i < sList.size(); i++) {
+			url_maps.put("" + i, CONSTANT.BASE_ROOT_URL
+					+ sList.get(i).replaceFirst(".", ""));
+		}
+		for (String name : url_maps.keySet()) {
+			TextSliderView textSliderView = new TextSliderView(this);
+			// initialize a SliderLayout
+			textSliderView.description("").image(url_maps.get(name))
+					.setScaleType(BaseSliderView.ScaleType.Fit)
+					.setOnSliderClickListener(this);
+			// add your extra information
+			textSliderView.getBundle().putString("extra", name);
+			mDemoSlider.addSlider(textSliderView);
+		}
+		System.out.println(url_maps);
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				gridViewAdapter = new GridViewAdapter(PointActivity.this, vList);
+
+				gridView.setVisibility(View.VISIBLE);
+				gridView.setAdapter(gridViewAdapter);
+				gridView.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+							long arg3) {
+						// TODO Auto-generated method stub
+						Views view = (Views) gridViewAdapter.getItem(arg2);
+						Bundle bundle = new Bundle();
+						bundle.putSerializable(CONSTANT.VIEW_INFO, view);
+						goActivity(DetailActivity.class, bundle);
+					}
+				});
+				progressBar.setVisibility(View.GONE);
+			}
+		}, 2000);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
+		case R.id.action_bar_btn_like: {
+			// show("中山市南区点赞");
+			String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_LIKE + "view" + views.getViewId());
+			if(temp==null){
+				like();
+			}else{
+				Long sign = Long.parseLong(temp);
+				if((System.currentTimeMillis()-sign)>24*60*60*1000){
+					like();
+				}else{
+					shortToastHandler("亲，你今天已经点过赞了哦！");
+				}
+			}
+			break;
+		}
 		case R.id.action_bar_advice: {
 			show("中山市南区推荐路线");
 			break;
@@ -218,4 +297,40 @@ public class PointActivity extends BaseActivity implements
 		Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
 	}
 
+	public void like(){
+		String url = "/AppLike_addLikeAction.action";
+		JsonObject json = new JsonObject();
+		json.addProperty(CONSTANT.APP_GET_DATA, CONSTANT.LIKE_ADD);
+		json.addProperty(CONSTANT.LIKE_ID, views.getViewId());
+		json.addProperty(CONSTANT.LIKE_TYPE, CONSTANT.LIKE_TYPE_VIEW);
+		json.addProperty(CONSTANT.LIKE_SIGN, System.currentTimeMillis());
+		
+		RequestParams params = new RequestParams();
+		params.put(CONSTANT.DATA, json.toString());
+		
+		System.out.println("App发送数据：" + json.toString());
+		HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				// TODO Auto-generated method stub
+				JsonObject json = (JsonObject) new JsonParser()
+				.parse(new String(arg2));
+				System.out.println("服务器返回数据：" + json);
+				String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+				if (CONSTANT.CODE_168.equals(errorCode)) {
+					String likeNum = json.get(CONSTANT.LIKE_NUM).getAsString();
+					Long sign = json.get(CONSTANT.LIKE_SIGN).getAsLong();
+					writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_LIKE + "view" + views.getViewId(), sign+CONSTANT.NULL_STRING);
+					shortToastHandler("点赞成功，当前点赞数为： " + likeNum);
+				} else {
+					shortToastHandler(CONSTANT.OTHER_ERROR);
+				}
+			}
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				// TODO Auto-generated method stub
+				shortToastHandler(CONSTANT.OTHER_ERROR);
+			}
+		});
+	}
 }

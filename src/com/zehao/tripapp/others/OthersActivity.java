@@ -1,6 +1,5 @@
 package com.zehao.tripapp.others;
 
-import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 
 import android.os.Bundle;
@@ -66,7 +65,7 @@ public class OthersActivity extends Activity implements OnClickListener {
 			}
 		case R.id.action_bar_btn_back:{
 			show("返回主界面");
-			goForActivity(MainActivity.class);
+			finish();
 			break;
 			}
 		case R.id.action_bar_btn_share:{

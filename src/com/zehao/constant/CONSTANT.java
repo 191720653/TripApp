@@ -5,12 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.28.37.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.22.239.1:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 服务器根基本地址
 	 */
-	public static final String BASE_ROOT_URL = "http://172.28.37.1:8080/TripServer";
+	public static final String BASE_ROOT_URL = "http://172.22.239.1:8080/TripServer";
 	
 	/**
 	 * 结果KEY
@@ -128,6 +128,10 @@ public class CONSTANT {
 	 */
 	public static final String INFO_DATA_TOKEN = "info_data_token";
 	/**
+	 * 本地用户点赞信息 key：info_data_like
+	 */
+	public static final String INFO_DATA_LIKE = "info_data_like";
+	/**
 	 * 处理其它异常 value：other_error
 	 */
 	public static final String OTHER_ERROR = "网络异常，请稍后再试！";
@@ -139,6 +143,10 @@ public class CONSTANT {
 	 * 隐藏连接服务器对话框 value：ACTION_DISMISS_DIALOG
 	 */
 	public static final int ACTION_DISMISS_DIALOG = 10087;
+	/**
+	 * 获取的景点的信息 key：view_info
+	 */
+	public static final String VIEW_INFO = "view_info";
 	
 	/****************************************************************
 	    *********************** 通用变量  **************************
@@ -168,6 +176,72 @@ public class CONSTANT {
 	 * 获取数据 key: get_data
 	 */
 	public static final String APP_GET_DATA = "get_data";
+	
+	/****************************************************************
+	    *********************** 点赞变量  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 点赞的命令 value: like_add
+	 */
+	public static final String LIKE_ADD = "like_add";
+	/**
+	 * 点赞的Id key: like_id
+	 */
+	public static final String LIKE_ID = "like_id";
+	/**
+	 * 点赞的类型 key: like_type
+	 */
+	public static final String LIKE_TYPE = "like_type";
+	/**
+	 * 点赞的类型1 value: like_type_view
+	 */
+	public static final String LIKE_TYPE_VIEW = "like_type_view";
+	/**
+	 * 点赞的类型2 value: like_type_village
+	 */
+	public static final String LIKE_TYPE_VILLAGE = "like_type_village";
+	/**
+	 * 点赞的时间戳 key: like_sign
+	 */
+	public static final String LIKE_SIGN = "like_sign";
+	/**
+	 * 点赞后的数量 key: like_num
+	 */
+	public static final String LIKE_NUM = "like_num";
+	
+	/****************************************************************
+	    *********************** 景点信息  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 获取景点信息带列表 value：view_ist
+	 */
+	public static final String VIEW_LIST = "view_list";
+	/**
+	 * 获取的景点的Id key：view_id
+	 */
+	public static final String VIEW_ID = "view_id";
+	/**
+	 * 获取的景点是否有子景点 key：view_sign
+	 */
+	public static final String VIEW_SIGN = "view_sign";
+	/**
+	 * 获取的景点有子景点 value：view_sign_y
+	 */
+	public static final String VIEW_SIGN_Y = "Y";
+	/**
+	 * 获取的景点没有子景点 value：view_sign_n
+	 */
+	public static final String VIEW_SIGN_N = "N";
+	/**
+	 * 获取的景点的图片列表 key：view_picture
+	 */
+	public static final String VIEW_PICTURE = "view_picture";
+	/**
+	 * 获取的景点的子区列表 key：view_child 
+	 */
+	public static final String VIEW_CHILD = "view_child";
 	
 	/****************************************************************
 	    *********************** 四大景区  **************************

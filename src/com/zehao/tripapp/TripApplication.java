@@ -24,10 +24,10 @@ public class TripApplication extends Application {
 				.threadPoolSize(3) // 线程池内加载的数量
 				.threadPriority(Thread.NORM_PRIORITY - 2) // 降低线程的优先级保证主UI线程不受太大影响
 				.denyCacheImageMultipleSizesInMemory()
-				.memoryCache(new LruMemoryCache(5 * 1024 * 1024)) // 建议内存设在5-10M,可以有比较好的表现
-				.memoryCacheSize(5 * 1024 * 1024)
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.diskCacheSize(50 * 1024 * 1024)
+				.tasksProcessingOrder(QueueProcessingType.FIFO)
+				.memoryCache(new LruMemoryCache(8 * 1024 * 1024)) // 建议内存设在5-10M,可以有比较好的表现
+				.memoryCacheSize(8 * 1024 * 1024)
+				.diskCacheSize(512 * 1024 * 1024)
 				.diskCacheFileCount(100) // 缓存的文件数量
 				.defaultDisplayImageOptions(DisplayImageOptions.createSimple())
 				.imageDownloader( new BaseImageDownloader(getApplicationContext(),

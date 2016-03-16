@@ -10,7 +10,7 @@ public class Views implements java.io.Serializable {
 
 	// Fields
 
-	private static final long serialVersionUID = 7392228240978733983L;
+	private static final long serialVersionUID = 3573759633962147312L;
 	private Integer viewId;
 	private Village village;
 	private String viewName;
@@ -26,6 +26,8 @@ public class Views implements java.io.Serializable {
 	private Integer upView;
 	private Date createDate;
 	private String remark;
+	private String viewPerson;
+	private String viewAction;
 
 	// Constructors
 
@@ -37,7 +39,8 @@ public class Views implements java.io.Serializable {
 	public Views(Village village, String viewName, String viewAddress,
 			String viewGuide, String viewInfo, String viewLogo,
 			String openTime, String ticket, String phone, Integer likeNum,
-			String childSign, Integer upView, Date createDate, String remark) {
+			String childSign, Integer upView, Date createDate, String remark,
+			String viewPerson, String viewAction) {
 		this.village = village;
 		this.viewName = viewName;
 		this.viewAddress = viewAddress;
@@ -52,6 +55,8 @@ public class Views implements java.io.Serializable {
 		this.upView = upView;
 		this.createDate = createDate;
 		this.remark = remark;
+		this.viewPerson = viewPerson;
+		this.viewAction = viewAction;
 	}
 
 	// Property accessors
@@ -174,6 +179,22 @@ public class Views implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getViewPerson() {
+		return this.viewPerson;
+	}
+
+	public void setViewPerson(String viewPerson) {
+		this.viewPerson = viewPerson;
+	}
+
+	public String getViewAction() {
+		return this.viewAction;
+	}
+
+	public void setViewAction(String viewAction) {
+		this.viewAction = viewAction;
 	}
 
 }

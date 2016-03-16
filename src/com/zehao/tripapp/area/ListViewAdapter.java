@@ -1,12 +1,13 @@
 package com.zehao.tripapp.area;
 
 import java.util.List;
-import java.util.Map;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.Views;
 import com.zehao.tripapp.R;
 
 import android.annotation.SuppressLint;
@@ -19,9 +20,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-@SuppressLint("ResourceAsColor")
 public class ListViewAdapter extends BaseAdapter {
-	private List<Map<String, Object>> listItems; // 信息集合
+	private List<Views> listItems; // 信息集合
 	private LayoutInflater listContainer; // 视图容器
 	private DisplayImageOptions options;
 
@@ -32,7 +32,7 @@ public class ListViewAdapter extends BaseAdapter {
 		public TextView info;
 	}
 
-	public ListViewAdapter(Context context, List<Map<String, Object>> listItems) {
+	public ListViewAdapter(Context context, List<Views> listItems) {
 		listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
 		this.listItems = listItems;
 		System.out.println("创建视图容器并设置上下文");
@@ -55,7 +55,7 @@ public class ListViewAdapter extends BaseAdapter {
 
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return listItems.get(arg0);
 	}
 
 	public long getItemId(int arg0) {
@@ -93,10 +93,10 @@ public class ListViewAdapter extends BaseAdapter {
 		System.out.println("设置文字和图片");
 
 		// 设置文字和图片
-		ImageLoader.getInstance().displayImage(listItems.get(position).get("image").toString(), listItemView.image, options);
-		listItemView.title.setText((String) listItems.get(position).get("title"));
-		listItemView.info.setText((String) listItems.get(position).get("info"));
-		listItemView.likeNum.setText(listItems.get(position).get("likeNum").toString());
+		ImageLoader.getInstance().displayImage(CONSTANT.BASE_ROOT_URL + listItems.get(position).getViewLogo().replaceFirst(".", ""), listItemView.image, options);
+		listItemView.title.setText((String) listItems.get(position).getViewName());
+		listItemView.info.setText((String) listItems.get(position).getViewInfo());
+		listItemView.likeNum.setText(listItems.get(position).getLikeNum() + "人赞过");
 		
 		return convertView;
 	}

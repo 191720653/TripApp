@@ -354,7 +354,7 @@ public class LoginActivity extends BaseActivity implements
 						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_TOKEN, user.getToken());
 						// 登录成功，跳到主界面
 						shortToastHandler("登录成功！");
-						goActivity(MainActivity.class);
+						goActivityAndFinish(MainActivity.class);
 						// finish();
 					}else{
 						// 跳往注册界面

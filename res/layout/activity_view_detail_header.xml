@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="396dp" >
+    android:layout_height="379dp" >
 
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
@@ -16,7 +16,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="196dp"
+        android:layout_height="179dp"
         android:layout_gravity="bottom" >
 
         <TextView
@@ -33,21 +33,23 @@
         <TextView
             android:id="@+id/view_info"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="43dip"
             android:layout_below="@+id/view_name"
             android:layout_marginLeft="18dip"
             android:layout_marginStart="18dip"
             android:layout_marginRight="12dip"
             android:layout_marginEnd="12dip"
             android:layout_marginTop="6dip"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:text="@string/viewarea_info"
             android:textColor="@color/gray"
             android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/item_like_image"
-            android:layout_width="12dip"
-            android:layout_height="12dip"
+            android:layout_width="14dip"
+            android:layout_height="14dip"
             android:layout_alignBottom="@+id/view_name"
             android:layout_toLeftOf="@+id/item_like_num"
             android:layout_toStartOf="@+id/item_like_num"

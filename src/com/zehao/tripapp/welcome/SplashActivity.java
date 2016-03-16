@@ -1,11 +1,18 @@
 package com.zehao.tripapp.welcome;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.Users;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.login.LoginActivity;
+import com.zehao.util.Tool;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Window;
@@ -64,16 +71,22 @@ public class SplashActivity extends BaseActivity {
 		switch (msg.what) {
 		case SWITCH_MAINACTIVITY:
 			// 在启动页读取本地信息，若有token则跳过登录到主界面，否则先登录（游客用不了，必须注册）
-			Intent mIntent = new Intent();
-			mIntent.setClass(SplashActivity.this, MainActivity.class);
-			SplashActivity.this.startActivity(mIntent);
-			SplashActivity.this.finish();
+			String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+			if(!CONSTANT.NULL_STRING.equals(Tool.NVL(temp))){
+				JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+				Users user = gson.fromJson(json, Users.class);
+				if(CONSTANT.LOGIN_SIGN_OFF.equals(user.getLoginSign())){
+					goActivityAndFinish(LoginActivity.class);
+				} else {
+					goActivityAndFinish(MainActivity.class);
+				}
+			} else {
+				goActivityAndFinish(MainActivity.class);
+			}
 			break;
 		case SWITCH_GUIDACTIVITY:
-			mIntent = new Intent();
-			mIntent.setClass(SplashActivity.this, GuideActivity.class);
-			SplashActivity.this.startActivity(mIntent);
-			SplashActivity.this.finish();
+			goActivityAndFinish(GuideActivity.class);
 			break;
 		}
 	}

@@ -43,6 +43,7 @@
             android:text="@string/viewarea_info"
             android:textColor="@color/gray"
             android:textSize="12sp" />
+        
     </RelativeLayout>
 
 </FrameLayout>
