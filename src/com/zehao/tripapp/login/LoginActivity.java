@@ -114,14 +114,15 @@ public class LoginActivity extends BaseActivity implements
 	public void qq_login(){
 		ShareSDK.initSDK(this);
 		final Platform qq = ShareSDK.getPlatform(QZone.NAME);
-		if(qq.isValid()){
+		/*if(qq.isValid()){
 			qq.removeAccount();
-		}
+		}*/
 		qq.setPlatformActionListener(new PlatformActionListener() {
 			@Override
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onError");
+				qq.removeAccount();
 			}
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
@@ -133,6 +134,7 @@ public class LoginActivity extends BaseActivity implements
 			public void onCancel(Platform arg0, int arg1) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onCancel");
+				qq.removeAccount();
 			}
 		});
 		// 关闭SSO授权，即关闭客户端授权，通过网页授权
@@ -142,15 +144,16 @@ public class LoginActivity extends BaseActivity implements
 	
 	public void sina_login(){
 		ShareSDK.initSDK(this);
-		Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-		if(weibo.isValid()){
+		final Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+		/*if(weibo.isValid()){
 			weibo.removeAccount();
-		}
+		}*/
 		weibo.setPlatformActionListener(new PlatformActionListener() {
 			@Override
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onError");
+				weibo.removeAccount();
 			}
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
@@ -162,6 +165,7 @@ public class LoginActivity extends BaseActivity implements
 			public void onCancel(Platform arg0, int arg1) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onCancel");
+				weibo.removeAccount();
 			}
 		});
 		// 关闭SSO授权，即关闭客户端授权，通过网页授权
@@ -171,7 +175,7 @@ public class LoginActivity extends BaseActivity implements
 	
 	public void wechat_login(){
 		ShareSDK.initSDK(this);
-		Platform wechat = ShareSDK.getPlatform("Wechat");
+		final Platform wechat = ShareSDK.getPlatform("Wechat");
 //		if(weibo.isValid()){
 //			weibo.removeAccount();
 //		}
@@ -180,6 +184,7 @@ public class LoginActivity extends BaseActivity implements
 			public void onError(Platform arg0, int arg1, Throwable arg2) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onError");
+				wechat.removeAccount();
 			}
 			@Override
 			public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
@@ -191,10 +196,11 @@ public class LoginActivity extends BaseActivity implements
 			public void onCancel(Platform arg0, int arg1) {
 				// TODO Auto-generated method stub
 				shortToastHandler("onCancel");
+				wechat.removeAccount();
 			}
 		});
 		//关闭SSO授权，即关闭客户端授权，通过网页授权
-		wechat.SSOSetting(true);
+		//wechat.SSOSetting(true);
 		wechat.showUser(null);
 	}
 	

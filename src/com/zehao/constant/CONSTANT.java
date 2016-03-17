@@ -5,12 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.22.239.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.30.169.1:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 服务器根基本地址
 	 */
-	public static final String BASE_ROOT_URL = "http://172.22.239.1:8080/TripServer";
+	public static final String BASE_ROOT_URL = "http://172.30.169.1:8080/TripServer";
 	
 	/**
 	 * 结果KEY

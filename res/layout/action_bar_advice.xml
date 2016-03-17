@@ -50,20 +50,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" >
-        
-        <ImageButton
-        android:id="@+id/action_bar_btn_like"
-        android:onClick="onClick"
-        android:layout_width="22dip"
-        android:layout_height="18dip"
-        android:layout_marginRight="5dip"
-        android:layout_marginEnd="15dip"
-        android:layout_toLeftOf="@+id/action_bar_btn_share"
-        android:layout_toStartOf="@+id/action_bar_btn_share" 
-        android:src="@drawable/image_like_yellow"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/descr_image"
-        android:background="@color/transparent" />
 
         <ImageButton
             android:id="@+id/action_bar_btn_share"

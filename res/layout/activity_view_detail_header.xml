@@ -68,7 +68,7 @@
             android:text="@string/item_view_like"
             android:textSize="12sp" />
 
-        <LinearLayout
+        <!-- <LinearLayout
             android:id="@+id/maps"
             android:layout_width="fill_parent"
             android:layout_height="60dip"
@@ -76,7 +76,15 @@
             android:layout_margin="12dip"
             android:background="@color/main_orange"
             android:orientation="vertical" >
-        </LinearLayout>
+        </LinearLayout> -->
+        
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/maps"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_below="@+id/view_info"
+            android:layout_margin="12dip"
+            android:clickable="true" />
 
         <ImageView
             android:id="@+id/break_line"

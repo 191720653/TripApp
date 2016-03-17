@@ -16,6 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.achep.header2actionbar.HeaderFragment;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -42,7 +57,7 @@ import java.util.Map;
 import org.apache.http.Header;
 
 @SuppressLint("InflateParams")
-public class ListViewDetailFragment extends HeaderFragment implements OnSliderClickListener {
+public class ListViewDetailFragment extends HeaderFragment implements OnSliderClickListener, OnMarkerClickListener {
 
 	private ListView mListView;
 	private TextView viewName, viewInfo, likeNum;
@@ -51,6 +66,7 @@ public class ListViewDetailFragment extends HeaderFragment implements OnSliderCl
 
 	private View mainView;
 	private Views views = null;
+	public Views getViews(){return views;}
 	public Integer getViewId(){
 		return views==null?0:views.getViewId();
 	}
@@ -96,11 +112,11 @@ public class ListViewDetailFragment extends HeaderFragment implements OnSliderCl
 						String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
 						if (CONSTANT.CODE_168.equals(errorCode)) {
 							Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-							List<String> urls = gson.fromJson(
+							imageUrls = gson.fromJson(
 									json.get(CONSTANT.VIEW_PICTURE).getAsJsonArray(),
 									new TypeToken<List<String>>() {
 									}.getType());
-							setListViewTitles(urls);
+							setListViewTitles();
 						} else {
 							Toast.makeText(getActivity(), CONSTANT.OTHER_ERROR,
 									Toast.LENGTH_SHORT).show();
@@ -123,7 +139,38 @@ public class ListViewDetailFragment extends HeaderFragment implements OnSliderCl
 		super.onDetach();
 	}
 
-	// private SliderLayout mDemoSlider;
+	private MapView mMapView = null; // 地图View
+	private BaiduMap mBaidumap = null;
+	public MapView getMapView(){return mMapView;}
+	public BaiduMap getBaiduMap(){return mBaidumap;}
+	// 搜索相关
+	private GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
+	public GeoCoder getSearch(){return mSearch;}
+	private OnGetGeoCoderResultListener listener = new OnGetGeoCoderResultListener() {
+	    public void onGetGeoCodeResult(GeoCodeResult result) {
+	    	//获取地理编码结果
+	    	if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+				Toast.makeText(getActivity(), "抱歉，未找到结果",Toast.LENGTH_LONG).show();
+				return;
+			}Toast.makeText(getActivity(), result.getAddress() + " " + result.getLocation().latitude + " " + result.getLocation().longitude,Toast.LENGTH_LONG).show();
+			mBaidumap.addOverlay(new MarkerOptions()// Marker marker = (Marker) 
+					.icon(BitmapDescriptorFactory
+					.fromResource(R.drawable.location_here))
+					.title(result.getAddress()).position(result.getLocation()));
+			MapStatus mMapStatus = new MapStatus.Builder().target(result.getLocation()).zoom(18).build();
+			mBaidumap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mMapStatus));
+	    }
+	    @Override
+	    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+	        //获取反向地理编码结果
+	    }
+	};
+	@Override
+	public boolean onMarkerClick(Marker arg0) {
+		// TODO Auto-generated method stub
+		Toast.makeText(getActivity(), arg0.getTitle(),Toast.LENGTH_LONG).show();
+		return true;
+	}
 
 	@Override
 	public View onCreateHeaderView(LayoutInflater inflater, ViewGroup container) {
@@ -140,6 +187,18 @@ public class ListViewDetailFragment extends HeaderFragment implements OnSliderCl
 		sliderLayout.setCustomAnimation(new DescriptionAnimation());
 		sliderLayout.setDuration(4000);
 		System.out.println("onCreateHeaderView");
+		// 初始化地图
+		mMapView = (MapView) mainView.findViewById(R.id.maps);
+		mMapView.showZoomControls(false);
+		// 初始化搜索模块，注册事件监听
+		mSearch = GeoCoder.newInstance();
+		mSearch.setOnGetGeoCodeResultListener(listener);
+		mSearch.geocode(new GeoCodeOption().city("广东省中山市").address(views.getViewName()));
+		mBaidumap = mMapView.getMap();
+		mBaidumap.setOnMarkerClickListener(this);
+		// 地图移动到中山市南区
+		LatLng main = new LatLng(22.4960480000, 113.3772240000);
+		mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(main));
 		return mainView;
 	}
 
@@ -166,30 +225,29 @@ public class ListViewDetailFragment extends HeaderFragment implements OnSliderCl
 
 	private ListViewDetailAdapter viewListAdapter;
 	private SliderLayout sliderLayout;
+	private List<String> imageUrls = null;
+	public List<String> getUrls(){return imageUrls;}
 	
-	private void setListViewTitles(List<String> sList) {
+	private void setListViewTitles() {
 
 		viewName.setText(views.getViewName());
 		viewInfo.setText(views.getViewInfo());
 		likeNum.setText(views.getLikeNum() + "人赞过");
 
-		System.out.println("setListViewTitles");
-		HashMap<String, String> url_maps = new HashMap<String, String>();
-		for (int i = 0; i < sList.size(); i++) {
-			url_maps.put("" + i, CONSTANT.BASE_ROOT_URL
-					+ sList.get(i).replaceFirst(".", ""));
-		}
-		for (String name : url_maps.keySet()) {
+		System.out.println("setListViewTitles......");
+		for (int i = 0; i < imageUrls.size(); i++) {
+			StringBuffer temp = new StringBuffer(CONSTANT.BASE_ROOT_URL)
+			.append(imageUrls.get(i).replaceFirst(".", ""));
 			TextSliderView textSliderView = new TextSliderView(getActivity());
 			// initialize a SliderLayout
-			textSliderView.description("").image(url_maps.get(name))
+			textSliderView.description("").image(temp.toString())
 					.setScaleType(BaseSliderView.ScaleType.Fit)
 					.setOnSliderClickListener(this);
 			// add your extra information
-			textSliderView.getBundle().putString("extra", name);
+			textSliderView.getBundle().putString("extra", i+"");
 			sliderLayout.addSlider(textSliderView);
+			System.out.println(temp.toString());
 		}
-		System.out.println(url_maps);
 
 		List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();

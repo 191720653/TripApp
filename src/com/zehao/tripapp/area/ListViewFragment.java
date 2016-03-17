@@ -48,12 +48,16 @@ import org.apache.http.Header;
 public class ListViewFragment extends HeaderFragment implements OnSliderClickListener {
 
 	private ListView mListView;
-	private TextView viewName, viewInfo;
+	private TextView viewName, viewInfo, viewLike;
+	public void setLikeNum(String num){
+		viewLike.setText(num + "人赞过");
+	}
 
 	private ProgressBar progressBar;
 
 	private View mainView;
 	private Village village = null;
+	public Village getVillage(){return village;}
 	public Integer getVillageId(){
 		return village==null?0:village.getVillageId();
 	}
@@ -145,6 +149,7 @@ public class ListViewFragment extends HeaderFragment implements OnSliderClickLis
 				container, false);
 		viewName = (TextView) mainView.findViewById(R.id.viewa_viewarea_name);
 		viewInfo = (TextView) mainView.findViewById(R.id.viewa_viewarea_info);
+		viewLike = (TextView) mainView.findViewById(R.id.item_like_num);
 		sliderLayout =  (SliderLayout) mainView.findViewById(R.id.slider);
 		sliderLayout.setPresetTransformer(SliderLayout.Transformer.Stack);
 		sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -181,6 +186,7 @@ public class ListViewFragment extends HeaderFragment implements OnSliderClickLis
 
 		viewName.setText(village.getVillageName());
 		viewInfo.setText(village.getVillageInfo());
+		viewLike.setText(village.getLikeNum() + "人赞过");
 
 		System.out.println("setListViewTitles");
 		HashMap<String, String> url_maps = new HashMap<String, String>();

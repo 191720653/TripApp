@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="192dip" >
+
+    <ImageView
+        android:id="@+id/item_advice_image"
+        android:layout_width="fill_parent"
+        android:layout_height="180dip"
+        android:layout_marginBottom="12dip"
+        android:contentDescription="@string/descr_image"
+        android:src="@drawable/image_nanqu" />
+    
+    <TextView
+        android:id="@+id/item_advice_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+</RelativeLayout>

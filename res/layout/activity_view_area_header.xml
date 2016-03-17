@@ -29,6 +29,29 @@
             android:text="@string/viewarea_name"
             android:textSize="18sp"
             android:textStyle="bold" />
+        
+        <ImageView
+        	android:id="@+id/item_like_image"
+        	android:onClick="onClick"
+        	android:layout_width="14dip"
+        	android:layout_height="14dip"
+        	android:layout_alignBottom="@+id/viewa_viewarea_name"
+        	android:layout_toLeftOf="@+id/item_like_num"
+        	android:layout_toStartOf="@+id/item_like_num"
+        	android:contentDescription="@string/descr_image"
+        	android:src="@drawable/image_like_yellow" />
+
+   		<TextView
+        	android:id="@+id/item_like_num"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBottom="@+id/viewa_viewarea_name"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentEnd="true"
+        	android:layout_marginRight="12dip"
+        	android:layout_marginEnd="12dip"
+        	android:text="@string/item_view_like"
+        	android:textSize="12sp" />
 
         <TextView
             android:id="@+id/viewa_viewarea_info"

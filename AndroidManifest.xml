@@ -102,6 +102,9 @@
         <!-- 其它-->
         <activity android:name="com.zehao.tripapp.others.OthersActivity" />
         
+        <!-- 路线推荐-->
+        <activity android:name="com.zehao.tripapp.advice.AdviceLineActivity" />
+        
         <!-- 地图定位 -->
         <!-- <activity android:name="com.zehao.tripapp.map.LocationDemo" /> -->
         <!-- 路线导航 -->

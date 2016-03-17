@@ -26,7 +26,7 @@
             android:layout_toLeftOf="@+id/view"
             android:layout_toStartOf="@+id/view" >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dip"
                 android:layout_marginBottom="15dip"
@@ -53,7 +53,7 @@
             android:layout_toRightOf="@+id/view"
             android:layout_toEndOf="@+id/view" >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dip"
                 android:layout_marginBottom="15dip"
@@ -77,7 +77,7 @@
         <RelativeLayout
             android:id="@+id/relative_hero"
             android:onClick="onClick"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/view_t"
             android:layout_toStartOf="@+id/view_t" >
@@ -104,7 +104,7 @@
         <RelativeLayout
             android:id="@+id/relative_food"
             android:onClick="onClick"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/view_t"
             android:layout_toEndOf="@+id/view_t" >
@@ -138,7 +138,7 @@
             android:layout_toLeftOf="@+id/view_d"
             android:layout_toStartOf="@+id/view_d" >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dip"
                 android:layout_marginBottom="15dip"
@@ -165,7 +165,7 @@
             android:layout_toRightOf="@+id/view_d"
             android:layout_toEndOf="@+id/view_d" >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dip"
                 android:layout_marginBottom="15dip"

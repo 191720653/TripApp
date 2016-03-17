@@ -1,6 +1,7 @@
 package com.zehao.tripapp.others;
 
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.advice.AdviceLineActivity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -60,7 +61,8 @@ public class OthersActivity extends Activity implements OnClickListener {
 			break;
 			}
 		case R.id.relative_advice:{
-			show("中山市南区路线推荐");
+			// show("中山市南区路线推荐");
+			startActivity(new Intent(this, AdviceLineActivity.class));
 			break;
 			}
 		case R.id.action_bar_btn_back:{
