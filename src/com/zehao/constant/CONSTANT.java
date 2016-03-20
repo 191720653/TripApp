@@ -5,12 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.30.169.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.27.49.1:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 服务器根基本地址
 	 */
-	public static final String BASE_ROOT_URL = "http://172.30.169.1:8080/TripServer";
+	public static final String BASE_ROOT_URL = "http://172.27.49.1:8080/TripServer";
 	
 	/**
 	 * 结果KEY
@@ -147,6 +147,10 @@ public class CONSTANT {
 	 * 获取的景点的信息 key：view_info
 	 */
 	public static final String VIEW_INFO = "view_info";
+	/**
+	 * 本地的图片url key：info_photo_url
+	 */
+	public static final String INFO_PHOTO_URL = "info_photo_url";
 	
 	/****************************************************************
 	    *********************** 通用变量  **************************
@@ -349,6 +353,14 @@ public class CONSTANT {
 	 * 用户token key：token
 	 */
 	public static final String TOKEN = "token";
+	/**
+	 * 用户相册 key：pictures
+	 */
+	public static final String PICTURES = "pictures";
+	/**
+	 * 用户相册数量 key：picture_count
+	 */
+	public static final String PICTURE_COUNT = "picture_count";
 	
 	/****************************************************************
 	    *********************** 错误代码 **************************

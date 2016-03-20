@@ -1,11 +1,10 @@
-package com.zehao.tripapp.register;
+package com.zehao.tripapp.info;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.http.Header;
@@ -21,6 +20,7 @@ import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Users;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.register.IconActivity;
 import com.zehao.util.Tool;
 
 import android.app.Activity;
@@ -45,13 +45,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
 
-public class SigninActivity extends BaseActivity implements OnClickListener {
+public class InfoActivity extends BaseActivity implements OnClickListener {
 
 	/** 用户信息对话框*/
-	private enum ChangeUserType {USER_ACCOUNT, USER_PASSWORD, USER_NOTE, USER_NAME};
+	private enum ChangeUserType {USER_ACCOUNT, USER_PASSWORD, USER_NOTE, USER_NAME, OLD_PASSWORD};
 	/**加载用户头像*/
 	private static final int LOAD_USER_ICON = 2;
 	/**Toast 提升*/
@@ -67,29 +65,16 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 	
 	private ImageView ivUserIcon;
 	private TextView tvUserName, tvUserGender, tvUserNote, tvUserAccount, tvUserPassword;
-	private Platform platform;
-	private String pname = null;
 	
 	private String picturePath;
-	// private UserInfo userInfo = new UserInfo();
 	private Users users = new Users();
 
 	private ProgressDialog progressDialog;
 	
-//	private Button back,register;
-	
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		// addActionBar();
-		// ((TextView)findViewById(R.id.action_bar_title)).setText("用户信息");
 		baseSetContentView(savedInstanceState, R.layout.activity_signup);
-//		back = (Button) findViewById(R.id.action_bar_btn_first);
-//		back.setText("返回");
-//		register = (Button) findViewById(R.id.action_bar_btn_second);
-//		register.setText(this.getString(R.string.register_userinfo_sign_up));
-//		back.setOnClickListener(this);
-//		register.setOnClickListener(this);
 
 		tvUserName = (TextView) findViewById(R.id.tv_user_name);
 		tvUserGender = (TextView) findViewById(R.id.tv_user_gender);
@@ -103,17 +88,13 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		findViewById(R.id.rl_name).setOnClickListener(this);
 		findViewById(R.id.rl_gender).setOnClickListener(this);
 		findViewById(R.id.rl_note).setOnClickListener(this);
-		findViewById(R.id.rl_account).setOnClickListener(this);
+		// findViewById(R.id.rl_account).setOnClickListener(this);
 		findViewById(R.id.rl_password).setOnClickListener(this);
 		
-		Bundle bundle = getIntent().getExtras();
-		if(bundle!=null){
-			pname = bundle.getString("platform");
-			setRegisterUserinfoatform(pname);
-			initData();
-		}else{
-			users.setType(CONSTANT.USER_TYPE_COMMON);
-		}
+		String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+		JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		users = gson.fromJson(json, Users.class);
 		
 		//初始化照片保存地址
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
@@ -136,41 +117,19 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		}else{
 			Log.e("change user icon ==>>", "there is not sdcard!");
 		}
+		
+		initData();
 			
-	}
-
-	public void setRegisterUserinfoatform(String platName) {
-		platform = ShareSDK.getPlatform(platName);
-		System.out.println(platName);
-		System.out.println("platform.getName(): "+platform.getName());
 	}
 	
 	/**初始化数据*/
 	private void initData(){
-		System.out.println(platform.getDb().exportData());
-		if(platform != null){
-			String gender = platform.getDb().getUserGender();
-			if(gender.equals("0")){
-				users.setSexs("男");
-			}else{
-				users.setSexs("女");
-			}
-			users.setIcon(platform.getDb().getUserIcon());
-			users.setNickName(platform.getDb().getUserName());
-			users.setTypeId(platform.getDb().getUserId());
-			users.setType(pname);
-			StringBuffer temp = new StringBuffer().append(System.currentTimeMillis());
-			int index = new Random().nextInt(10) + 1;
-			String account = temp.toString().substring(0, index-1) + temp.toString().substring(index);
-			users.setAccount(account);
-			users.setPassword(account);
-		}
 		
 		tvUserName.setText(users.getNickName());
 		tvUserGender.setText(users.getSexs());
 		tvUserAccount.setText(users.getAccount());
 		tvUserPassword.setText(users.getPassword());
-		tvUserNote.setText(users.getRemark());
+		tvUserNote.setText(users.getInfo());
 		// 加载头像
 		if(!TextUtils.isEmpty(users.getIcon())){
 			loadIcon();
@@ -205,7 +164,7 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 			showChangeInfo(ChangeUserType.USER_ACCOUNT);
 			break;
 		case R.id.rl_password:
-			showChangeInfo(ChangeUserType.USER_PASSWORD);
+			showChangeInfo(ChangeUserType.OLD_PASSWORD);
 			break;
 		case R.id.iv_user_icon:
 			Bundle bundle = new Bundle();
@@ -221,7 +180,7 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 	 * 加载头像
 	 */
 	public void loadIcon() {
-		final String imageUrl = platform.getDb().getUserIcon();
+		final String imageUrl = CONSTANT.BASE_ROOT_URL + users.getIcon().replaceFirst(".", "");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -264,14 +223,14 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 			System.out.println("onActivityResult == " + picturePath);
 			if(new File(picturePath).exists()){
 				System.out.println("onActivityResult == " + picturePath +" == exist");
-				users.setIcon(picturePath);
+				// users.setIcon(picturePath);
 				ivUserIcon.setImageBitmap(compressImageFromFile(picturePath));
 				//ivUserIcon.setImageURI(Uri.parse(path));
 				//ivUserIcon.setImageDrawable(Drawable.createFromPath(path));
 			}
 		}else if(requestCode == INTENT_ACTION_CAREMA && resultCode == Activity.RESULT_OK){
 			System.out.println("INTENT_ACTION_CAREMA == " + picturePath );
-			users.setIcon(picturePath);
+			// users.setIcon(picturePath);
 			//ivUserIcon.setImageURI(Uri.parse(picturePath));
 			ivUserIcon.setImageBitmap(compressImageFromFile(picturePath));
 			//ivUserIcon.setImageDrawable(Drawable.createFromPath(picturePath));
@@ -408,6 +367,10 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 			content = tvUserPassword.getText().toString();
 			title = getApplicationContext().getString(R.string.register_userinfo_change_user_password_title);
 			hint = getApplicationContext().getString(R.string.register_userinfo_input_user_password_hint);
+		}else if(type==ChangeUserType.OLD_PASSWORD){
+			content = "";
+			title = "旧的密码";
+			hint = "更改密码需要您先输入旧的密码！";
 		}else{
 			content = tvUserNote.getText().toString();
 			title = getApplicationContext().getString(R.string.register_userinfo_change_user_note_title);
@@ -423,7 +386,7 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		final EditText etInfo = (EditText) dialog.findViewById(R.id.dialog_ev_info);
 		final TextView tvHint = (TextView) dialog.findViewById(R.id.dialog_tv_hint);
 		tvTitle.setText(title);
-		etInfo.setHint(content);
+		etInfo.setText(content);etInfo.setHint("");
 		tvHint.setText(hint);
 		dialog.findViewById(R.id.dialog_btn_save).setOnClickListener(new OnClickListener() {
 			@Override
@@ -438,9 +401,15 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 				}else if(type == ChangeUserType.USER_PASSWORD){
 					tvUserPassword.setText(content);
 					users.setPassword(content);
+				}else if(type==ChangeUserType.OLD_PASSWORD){
+					if(content.equals(users.getPassword())){
+						showChangeInfo(ChangeUserType.USER_PASSWORD);
+					}else{
+						shortToastHandler("对不起，您输入的密码不正确");
+					}
 				}else{
 					tvUserNote.setText(content);
-					users.setRemark(content);
+					users.setInfo(content);
 				}
 				dialog.dismiss();
 			}
@@ -492,7 +461,7 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (msg.what) {
 		case CONSTANT.ACTION_SHOW_DIALOG: 
-			progressDialog = ProgressDialog.show(this, "注册", "正在联网注册,请稍候......");
+			progressDialog = ProgressDialog.show(this, "稍等", "正在联网提交,请稍候......");
 			break;
 		case CONSTANT.ACTION_DISMISS_DIALOG: 
 			progressDialog.dismiss();
@@ -503,7 +472,6 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 		case MSG_SHOW_TOAST:
 			// 执行注册
 			System.out.println(users.toString());
-			shortToastHandler("注册成功！");
 			finish();
 			break;
 		default:
@@ -520,23 +488,24 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 					||!Pattern.matches("^[0-9a-zA-Z]{8,12}", users.getPassword())){
 				shortToastHandler("请填写8到12位的纯数字、字母或数字字母组合的账号、密码！");
 			}else{
-				if(pname==null) users.setTypeId(users.getAccount());
-				String url = "/AppSignIn_registerAction.action";
+				
+				String url = "/AppUser_updateUserInfoAction.action";
 				JsonObject json = new JsonObject();
 				json.addProperty(CONSTANT.ACCOUNT, users.getAccount());
 				json.addProperty(CONSTANT.PASSWORD, users.getPassword());
 				json.addProperty(CONSTANT.ICON, CONSTANT.NULL_STRING);
 				json.addProperty(CONSTANT.NICK_NAME, users.getNickName());
 				json.addProperty(CONSTANT.SEX, users.getSexs());
-				json.addProperty(CONSTANT.REMARK, users.getRemark());
+				json.addProperty(CONSTANT.REMARK, users.getInfo());
 				json.addProperty(CONSTANT.TYPE, users.getType());
 				json.addProperty(CONSTANT.USER_TYPE_ID, users.getTypeId());
+				json.addProperty(CONSTANT.TOKEN, users.getToken());
 				
 				RequestParams params = new RequestParams();
 				params.put(CONSTANT.DATA, json);
 				
-				if(!CONSTANT.NULL_STRING.equals(users.getIcon())){
-					System.out.println("用户头像路径: " + users.getIcon());
+				if(!CONSTANT.NULL_STRING.equals(picturePath)){
+					System.out.println("用户头像路径: " + picturePath);
 					try {
 						params.put("image", new File(picturePath));
 					} catch (FileNotFoundException e) {
@@ -562,12 +531,7 @@ public class SigninActivity extends BaseActivity implements OnClickListener {
 							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, info.toString());
 							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
 							writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
-							shortToastHandler("注册成功！");
-							// 注册成功，跳到登录界面
-							Intent intent = new Intent();
-							intent.putExtra(CONSTANT.INFO_DATA_ACCOUNT, user.getAccount());
-							intent.putExtra(CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
-							setResult(RESULT_OK, intent);
+							shortToastHandler("修改成功！");
 							finish();
 						}else if(CONSTANT.CODE_176.equals(errorCode)){
 							shortToastHandler(CONSTANT.CODE_176_TEXT);

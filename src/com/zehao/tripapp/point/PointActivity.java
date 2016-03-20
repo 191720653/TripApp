@@ -26,11 +26,15 @@ import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.data.bean.Users;
 import com.zehao.data.bean.Views;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.advice.AdviceLineActivity;
 import com.zehao.tripapp.detail.DetailActivity;
+import com.zehao.tripapp.login.LoginActivity;
+import com.zehao.tripapp.mine.MineActivity;
+import com.zehao.util.Tool;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -225,10 +229,27 @@ public class PointActivity extends BaseActivity implements
 		case R.id.action_bar_btn_mine:
 		case R.id.action_bar_btn_mines:{
 			show("中山市南区我的信息");
+			mine();
 			break;
 			}
 		default:
 			break;
+		}
+	}
+	
+	public void mine(){
+		String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+		if(!CONSTANT.NULL_STRING.equals(Tool.NVL(temp))){
+			JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+			Users user = gson.fromJson(json, Users.class);
+			if(CONSTANT.LOGIN_SIGN_OFF.equals(user.getLoginSign())){
+				goActivityAndFinish(LoginActivity.class);
+			} else {
+				goActivityAndFinish(MineActivity.class);
+			}
+		} else {
+			goActivityAndFinish(LoginActivity.class);
 		}
 	}
 	

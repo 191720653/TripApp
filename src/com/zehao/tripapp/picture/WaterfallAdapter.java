@@ -22,12 +22,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.zehao.constant.CONSTANT;
 import com.zehao.tripapp.R;
 
 public class WaterfallAdapter extends BaseAdapter {
 
-	ArrayList<String> list;
-	Context context;
+	private ArrayList<String> list;
+	private Context context;
 	private Drawable drawable;
 	//初始化图片加载库
 	DisplayImageOptions defaultOptions =
@@ -42,6 +43,10 @@ public class WaterfallAdapter extends BaseAdapter {
 		this.list = list;
 		this.context = context;
 		drawable = context.getResources().getDrawable(R.drawable.load_default);
+	}
+	
+	public void setList(ArrayList<String> list){
+		this.list = list;
 	}
 
 	@Override
@@ -76,8 +81,8 @@ public class WaterfallAdapter extends BaseAdapter {
 			holder = (Holder) view.getTag();
 		}
 
-		String url = list.get(position);
-		ImageLoader.getInstance().displayImage(url, holder.ivIcon, defaultOptions,
+		StringBuffer url = new StringBuffer(CONSTANT.BASE_ROOT_URL).append(list.get(position).replaceFirst(".", ""));
+		ImageLoader.getInstance().displayImage(url.toString(), holder.ivIcon, defaultOptions,
 				new ImageLoadingListener() {
 					@Override
 					public void onLoadingStarted(String imageUri, View view) {

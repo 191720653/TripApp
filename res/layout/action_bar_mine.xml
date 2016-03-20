@@ -1,26 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="48dip"
-    android:orientation="horizontal" >
+    android:layout_height="50dip"
+    android:orientation="horizontal"
+    android:background="@color/white" >
 
     <RelativeLayout
         android:id="@+id/action_bar_btn_back"
         android:onClick="onClick"
         android:layout_width="fill_parent"
-        android:layout_height="48dip"
+        android:layout_height="50dip"
+        android:layout_weight="1"
         android:paddingLeft="15dip"
         android:paddingStart="15dip"
-        android:paddingRight="1dip"
-        android:paddingEnd="1dip"
-        android:layout_weight="1" >
+        android:paddingRight="0dip"
+        android:paddingEnd="0dip" >
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="40dip"
-            android:layout_height="20dip"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_height="21dip"
+            android:clickable="false"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
             android:contentDescription="@string/descr_image"
@@ -34,37 +33,25 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/action_bar_check"
+        android:text="@string/button_mine"
         android:textColor="@color/main_yellow"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/action_bar_advice"
-        android:onClick="onClick"
-        android:clickable="true"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/action_bar_advice"
-        android:textColor="@color/gray"
         android:textSize="18sp" />
 
     <RelativeLayout
         android:id="@+id/action_bar_btn_share"
         android:onClick="onClick"
         android:layout_width="fill_parent"
-        android:layout_height="48dip"
-        android:paddingLeft="1dip"
-        android:paddingStart="1dip"
+        android:layout_height="50dip"
+        android:layout_weight="1"
+        android:paddingLeft="0dip"
+        android:paddingStart="0dip"
         android:paddingRight="15dip"
-        android:paddingEnd="15dip"
-        android:layout_weight="1" >
+        android:paddingEnd="15dip" >
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="15dip"
             android:layout_height="20dip"
+            android:clickable="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"

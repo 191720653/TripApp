@@ -34,6 +34,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -227,8 +228,7 @@ public class LoginActivity extends BaseActivity implements
 					String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
 					if(CONSTANT.CODE_168.equals(errorCode)){
 						JsonObject info = json.get(CONSTANT.USER_INFO).getAsJsonObject();
-						info.addProperty("createDate", info.get("createDates").getAsString());
-						Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+						Gson gson = new GsonBuilder().create();
 						Users user = gson.fromJson(info, Users.class);
 						System.out.println("返回结果转Uers：" + user.toString());
 						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS, info.toString());
@@ -236,7 +236,7 @@ public class LoginActivity extends BaseActivity implements
 						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_PASSWORD, user.getPassword());
 						writeXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_TOKEN, user.getToken());
 						// 登录成功，跳到主界面
-						goActivity(MainActivity.class);
+						goActivityAndFinish(MainActivity.class);
 						// finish();
 					}else if(CONSTANT.CODE_173.equals(errorCode)){
 						shortToastHandler(CONSTANT.CODE_173_TEXT);
@@ -387,6 +387,16 @@ public class LoginActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		// 不用系统自带ActionBar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			finish();
+			System.exit(0);
+		}
+		return false;
 	}
 
 }

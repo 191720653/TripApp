@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    android:background="@color/white"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/action_bar_btn_back"
+        android:onClick="onClick"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingBottom="15dip"
+        android:paddingTop="15dip" >
+
+        <ImageButton
+            android:layout_width="40dip"
+            android:layout_height="25dip"
+            android:layout_marginLeft="15dip"
+            android:layout_marginStart="15dip"
+            android:background="@color/transparent"
+            android:contentDescription="@string/descr_image"
+            android:scaleType="fitXY"
+            android:clickable="false"
+            android:src="@drawable/image_back" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/action_bar_title"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="12dip"
+        android:paddingTop="12dip"
+        android:text="@string/button_mine"
+        android:textColor="@color/main_yellow"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/action_bar_add"
+        android:onClick="onClick"
+        android:layout_weight="1" >
+
+        <TextView
+            android:clickable="false"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginEnd="15dip"
+            android:layout_marginRight="15dip"
+            android:gravity="end|center_vertical"
+            android:text="@string/button_add"
+            android:textColor="@color/main_yellow"
+            android:textSize="26sp" />
+    </RelativeLayout>
+
+</LinearLayout>

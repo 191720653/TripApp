@@ -33,5 +33,10 @@
        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="DialogAnimStyle" parent="android:Animation">
+		<item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
+		<item name="@android:windowExitAnimation">@anim/dialog_exit</item>
+	</style>
 
 </resources>

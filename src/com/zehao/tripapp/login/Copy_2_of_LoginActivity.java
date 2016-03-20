@@ -23,7 +23,6 @@ import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.register.SigninActivity;
-import com.zehao.view.CircleImageButton;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +48,7 @@ public class Copy_2_of_LoginActivity extends BaseActivity implements
 	private TextView tv_register;
 	private CheckBox cb_rem_password, cb_auto_login;
 	private Button btn_login;
-	private CircleImageButton btnQuit;
+	private ImageView btnQuit;
 	private String loginNameValue, passwordValue;
 	private ProgressDialog progressDialog;
 
@@ -95,7 +95,7 @@ public class Copy_2_of_LoginActivity extends BaseActivity implements
 		cb_rem_password = (CheckBox) findViewById(R.id.cb_rem_password);
 		cb_auto_login = (CheckBox) findViewById(R.id.cb_auto_login);
 		btn_login = (Button) findViewById(R.id.btn_login);
-		btnQuit = (CircleImageButton) findViewById(R.id.user_icon);
+		btnQuit = (ImageView) findViewById(R.id.user_icon);
 
 		btnQuit.setImageDrawable(getResources()
 				.getDrawable(R.drawable.ic_empty));
