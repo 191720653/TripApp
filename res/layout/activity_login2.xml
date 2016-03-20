@@ -65,6 +65,7 @@
             android:layout_width="110dip"
             android:layout_height="30dip"
             android:layout_alignLeft="@+id/et_password"
+            android:layout_alignStart="@+id/et_password"
             android:layout_below="@+id/et_password"
             android:layout_marginTop="20dip"
             android:background="@drawable/button_common_style"
@@ -77,6 +78,7 @@
             android:layout_width="110dip"
             android:layout_height="30dip"
             android:layout_alignRight="@+id/et_password"
+            android:layout_alignEnd="@+id/et_password"
             android:layout_below="@+id/et_password"
             android:layout_marginTop="20dip"
             android:background="@drawable/button_common_style"
@@ -101,18 +103,21 @@
             android:text="@string/login_third_patry_text"
             android:textColor="@color/main_orange" />
 
-        <com.zehao.view.CircleImageButton
+        <ImageView
             android:id="@+id/wechat_button"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_below="@+id/login_third_party"
             android:layout_marginBottom="20dip"
             android:layout_marginRight="10dip"
+            android:layout_marginEnd="10dip"
             android:layout_toLeftOf="@+id/qq_button"
+            android:layout_toStartOf="@+id/qq_button"
             android:onClick="onClick"
-            android:src="@drawable/image_wechat_logo" />
+            android:src="@drawable/image_wechat_logo"
+            android:contentDescription="@string/descr_image" />
 
-        <com.zehao.view.CircleImageButton
+        <ImageView
             android:id="@+id/qq_button"
             android:layout_width="50dip"
             android:layout_height="50dip"
@@ -120,18 +125,22 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dip"
             android:onClick="onClick"
-            android:src="@drawable/image_qq_logo" />
+            android:src="@drawable/image_qq_logo"
+            android:contentDescription="@string/descr_image" />
 
-        <com.zehao.view.CircleImageButton
+        <ImageView
             android:id="@+id/sina_button"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_below="@+id/login_third_party"
             android:layout_marginBottom="20dip"
             android:layout_marginLeft="10dip"
+            android:layout_marginStart="10dip"
             android:layout_toRightOf="@+id/qq_button"
+            android:layout_toEndOf="@+id/qq_button"
             android:onClick="onClick"
-            android:src="@drawable/image_weibo_logo" />
+            android:src="@drawable/image_weibo_logo"
+            android:contentDescription="@string/descr_image" />
     </RelativeLayout>
 
 </RelativeLayout>

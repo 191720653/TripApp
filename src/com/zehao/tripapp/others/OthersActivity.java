@@ -1,15 +1,24 @@
 package com.zehao.tripapp.others;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.zehao.base.BaseActivity;
+import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.Users;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.advice.AdviceLineActivity;
+import com.zehao.tripapp.login.LoginActivity;
+import com.zehao.tripapp.mine.MineActivity;
+import com.zehao.util.Tool;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
-import android.app.Activity;
 import android.content.Intent;
 
 /**
@@ -19,14 +28,11 @@ import android.content.Intent;
  * @date 2016年2月22日 下午10:06:49
  * @version V 1.0
  */
-public class OthersActivity extends Activity implements OnClickListener {
+public class OthersActivity extends BaseActivity implements OnClickListener {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// 不用系统自带ActionBar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_view_culture);
+	protected void initContentView(Bundle savedInstanceState) {
+		baseSetContentView(savedInstanceState, R.layout.activity_view_culture);
 	}
 
 	@Override
@@ -41,23 +47,23 @@ public class OthersActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.relative_build:{
-			show("中山市南区经典古建");
+			shortToastHandler("中山市南区经典古建");
 			break;
 			}
 		case R.id.relative_tree:{
-			show("中山市南区名木古树");
+			shortToastHandler("中山市南区名木古树");
 			break;
 			}
 		case R.id.relative_hero:{
-			show("中山市南区名人典故");
+			shortToastHandler("中山市南区名人典故");
 			break;
 			}
 		case R.id.relative_food:{
-			show("中山市南区名店美食");
+			shortToastHandler("中山市南区名店美食");
 			break;
 			}
 		case R.id.relative_custom:{
-			show("中山市南区民品民俗");
+			shortToastHandler("中山市南区民品民俗");
 			break;
 			}
 		case R.id.relative_advice:{
@@ -66,17 +72,18 @@ public class OthersActivity extends Activity implements OnClickListener {
 			break;
 			}
 		case R.id.action_bar_btn_back:{
-			show("返回主界面");
+			shortToastHandler("返回主界面");
 			finish();
 			break;
 			}
 		case R.id.action_bar_btn_share:{
-			show("中山市南区分享");
+			shortToastHandler("中山市南区分享");
 			break;
 			}
 		case R.id.action_bar_btn_mine:
 		case R.id.action_bar_btn_mines:{
-			show("中山市南区我的信息");
+			shortToastHandler("中山市南区我的信息");
+			mine();
 			break;
 			}
 		default:
@@ -84,14 +91,39 @@ public class OthersActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	public void show(String contents){
-		Toast.makeText(this, contents, Toast.LENGTH_SHORT).show();
-	}
-	
 	public void goForActivity(Class<?> clas){
 		Intent intent = new Intent(this, clas);
 		startActivity(intent);
 		this.finish();
+	}
+	
+	public void mine(){
+		String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+		if(!CONSTANT.NULL_STRING.equals(Tool.NVL(temp))){
+			JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+			Users user = gson.fromJson(json, Users.class);
+			if(CONSTANT.LOGIN_SIGN_OFF.equals(user.getLoginSign())){
+				goActivityAndFinish(LoginActivity.class);
+			} else {
+				goActivityAndFinish(MineActivity.class);
+			}
+		} else {
+			goActivityAndFinish(LoginActivity.class);
+		}
+	}
+
+	@Override
+	public void setBaseNoTitle() {
+		// TODO Auto-generated method stub
+		// 不用系统自带ActionBar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	protected void handler(Message msg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

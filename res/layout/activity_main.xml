@@ -12,21 +12,25 @@
         android:layout_weight="4"
         android:background="@drawable/image_nanqu" >
 
-        <ImageButton
+        <RelativeLayout
             android:id="@+id/main_culture"
-            android:layout_width="21dip"
-            android:layout_height="21dip"
+            android:onClick="onClick"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="13dip"
-            android:layout_marginStart="13dip"
-            android:layout_marginTop="13dip"
-            android:background="@color/transparent"
-            android:contentDescription="@string/descr_image"
-            android:scaleType="fitXY"
-            android:src="@drawable/image_menu"
-            android:onClick="onClick" />
+            android:layout_alignParentTop="true" >
+
+            <ImageButton
+                android:layout_width="21dip"
+                android:layout_height="21dip"
+                android:layout_centerInParent="true"
+                android:background="@color/transparent"
+                android:contentDescription="@string/descr_image"
+                android:clickable="false"
+                android:scaleType="fitXY"
+                android:src="@drawable/image_menu" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/main_textView_nanqu"
@@ -45,11 +49,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="10dip"
-            android:layout_marginRight="20dip"
             android:layout_marginEnd="20dip"
+            android:layout_marginRight="20dip"
             android:text="@string/main_sub_title"
             android:textColor="@android:color/white"
             android:textSize="25sp"
@@ -58,11 +62,11 @@
 
     <RelativeLayout
         android:id="@+id/main_liangdu"
-        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
-        android:baselineAligned="false" >
+        android:baselineAligned="false"
+        android:onClick="onClick" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -79,8 +83,8 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_toRightOf="@+id/view"
             android:layout_toEndOf="@+id/view"
+            android:layout_toRightOf="@+id/view"
             android:background="@drawable/image_liangdu" >
 
             <TextView
@@ -98,11 +102,11 @@
 
     <RelativeLayout
         android:id="@+id/main_beixi"
-        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
-        android:baselineAligned="false" >
+        android:baselineAligned="false"
+        android:onClick="onClick" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -114,10 +118,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dip"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="15dip"
+                android:layout_marginRight="15dip"
                 android:ems="1"
                 android:text="@string/main_tv_beixi"
                 android:textColor="@android:color/black"
@@ -139,11 +143,11 @@
 
     <RelativeLayout
         android:id="@+id/main_chengnan"
-        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
-        android:baselineAligned="false" >
+        android:baselineAligned="false"
+        android:onClick="onClick" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -160,8 +164,8 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_toRightOf="@+id/view_h"
             android:layout_toEndOf="@+id/view_h"
+            android:layout_toRightOf="@+id/view_h"
             android:background="@drawable/image_chengnan" >
 
             <TextView
@@ -178,11 +182,11 @@
 
     <RelativeLayout
         android:id="@+id/main_maling"
-        android:onClick="onClick"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="5"
-        android:baselineAligned="false" >
+        android:baselineAligned="false"
+        android:onClick="onClick" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -194,10 +198,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dip"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="15dip"
+                android:layout_marginRight="15dip"
                 android:ems="1"
                 android:text="@string/main_tv_maling"
                 android:textColor="@android:color/black"

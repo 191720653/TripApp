@@ -8,6 +8,8 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.achep.header2actionbar.FadingActionBarHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -18,8 +20,12 @@ import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.data.bean.Users;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.login.LoginActivity;
+import com.zehao.tripapp.mine.MineActivity;
+import com.zehao.util.Tool;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -100,10 +106,27 @@ public class AreaActivity extends BaseActivity implements
 		case R.id.action_bar_btn_mine:
 		case R.id.action_bar_btn_mines: {
 			show("中山市南区我的信息");
+			mine();
 			break;
 		}
 		default:
 			break;
+		}
+	}
+	
+	public void mine(){
+		String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+		if(!CONSTANT.NULL_STRING.equals(Tool.NVL(temp))){
+			JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+			Users user = gson.fromJson(json, Users.class);
+			if(CONSTANT.LOGIN_SIGN_OFF.equals(user.getLoginSign())){
+				goActivityAndFinish(LoginActivity.class);
+			} else {
+				goActivityAndFinish(MineActivity.class);
+			}
+		} else {
+			goActivityAndFinish(LoginActivity.class);
 		}
 	}
 

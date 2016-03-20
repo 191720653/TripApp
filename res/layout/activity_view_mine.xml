@@ -1,0 +1,200 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="12dip"
+    android:background="@drawable/image_main_background" >
+
+    <include
+        android:id="@+id/action_bar_advices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/action_bar_mine" >
+    </include>
+
+    <RelativeLayout
+        android:onClick="onClick"
+        android:id="@+id/mine_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar_advices"
+        android:layout_marginTop="12dip"
+        android:padding="12dip"
+        android:background="@drawable/relativelayout_border" >
+
+        <com.zehao.view.RoundImageView
+            android:id="@+id/mine_info_icon"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/image_main_logo" >
+        </com.zehao.view.RoundImageView>
+        
+        <TextView
+            android:id="@+id/mine_info_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginStart="8dip"
+            android:layout_toRightOf="@+id/mine_info_icon"
+            android:layout_toEndOf="@+id/mine_info_icon" 
+            android:textSize="18sp"
+            android:text="@string/info_name" />
+        
+        <TextView
+            android:id="@+id/mine_info_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginEnd="10dip"
+            android:layout_alignLeft="@+id/mine_info_name"
+            android:layout_alignStart="@+id/mine_info_name"
+            android:layout_below="@+id/mine_info_name"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:text="@string/info_sign" />
+        
+        <ImageView 
+            android:layout_width="12dip"
+            android:layout_height="12dip"
+            android:layout_marginTop="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/image_icon_arrow"
+            android:contentDescription="@string/descr_image" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:onClick="onClick"
+        android:id="@+id/mine_info_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dip"
+        android:padding="13dip"
+        android:layout_below="@+id/mine_info"
+        android:background="@drawable/relativelayout_border" >
+        
+        <ImageView 
+            android:id="@+id/mine_picture"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/image_mine"
+            android:contentDescription="@string/descr_image" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/mine_picture"
+            android:layout_toEndOf="@+id/mine_picture"
+            android:layout_marginLeft="12dip"
+            android:layout_marginStart="12dip"
+            android:textSize="18sp"
+            android:text="@string/info_picture" />
+        
+        <ImageView 
+            android:layout_width="12dip"
+            android:layout_height="12dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/image_icon_arrow"
+            android:contentDescription="@string/descr_image" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:onClick="onClick"
+        android:id="@+id/mine_advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dip"
+        android:padding="13dip"
+        android:layout_below="@+id/mine_info_picture"
+        android:background="@drawable/relativelayout_border" >
+        
+        <ImageView 
+            android:id="@+id/mine_advice_picture"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/image_mine"
+            android:contentDescription="@string/descr_image" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/mine_advice_picture"
+            android:layout_toEndOf="@+id/mine_advice_picture"
+            android:layout_marginLeft="12dip"
+            android:layout_marginStart="12dip"
+            android:textSize="18sp"
+            android:text="@string/info_advice" />
+        
+        <ImageView 
+            android:layout_width="12dip"
+            android:layout_height="12dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/image_icon_arrow"
+            android:contentDescription="@string/descr_image" />
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:onClick="onClick"
+        android:id="@+id/mine_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="13dip"
+        android:layout_below="@+id/mine_advice"
+        android:background="@drawable/relativelayout_border" >
+        
+        <ImageView 
+            android:id="@+id/mine_update_picture"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/image_mine"
+            android:contentDescription="@string/descr_image" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/mine_update_picture"
+            android:layout_toEndOf="@+id/mine_update_picture"
+            android:layout_marginLeft="12dip"
+            android:layout_marginStart="12dip"
+            android:textSize="18sp"
+            android:text="@string/info_update" />
+        
+        <ImageView 
+            android:layout_width="12dip"
+            android:layout_height="12dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/image_icon_arrow"
+            android:contentDescription="@string/descr_image" />
+        
+    </RelativeLayout>
+    
+    <Button
+        android:onClick="onClick"
+        android:id="@+id/mine_logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="12dip"
+        android:layout_marginRight="12dip"
+        android:text="@string/info_logout"
+        android:textColor="@drawable/button_text_red_style"
+        android:background="@drawable/button_logout_style" />
+
+</RelativeLayout>

@@ -2,13 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/image_main_background"
     tools:context=".WaterfallActivity" >
+    
+    <include
+        android:id="@+id/action_bar_advices"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        layout="@layout/action_bar_image" >
+    </include>
 
    	<com.huewu.pla.lib.MultiColumnPullToRefreshListView
    	    xmlns:pla="http://schemas.android.com/apk/res-auto"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar_advices"
         pla:plaColumnNumber="3"  
         pla:plaLandscapeColumnNumber="3" />
     

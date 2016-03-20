@@ -61,7 +61,7 @@
     <string name="register_userinfo_input_user_note_hint">自定义简介信息，给你带来更多吸引</string>
     <string name="register_userinfo_input_user_account_hint">请牢记修改后的账号，不要轻易透露</string>
     <string name="register_userinfo_input_user_password_hint">请牢记修改后的密码，不要轻易透露</string>
-    <string name="register_userinfo_sign_up">注册</string>
+    <string name="register_userinfo_sign_up">提交</string>
     <string name="register_userinfo_girl">女</string>
     <string name="register_userinfo_boy">男</string>
     <string name="register_userinfo_user_icon">头像</string>
@@ -71,6 +71,7 @@
     <string name="register_userinfo_sign_user_info">用户信息</string>
     
     <string name="button_mine" translatable="false">我的</string>
+    <string name="button_add" translatable="false">+</string>
     
     <!-- Guide Text -->
     <string name="guide_first" translatable="false">寻找古村的记忆</string>
@@ -118,4 +119,11 @@
     <string name="view_content_person" translatable="false">\u3000马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。</string>
     <string name="view_content_activity" translatable="false">\u3000马应彪早年家庭贫苦，为了生计去澳洲悉尼谋生，在澳洲皈依基督教。1900年，筹集了一笔资金在香港筹办先施百货公司自任总监督。1914年，在广州长堤建立先施粤行，并附设东亚大酒店，总投资额为港币100万元，取得巨大成功。1917年，先施公司的业务扩展到上海。1921年，与蔡兴等创办了香港国民商业储蓄银行。</string>
 
+    <!-- Mine Text -->
+    <string name="info_name" translatable="false">昵称</string>
+    <string name="info_sign" translatable="false">签名签名签名签名签名签名签名签名签名签名签名签名签名签名</string>
+    <string name="info_picture" translatable="false">我的相册</string>
+    <string name="info_advice" translatable="false">意见反馈</string>
+    <string name="info_update" translatable="false">检测更新</string>
+    <string name="info_logout" translatable="false">退出登录</string>
 </resources>

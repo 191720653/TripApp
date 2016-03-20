@@ -188,7 +188,7 @@ public abstract class BaseActivity extends Activity {
 		editor.commit();
 	}
 
-	protected static UIHandler handler = new UIHandler(Looper.getMainLooper());
+	protected UIHandler handler = new UIHandler(Looper.getMainLooper());
 
 	// 数据回调接口，都传递Domine的子类实体
 	protected IDataCallback<MData<? extends Domine>> dataCallback;

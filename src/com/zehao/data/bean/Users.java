@@ -1,8 +1,6 @@
 package com.zehao.data.bean;
 
 import android.annotation.SuppressLint;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Users entity. @author MyEclipse Persistence Tools
@@ -20,7 +18,6 @@ public class Users implements java.io.Serializable {
 	private String nickName;
 	private String trueName;
 	private Integer sex;
-	private Date birthday;
 	private String icon;
 	private String phone;
 	private String email;
@@ -33,8 +30,6 @@ public class Users implements java.io.Serializable {
 	private String type;
 	private String typeId;
 	private String loginSign;
-	private Date createDate;
-	private Date lastUpdate;
 	private String remark;
 	
 	private String birthdays;
@@ -51,17 +46,16 @@ public class Users implements java.io.Serializable {
 
 	/** full constructor */
 	public Users(String account, String password, String nickName,
-			String trueName, Integer sex, Date birthday, String icon,
+			String trueName, Integer sex, String birthday, String icon,
 			String phone, String email, String qq, String wechat, String sina, String info,
 			Integer sign,  String token, String type,
-			String typeId, String loginSign, Date createDate, Date lastUpdate, String remark) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String typeId, String loginSign, String createDate, String lastUpdate, String remark) {
 		this.account = account;
 		this.password = password;
 		this.nickName = nickName;
 		this.trueName = trueName;
 		this.sex = sex;
-		this.birthdays = simpleDateFormat.format(birthday);
+		this.birthdays = birthday;
 		this.icon = icon;
 		this.phone = phone;
 		this.email = email;
@@ -73,8 +67,8 @@ public class Users implements java.io.Serializable {
 		this.type = type;
 		this.typeId = typeId;
 		this.loginSign = loginSign;
-		this.createDates = simpleDateFormat.format(createDate);
-		this.lastUpdates = simpleDateFormat.format(lastUpdate);
+		this.createDates = createDate;
+		this.lastUpdates = lastUpdate;
 		this.remark = remark;
 		this.sexs = forSexs();
 		this.signs = forSigns();
@@ -132,15 +126,6 @@ public class Users implements java.io.Serializable {
 		this.sexs = forSexs();
 	}
 
-	public Date getBirthday() {
-		return this.birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-		this.birthdays = birthday==null?null:new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(birthday);
-	}
-
 	public String getIcon() {
 		return this.icon;
 	}
@@ -196,24 +181,6 @@ public class Users implements java.io.Serializable {
 	public void setSign(Integer sign) {
 		this.sign = sign;
 		this.signs = forSigns();
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-		this.createDates = createDate==null?null:new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(createDate);
-	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-		this.lastUpdates = lastUpdate==null?null:new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastUpdate);
 	}
 
 	public String getRemark() {
@@ -336,13 +303,12 @@ public class Users implements java.io.Serializable {
 	public String toString() {
 		return "Users [userId=" + userId + ", account=" + account
 				+ ", password=" + password + ", nickName=" + nickName
-				+ ", trueName=" + trueName + ", sex=" + sex + ", birthday="
-				+ birthday + ", icon=" + icon + ", phone=" + phone + ", email="
+				+ ", trueName=" + trueName + ", sex=" + sex 
+				+ ", icon=" + icon + ", phone=" + phone + ", email="
 				+ email + ", qq=" + qq + ", wechat=" + wechat + ", sina="
 				+ sina + ", info=" + info + ", sign=" + sign + ", token="
 				+ token + ", type=" + type + ", typeId=" + typeId
-				+ ", loginSign=" + loginSign + ", createDate=" + createDate
-				+ ", lastUpdate=" + lastUpdate + ", remark=" + remark
+				+ ", loginSign=" + loginSign + ", remark=" + remark
 				+ ", birthdays=" + birthdays + ", createDates=" + createDates
 				+ ", lastUpdates=" + lastUpdates + ", signs=" + signs
 				+ ", sexs=" + sexs + "]";
