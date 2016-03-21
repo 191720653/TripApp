@@ -1036,11 +1036,12 @@ int style AndroidImageSlider_Attractive_Rect_Blue 0x7f060001
 int style AndroidImageSlider_Corner_Oval_Orange 0x7f060000
 int style AndroidImageSlider_Magnifier_Oval_Black 0x7f060002
 int style AppBaseTheme 0x7f060004
-int style AppHeaderTheme 0x7f060005
+int style AppHeaderTheme 0x7f060006
 int style AppTheme 0x7f060003
-int style CommonDialog 0x7f060006
-int style DialogAnimStyle 0x7f060008
-int style WhiteDialog 0x7f060007
+int style AppThemeNoTitle 0x7f060005
+int style CommonDialog 0x7f060007
+int style DialogAnimStyle 0x7f060009
+int style WhiteDialog 0x7f060008
 int[] styleable AbsListView { 0x7f010074, 0x7f010075, 0x7f010076, 0x7f010077, 0x7f010078, 0x7f010079, 0x7f01007a, 0x7f01007b, 0x7f01007c, 0x7f01007d, 0x7f01007e }
 int styleable AbsListView_cacheColorHint 6
 int styleable AbsListView_choiceMode 9
