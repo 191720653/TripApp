@@ -1,12 +1,14 @@
 package com.zehao.base;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
 import com.zehao.tripapp.R;
 import com.zehao.util.IHandler;
 import com.zehao.util.UIHandler;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -15,6 +17,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
@@ -285,12 +288,20 @@ public abstract class BaseActivity extends Activity {
 			 */
 			menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 			// 为侧滑菜单设置布局
-			menu.setMenu(R.layout.menu_main);
+			menu.setMenu(R.layout.menu_left);
+			menu.setBehindCanvasTransformer(new CanvasTransformer() {
+				@Override
+				public void transformCanvas(Canvas canvas, float percentOpen) {// percentOpen 滑动菜单栏打开时的百分比值
+					// TODO Auto-generated method stub
+					float scale = (float) (percentOpen * 0.25 + 0.75);
+	        		canvas.scale(scale, scale, canvas.getWidth() / 2, canvas.getHeight() / 2);
+				}
+			});
 		} else {
 
 		}
 	}
-
+	
 	/**
 	 * 让子类处理消息
 	 * @param msg

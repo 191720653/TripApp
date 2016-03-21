@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">TripApp</string>
+    <string name="app_name" translatable="false">南区导览</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="hello_world" translatable="false">Hello world!</string>
     
@@ -72,6 +72,7 @@
     
     <string name="button_mine" translatable="false">我的</string>
     <string name="button_add" translatable="false">+</string>
+    <string name="give_advice" translatable="false">输入反馈内容</string>
     
     <!-- Guide Text -->
     <string name="guide_first" translatable="false">寻找古村的记忆</string>

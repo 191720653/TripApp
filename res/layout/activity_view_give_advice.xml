@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/image_main_background" >
+
+    <include
+        android:id="@+id/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/action_bar_signup"
+        android:background="@color/white" >
+    </include>
+
+    <EditText 
+        android:id="@+id/suggest"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dip"
+        android:background="@null"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:textSize="14sp"
+        android:hint="@string/give_advice" />
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.zehao.view;
 
 import com.zehao.tripapp.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,8 +21,6 @@ import android.widget.TextView;
 
 /**
  * 可进行下拉刷新的自定义控件。
- * 
- * @author guolin
  * 
  */
 @SuppressLint({ "ClickableViewAccessibility", "InflateParams" })
@@ -167,7 +166,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 	/**
 	 * 是否已加载过一次layout，这里onLayout中的初始化只需加载一次
 	 */
-	private boolean loadOnce;
+	private boolean loadOnce = false;
 
 	/**
 	 * 当前是否可以下拉，只有ListView滚动到头的时候才允许下拉
@@ -262,6 +261,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 					|| currentStatus == STATUS_RELEASE_TO_REFRESH) {
 				updateHeaderView();
 				// 当前正处于下拉或释放状态，要让ListView失去焦点，否则被点击的那一项会一直处于选中状态
+				selfListView.isRefreshing = true;// 防止多次getview
 				selfListView.setPressed(false);
 				selfListView.setFocusable(false);
 				selfListView.setFocusableInTouchMode(false);
@@ -422,7 +422,6 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 	/**
 	 * 正在刷新的任务，在此任务中会去回调注册进来的下拉刷新监听器。
 	 * 
-	 * @author guolin
 	 */
 	class RefreshingTask extends AsyncTask<Void, Integer, Void> {
 
@@ -458,7 +457,6 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 	/**
 	 * 隐藏下拉头的任务，当未进行下拉刷新或下拉刷新完成后，此任务将会使下拉头重新隐藏。
 	 * 
-	 * @author guolin
 	 */
 	class HideHeaderTask extends AsyncTask<Void, Integer, Integer> {
 
@@ -508,7 +506,6 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 	/**
 	 * 下拉刷新的监听器，使用下拉刷新的地方应该注册此监听器来获取刷新回调。
 	 * 
-	 * @author guolin
 	 */
 	public interface PullToRefreshListener {
 

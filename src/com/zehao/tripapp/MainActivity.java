@@ -2,15 +2,24 @@ package com.zehao.tripapp;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Domine;
 import com.zehao.data.bean.Employee;
 import com.zehao.data.bean.IDataCallback;
 import com.zehao.data.bean.MData;
+import com.zehao.data.bean.Users;
 import com.zehao.tripapp.R;
+import com.zehao.tripapp.advice.AdviceLineActivity;
 import com.zehao.tripapp.area.AreaActivity;
-import com.zehao.tripapp.others.OthersActivity;
+import com.zehao.tripapp.login.LoginActivity;
+import com.zehao.tripapp.mine.MineActivity;
+import com.zehao.tripapp.others.SortActivity;
+import com.zehao.util.Tool;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,15 +40,12 @@ import android.view.Window;
 public class MainActivity extends BaseActivity implements
 		IDataCallback<MData<? extends Domine>>, OnClickListener {
 
-	// private ImageButton cultureButton;
-
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
 		baseSetContentView(savedInstanceState, R.layout.activity_main);
-
-		// cultureButton = (ImageButton) findViewById(R.id.main_culture);
+		addLeftMenu(true);
 
 	}
 
@@ -47,9 +53,52 @@ public class MainActivity extends BaseActivity implements
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
+		case R.id.relative_build:{
+			shortToastHandler("中山市南区经典古建");
+			Bundle bundle = new Bundle();
+			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_BUILD);
+			goActivity(SortActivity.class, bundle);
+			break;
+			}
+		case R.id.relative_tree:{
+			shortToastHandler("中山市南区名木古树");
+			Bundle bundle = new Bundle();
+			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_TREE);
+			goActivity(SortActivity.class, bundle);
+			break;
+			}
+		case R.id.relative_hero:{
+			shortToastHandler("中山市南区名人典故");
+			Bundle bundle = new Bundle();
+			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_PERSON);
+			goActivity(SortActivity.class, bundle);
+			break;
+			}
+		case R.id.relative_food:{
+			shortToastHandler("中山市南区名店美食");
+			break;
+			}
+		case R.id.relative_custom:{
+			shortToastHandler("中山市南区民品民俗");
+			Bundle bundle = new Bundle();
+			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_CUSTOM);
+			goActivity(SortActivity.class, bundle);
+			break;
+			}
+		case R.id.relative_advice:{
+			// show("中山市南区路线推荐");
+			startActivity(new Intent(this, AdviceLineActivity.class));
+			break;
+			}
+		case R.id.action_bar_btn_mine:
+		case R.id.action_bar_btn_mines:{
+			shortToastHandler("中山市南区我的信息");
+			mine();
+			break;
+			}
 		case R.id.main_culture: {
-			// 跳往介绍南区的其它情况
-			goActivity(OthersActivity.class);
+			// 显示左侧菜单
+			menu.showMenu();
 			break;
 		}
 		case R.id.main_liangdu: {
@@ -82,6 +131,22 @@ public class MainActivity extends BaseActivity implements
 		}
 		default:
 			break;
+		}
+	}
+	
+	public void mine(){
+		String temp = readXML(CONSTANT.INFO_DATA, CONSTANT.INFO_DATA_USERS);
+		if(!CONSTANT.NULL_STRING.equals(Tool.NVL(temp))){
+			JsonObject json = new JsonParser().parse(temp).getAsJsonObject();
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+			Users user = gson.fromJson(json, Users.class);
+			if(CONSTANT.LOGIN_SIGN_OFF.equals(user.getLoginSign())){
+				goActivityAndFinish(LoginActivity.class);
+			} else {
+				goActivity(MineActivity.class);
+			}
+		} else {
+			goActivityAndFinish(LoginActivity.class);
 		}
 	}
 

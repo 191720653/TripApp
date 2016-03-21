@@ -5,12 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.27.49.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://172.16.113.1:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 服务器根基本地址
 	 */
-	public static final String BASE_ROOT_URL = "http://172.27.49.1:8080/TripServer";
+	public static final String BASE_ROOT_URL = "http://172.16.113.1:8080/TripServer";
 	
 	/**
 	 * 结果KEY
@@ -180,6 +180,52 @@ public class CONSTANT {
 	 * 获取数据 key: get_data
 	 */
 	public static final String APP_GET_DATA = "get_data";
+	
+	/****************************************************************
+	    *********************** 用户反馈  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 反馈的命令 value: user_suggest
+	 */
+	public static final String USER_SUGGEST = "user_suggest";
+	/**
+	 * 反馈的内容 key: user_suggest_content
+	 */
+	public static final String USER_SUGGEST_CONTENT = "user_suggest_content";
+	
+	/****************************************************************
+	    *********************** 分类变量  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 分类的命令 value: sort_view
+	 */
+	public static final String SORT_VIEW = "sort_view";
+	/**
+	 * 分类的列表 value: sort_view_list
+	 */
+	public static final String SORT_VIEW_LIST = "sort_view_list";
+	/**
+	 * 分类的类型 value: sort_view_type
+	 */
+	public static final String SORT_VIEW_TYPE = "sort_view_type";
+	/**
+	 * 分类的类型经典古建 value: sort_view_type_build
+	 */
+	public static final String SORT_VIEW_TYPE_BUILD = "经典古建";
+	/**
+	 * 分类的类型名木古树 value: sort_view_type_tree
+	 */
+	public static final String SORT_VIEW_TYPE_TREE = "名木古树";
+	/**
+	 * 分类的类型名人典故 value: sort_view_type_person
+	 */
+	public static final String SORT_VIEW_TYPE_PERSON = "名人典故";
+	/**
+	 * 分类的类型民品民俗 value: sort_view_type_custom
+	 */
+	public static final String SORT_VIEW_TYPE_CUSTOM = "民品民俗";
 	
 	/****************************************************************
 	    *********************** 点赞变量  **************************

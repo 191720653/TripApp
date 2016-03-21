@@ -26,6 +26,7 @@ import com.zehao.tripapp.R;
 import com.zehao.tripapp.info.InfoActivity;
 import com.zehao.tripapp.login.LoginActivity;
 import com.zehao.tripapp.picture.WaterfallActivity;
+import com.zehao.tripapp.suggest.SuggestActivity;
 import com.zehao.util.Tool;
 import com.zehao.view.RoundImageView;
 
@@ -101,6 +102,7 @@ public class MineActivity extends BaseActivity implements
 			}
 		case R.id.mine_advice:{
 			shortToastHandler("进入提交意见反馈");
+			goActivity(SuggestActivity.class);
 			break;
 			}
 		case R.id.mine_update:{
