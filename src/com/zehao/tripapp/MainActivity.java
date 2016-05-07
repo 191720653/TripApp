@@ -15,6 +15,7 @@ import com.zehao.data.bean.MData;
 import com.zehao.data.bean.Users;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.advice.AdviceLineActivity;
+import com.zehao.tripapp.all.AllActivity;
 import com.zehao.tripapp.area.AreaActivity;
 import com.zehao.tripapp.login.LoginActivity;
 import com.zehao.tripapp.mine.MineActivity;
@@ -70,19 +71,26 @@ public class MainActivity extends BaseActivity implements
 		case R.id.relative_hero:{
 			shortToastHandler("中山市南区名人典故");
 			Bundle bundle = new Bundle();
-			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_PERSON);
-			goActivity(SortActivity.class, bundle);
+			bundle.putString(CONSTANT.OTHER_TYPE, "1");
+			goActivity(AllActivity.class, bundle);
+//			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_PERSON);
+//			goActivity(SortActivity.class, bundle);
 			break;
 			}
 		case R.id.relative_food:{
 			shortToastHandler("中山市南区名店美食");
+			Bundle bundle = new Bundle();
+			bundle.putString(CONSTANT.OTHER_TYPE, "2");
+			goActivity(AllActivity.class, bundle);
 			break;
 			}
 		case R.id.relative_custom:{
 			shortToastHandler("中山市南区民品民俗");
 			Bundle bundle = new Bundle();
-			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_CUSTOM);
-			goActivity(SortActivity.class, bundle);
+			bundle.putString(CONSTANT.OTHER_TYPE, "3");
+			goActivity(AllActivity.class, bundle);
+//			bundle.putString(CONSTANT.SORT_VIEW_TYPE, CONSTANT.SORT_VIEW_TYPE_CUSTOM);
+//			goActivity(SortActivity.class, bundle);
 			break;
 			}
 		case R.id.relative_advice:{

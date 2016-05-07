@@ -5,12 +5,12 @@ public class CONSTANT {
 	/**
 	 * 服务器基本地址
 	 */
-	public static final String BASE_URL = "http://172.16.113.1:8080/TripServer/ZZHPAPP";
+	public static final String BASE_URL = "http://192.168.1.102:8080/TripServer/ZZHPAPP";
 	
 	/**
 	 * 服务器根基本地址
 	 */
-	public static final String BASE_ROOT_URL = "http://172.16.113.1:8080/TripServer";
+	public static final String BASE_ROOT_URL = "http://192.168.1.102:8080/TripServer";
 	
 	/**
 	 * 结果KEY
@@ -182,6 +182,23 @@ public class CONSTANT {
 	public static final String APP_GET_DATA = "get_data";
 	
 	/****************************************************************
+	    *********************** 其它信息  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 其它信息的命令 value: other_info
+	 */
+	public static final String OTHER_INFO = "other_info";
+	/**
+	 * 获取其它的类型 key: other_type
+	 */
+	public static final String OTHER_TYPE = "other_type";
+	/**
+	 * 获取其它的列表 key: other_list
+	 */
+	public static final String OTHER_LIST = "other_list";
+	
+	/****************************************************************
 	    *********************** 用户反馈  **************************
 	 ****************************************************************/
 	
@@ -193,6 +210,36 @@ public class CONSTANT {
 	 * 反馈的内容 key: user_suggest_content
 	 */
 	public static final String USER_SUGGEST_CONTENT = "user_suggest_content";
+	
+	/****************************************************************
+	    *********************** 旅游类型  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 获取旅游类型的命令 value: trip_type_order
+	 */
+	public static final String TRIP_TYPE_ORDER = "trip_type_order";
+	/**
+	 * 旅游类型列表 key: trip_type_data
+	 */
+	public static final String TRIP_TYPE_DATA = "trip_type_data";
+	
+	/****************************************************************
+	    *********************** 旅游信息  **************************
+	 ****************************************************************/
+	
+	/**
+	 * 获取旅游信息的命令 value: trip_info_order
+	 */
+	public static final String TRIP_INFO_ORDER = "trip_info_order";
+	/**
+	 * 旅游信息列表 key: trip_info_data
+	 */
+	public static final String TRIP_INFO_DATA = "trip_info_data";
+	/**
+	 * 获取类型的旅游信息列表 key: trip_type_id
+	 */
+	public static final String TRIP_TYPE_ID = "trip_type_id";
 	
 	/****************************************************************
 	    *********************** 分类变量  **************************
@@ -251,6 +298,10 @@ public class CONSTANT {
 	 * 点赞的类型2 value: like_type_village
 	 */
 	public static final String LIKE_TYPE_VILLAGE = "like_type_village";
+	/**
+	 * 点赞的类型3 value: like_type_other
+	 */
+	public static final String LIKE_TYPE_OTHER = "like_type_other";
 	/**
 	 * 点赞的时间戳 key: like_sign
 	 */

@@ -1,13 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="192dip" >
+    android:layout_height="192dip"
+    android:paddingLeft="15dip"
+    android:paddingRight="15dip"
+    android:paddingTop="15dip" >
 
     <ImageView
         android:id="@+id/item_advice_image"
         android:layout_width="fill_parent"
         android:layout_height="180dip"
-        android:layout_marginBottom="12dip"
+        android:scaleType="fitXY"
         android:contentDescription="@string/descr_image"
         android:src="@drawable/image_nanqu" />
     

@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_login: {
+			// goActivityAndFinish(MainActivity.class);
 			// 点击登录，跳出进度对话框
 			account = accountEditText.getText().toString();
 			password = passwordEditText.getText().toString();

@@ -1,8 +1,18 @@
 package com.zehao.tripapp.advice;
 
+import java.util.List;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.TripType;
 import com.zehao.tripapp.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,27 +25,40 @@ public class AdviceListAdapter extends BaseAdapter {
 	
 	private LayoutInflater listContainer;
 	
+	private List<TripType> tripTypes;
+	
+	private DisplayImageOptions options;
+	
 	public final class ListItemView { // 自定义控件集合
 		public ImageView image;
 		public TextView title;
 	}
 	
-	public String[] title = {"孝道文化游","一日游","亲子一日游","节假游"};
-	
-	public AdviceListAdapter(Context context){
+	public AdviceListAdapter(Context context, List<TripType> tripTypes){
 		listContainer = LayoutInflater.from(context);
+		this.tripTypes = tripTypes;
+		options = new DisplayImageOptions.Builder()
+		.showImageForEmptyUri(R.drawable.ic_empty)
+		.showImageOnFail(R.drawable.ic_error)
+		.resetViewBeforeLoading(true)
+		.cacheOnDisk(true)
+		.cacheInMemory(true)
+		.imageScaleType(ImageScaleType.EXACTLY)
+		.bitmapConfig(Bitmap.Config.RGB_565)
+		.displayer(new FadeInBitmapDisplayer(50))
+		.build();
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return title.length;
+		return tripTypes.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return null;
+		return tripTypes.get(position);
 	}
 
 	@Override
@@ -63,8 +86,8 @@ public class AdviceListAdapter extends BaseAdapter {
 		System.out.println("设置文字和图片");
 
 		// 设置文字和图片
-		listItemView.title.setText(title[position]);
-		listItemView.image.setImageResource(R.drawable.image_nanqu);
+		listItemView.title.setText(tripTypes.get(position).getTypeTitle());
+		ImageLoader.getInstance().displayImage(CONSTANT.BASE_ROOT_URL + tripTypes.get(position).getTypeLogo().replaceFirst(".", ""), listItemView.image, options);
 		
 		return convertView;
 	}

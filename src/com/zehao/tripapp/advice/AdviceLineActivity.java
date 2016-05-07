@@ -1,37 +1,44 @@
 package com.zehao.tripapp.advice;
 
+import java.util.List;
+
+import org.apache.http.Header;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zehao.base.BaseActivity;
 import com.zehao.constant.CONSTANT;
+import com.zehao.data.bean.TripType;
 import com.zehao.data.bean.Users;
+import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.login.LoginActivity;
 import com.zehao.tripapp.mine.MineActivity;
+import com.zehao.tripapp.tripinfo.TripInfoActivity;
 import com.zehao.util.Tool;
-import com.zehao.view.RefreshableView;
-import com.zehao.view.SelfListView;
-import com.zehao.view.RefreshableView.PullToRefreshListener;
-import com.zehao.view.SelfListView.OnLoadListener;
 
-public class AdviceLineActivity extends BaseActivity implements OnClickListener, OnLoadListener {
+public class AdviceLineActivity extends BaseActivity implements OnClickListener {
 	
-	private RefreshableView refreshableView;
-	private SelfListView selfListView;
+	private ListView listView;
 	private AdviceListAdapter adviceListAdapter;
 	private TextView textViewTitle, textViewAdvice;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -46,34 +53,9 @@ public class AdviceLineActivity extends BaseActivity implements OnClickListener,
 			textViewTitle.setVisibility(View.GONE);
 		} else  textViewTitle.setTextColor(this.getResources().getColor(R.color.gray));
 		textViewAdvice.setTextColor(this.getResources().getColor(R.color.main_yellow));
-		
-		refreshableView = (RefreshableView) findViewById(R.id.refreshable_view);
-		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
-			@Override
-			public void onRefresh() {
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				refreshableView.finishRefreshing();
-			}
-		}, 0);
 
-		
-		selfListView = (SelfListView) findViewById(R.id.list_view);
-		adviceListAdapter = new AdviceListAdapter(this);
-		selfListView.setAdapter(adviceListAdapter);
-		selfListView.setDividerHeight(0);
-		selfListView.setOnLoadListener(this);
-		selfListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				shortToastHandler("点击了推荐路线：" + arg2);
-			}
-		});
+		handler.sendEmptyMessage(CONSTANT.ACTION_SHOW_DIALOG);
+		getData();
 		
 	}
 
@@ -86,7 +68,16 @@ public class AdviceLineActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void handler(Message msg) {
 		// TODO Auto-generated method stub
-		
+		switch (msg.what) {
+		case CONSTANT.ACTION_SHOW_DIALOG:
+			progressDialog = ProgressDialog.show(this, "获取数据", "正在联网,请稍候......");
+			break;
+		case CONSTANT.ACTION_DISMISS_DIALOG:
+			progressDialog.dismiss();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -129,17 +120,56 @@ public class AdviceLineActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	@Override
-	public void onLoad() {
-		// TODO Auto-generated method stub
-		// 为了显示效果，采用延迟加载
-		new Handler().postDelayed(new Runnable() {
+	public void getData(){
+		String url = "/AppTripType_getTripTypeListAction.action";
+		JsonObject json = new JsonObject();
+		json.addProperty(CONSTANT.APP_GET_DATA, CONSTANT.TRIP_TYPE_ORDER);
+		
+		RequestParams params = new RequestParams();
+		params.put(CONSTANT.DATA, json.toString());
+		
+		System.out.println("App发送数据：" + json.toString());
+		HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
 			@Override
-			public void run() {
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 				// TODO Auto-generated method stub
-				selfListView.loadComplete();
+				JsonObject json = (JsonObject) new JsonParser()
+				.parse(new String(arg2));
+				System.out.println("服务器返回数据：" + json);
+				String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
+				if (CONSTANT.CODE_168.equals(errorCode)) {
+					Gson gson = new GsonBuilder().create();
+					List<TripType> tripTypes = gson.fromJson(json.get(CONSTANT.TRIP_TYPE_DATA)
+							.getAsJsonArray(),new TypeToken<List<TripType>>() {}.getType());
+					
+					listView = (ListView) findViewById(R.id.list_view);
+					adviceListAdapter = new AdviceListAdapter(AdviceLineActivity.this, tripTypes);
+					listView.setAdapter(adviceListAdapter);
+					listView.setDividerHeight(0);
+					listView.setOnItemClickListener(new OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+								long arg3) {
+							// TODO Auto-generated method stub
+							shortToastHandler("点击了推荐路线：" + arg2);
+							Bundle bundle = new Bundle();
+							bundle.putInt(CONSTANT.TRIP_TYPE_ID, ((TripType)adviceListAdapter.getItem(arg2)).getTypeId());
+							goActivity(TripInfoActivity.class, bundle);
+						}
+					});
+					handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+				} else {
+					handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+					shortToastHandler(CONSTANT.OTHER_ERROR);
+				}
 			}
-		}, 3000);
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				// TODO Auto-generated method stub
+				handler.sendEmptyMessage(CONSTANT.ACTION_DISMISS_DIALOG);
+				shortToastHandler(CONSTANT.OTHER_ERROR);
+			}
+		});
 	}
 
 }

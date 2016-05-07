@@ -3,38 +3,31 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/image_main_background" >
-    
-     <include
+
+    <include
         android:id="@+id/action_bar_advices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         layout="@layout/action_bar_advice" >
     </include>
 
-    <com.zehao.view.RefreshableView
-        android:id="@+id/refreshable_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <RelativeLayout
         android:layout_below="@+id/action_bar_advices"
-        android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-        <RelativeLayout
+        <ListView
+            android:id="@+id/list_view"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="match_parent" >
+        </ListView>
 
-            <com.zehao.view.SelfListView
-                android:id="@+id/list_view"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent" >
-            </com.zehao.view.SelfListView>
-
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                layout="@layout/action_bar_bottom" >
-            </include>
-        </RelativeLayout>
-    </com.zehao.view.RefreshableView>
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            layout="@layout/action_bar_bottom" >
+        </include>
+    </RelativeLayout>
 
 </RelativeLayout>

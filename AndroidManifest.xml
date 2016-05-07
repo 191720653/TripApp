@@ -105,9 +105,13 @@
         <!-- 其它-->
         <activity android:name="com.zehao.tripapp.others.OthersActivity" />
         <activity android:name="com.zehao.tripapp.others.SortActivity" />
+        <activity android:name="com.zehao.tripapp.all.AllActivity" />
+        <activity android:name="com.zehao.tripapp.all.AllDetailActivity" />
         
         <!-- 路线推荐-->
         <activity android:name="com.zehao.tripapp.advice.AdviceLineActivity" />
+        <!-- 路线列表-->
+        <activity android:name="com.zehao.tripapp.tripinfo.TripInfoActivity" />
         
         <!-- 我的信息-->
         <activity android:name="com.zehao.tripapp.mine.MineActivity" />
