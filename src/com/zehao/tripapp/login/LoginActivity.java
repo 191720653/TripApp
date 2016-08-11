@@ -30,8 +30,8 @@ import com.zehao.tripapp.LastActivity;
 import com.zehao.tripapp.MainActivity;
 import com.zehao.tripapp.R;
 import com.zehao.tripapp.register.SigninActivity;
+import com.zehao.view.LoadingDialog;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity implements
 
 	private String account, password, platform;
 	private EditText accountEditText, passwordEditText;
-	private ProgressDialog progressDialog;
+	private LoadingDialog loadingDialog;
 
 	@Override
 	protected void initContentView(Bundle savedInstanceState) {
@@ -180,7 +180,7 @@ public class LoginActivity extends BaseActivity implements
 			}
 		});
 		// 关闭SSO授权，即关闭客户端授权，通过网页授权
-		weibo.SSOSetting(true);
+		// weibo.SSOSetting(true);
 		weibo.showUser(null);
 	}
 
@@ -323,10 +323,11 @@ public class LoginActivity extends BaseActivity implements
 	protected void handler(Message msg) { // 我们可以处理数据消息了
 		switch (msg.what) {
 		case CONSTANT.ACTION_SHOW_DIALOG:
-			progressDialog = ProgressDialog.show(this, "登录", "正在联网,请稍候......");
+			loadingDialog = new LoadingDialog(this);
+			loadingDialog.show();
 			break;
 		case CONSTANT.ACTION_DISMISS_DIALOG:
-			progressDialog.dismiss();
+			loadingDialog.dismiss();
 			break;
 		case 0:
 			break;

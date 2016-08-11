@@ -33,11 +33,14 @@ public class WaterfallAdapter extends BaseAdapter {
 	//初始化图片加载库
 	DisplayImageOptions defaultOptions =
 		        new DisplayImageOptions.Builder()
-		            .cacheOnDisk(true)//图片存本地
-		            .cacheInMemory(true)
-		            .displayer(new FadeInBitmapDisplayer(10))
-		            .bitmapConfig(Bitmap.Config.RGB_565)
-		            .build();
+				.showImageOnLoading(R.drawable.load_default)
+				.showImageForEmptyUri(R.drawable.load_default)
+				.showImageOnFail(R.drawable.load_default)
+		        .cacheOnDisk(true)//图片存本地
+		        .cacheInMemory(true)
+		        .displayer(new FadeInBitmapDisplayer(10))
+		        .bitmapConfig(Bitmap.Config.RGB_565)
+		        .build();
 
 	public WaterfallAdapter(ArrayList<String> list, Context context) {
 		this.list = list;

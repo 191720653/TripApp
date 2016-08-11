@@ -15,6 +15,7 @@ import com.zehao.constant.CONSTANT;
 import com.zehao.data.bean.Users;
 import com.zehao.http.HttpCLient;
 import com.zehao.tripapp.R;
+import com.zehao.view.LoadingDialog;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +33,7 @@ public class SuggestActivity extends Activity implements OnClickListener {
 	
 	private TextView textViewTitle;
 	private EditText editText;
+	private LoadingDialog loadingDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class SuggestActivity extends Activity implements OnClickListener {
 		textViewTitle.setText(getResources().getText(R.string.info_advice));
 		
 		editText = (EditText) findViewById(R.id.suggest);
+
+		loadingDialog = new LoadingDialog(this);
 
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -118,10 +122,12 @@ public class SuggestActivity extends Activity implements OnClickListener {
 			RequestParams params = new RequestParams();
 			params.add(CONSTANT.DATA, json.toString());
 			System.out.println("App发送数据：" + json.toString());
+			loadingDialog.show();
 			HttpCLient.post(url, params, new AsyncHttpResponseHandler() {
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 					// TODO Auto-generated method stub
+					loadingDialog.dismiss();
 					JsonObject json = (JsonObject) new JsonParser().parse(new String(arg2));
 					System.out.println("服务器返回数据：" + json);
 					String errorCode = json.get(CONSTANT.ERRCODE).getAsString();
@@ -136,6 +142,7 @@ public class SuggestActivity extends Activity implements OnClickListener {
 						Throwable arg3) {
 					// TODO Auto-generated method stub
 					shortToastHandler(CONSTANT.OTHER_ERROR);
+					loadingDialog.dismiss();
 				}
 			});
 		} else {

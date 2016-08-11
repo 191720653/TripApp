@@ -38,8 +38,9 @@ public class AdviceListAdapter extends BaseAdapter {
 		listContainer = LayoutInflater.from(context);
 		this.tripTypes = tripTypes;
 		options = new DisplayImageOptions.Builder()
-		.showImageForEmptyUri(R.drawable.ic_empty)
-		.showImageOnFail(R.drawable.ic_error)
+		.showImageOnLoading(R.drawable.load_default)
+		.showImageForEmptyUri(R.drawable.load_default)
+		.showImageOnFail(R.drawable.load_default)
 		.resetViewBeforeLoading(true)
 		.cacheOnDisk(true)
 		.cacheInMemory(true)

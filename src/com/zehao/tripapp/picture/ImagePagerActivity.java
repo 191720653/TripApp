@@ -56,8 +56,9 @@ public class ImagePagerActivity extends Activity {
 		}
 
 		options = new DisplayImageOptions.Builder()
-			.showImageForEmptyUri(R.drawable.ic_empty)
-			.showImageOnFail(R.drawable.ic_error)
+		.showImageOnLoading(R.drawable.load_default)
+		.showImageForEmptyUri(R.drawable.load_default)
+		.showImageOnFail(R.drawable.load_default)
 			.resetViewBeforeLoading(true)
 			.cacheOnDisk(true)
 			.cacheInMemory(true)

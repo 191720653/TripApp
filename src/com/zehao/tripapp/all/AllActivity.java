@@ -69,15 +69,15 @@ public class AllActivity extends BaseActivity implements
 	private String[] infos = {"名人典故的介绍！","名点美食的介绍！","民品民俗的介绍！"};
 	
 	private String[] urls = {CONSTANT.BASE_ROOT_URL+"/photoes/image_other_1_",
-			CONSTANT.BASE_ROOT_URL+"/photos/image_other_2_",
-			CONSTANT.BASE_ROOT_URL+"/photos/image_other_3_"};
+			CONSTANT.BASE_ROOT_URL+"/photoes/image_other_2_",
+			CONSTANT.BASE_ROOT_URL+"/photoes/image_other_3_"};
 
 	private SliderLayout mDemoSlider;
 	
 	private GridView gridView;
 	private GridViewAdapter gridViewAdapter;
 	
-	private TextView viewName, viewInfo;
+	private TextView viewName, viewInfo, viewTitle;
 	
 	private ProgressBar progressBar;
 	
@@ -91,6 +91,7 @@ public class AllActivity extends BaseActivity implements
 		gridView = (GridView) findViewById(R.id.view_point_gridview);
 		viewInfo = (TextView) findViewById(R.id.view_point_info);
 		viewName = (TextView) findViewById(R.id.view_point_name);
+		viewTitle = (TextView) findViewById(R.id.all_view_title);
 		
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
@@ -106,6 +107,7 @@ public class AllActivity extends BaseActivity implements
 		Bundle bundle = getIntent().getExtras();
 		type = bundle.getString(CONSTANT.OTHER_TYPE);
 		System.out.println(type);
+		viewTitle.setText(titles[Integer.parseInt(type)-1]);
 		
         new Handler().post(new Runnable() {
 			@Override

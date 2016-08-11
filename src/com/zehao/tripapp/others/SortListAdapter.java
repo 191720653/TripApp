@@ -37,8 +37,9 @@ public class SortListAdapter extends BaseAdapter {
 		this.listItems = listItems;
 		System.out.println("创建视图容器并设置上下文");
 		options = new DisplayImageOptions.Builder()
-		.showImageForEmptyUri(R.drawable.ic_empty)
-		.showImageOnFail(R.drawable.ic_error)
+		.showImageOnLoading(R.drawable.load_default)
+		.showImageForEmptyUri(R.drawable.load_default)
+		.showImageOnFail(R.drawable.load_default)
 		.resetViewBeforeLoading(true)
 		.cacheOnDisk(true)
 		.cacheInMemory(true)

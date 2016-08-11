@@ -124,7 +124,7 @@ public class InfoActivity extends BaseActivity implements OnClickListener {
 	
 	/**初始化数据*/
 	private void initData(){
-		
+		Log.e("users ==>>", users.toString());
 		tvUserName.setText(users.getNickName());
 		tvUserGender.setText(users.getSexs());
 		tvUserAccount.setText(users.getAccount());
@@ -317,7 +317,7 @@ public class InfoActivity extends BaseActivity implements OnClickListener {
 		dialog.setContentView(R.layout.activity_signup_gender_select_dialog);
 		final ImageView ivBoy = (ImageView) dialog.findViewById(R.id.dialog_iv_boy);
 		final ImageView ivGirl = (ImageView) dialog.findViewById(R.id.dialog_iv_girl);
-		if(users.getSexs() == "男"){
+		if("男".equals(users.getSexs())){
 			ivGirl.setVisibility(View.GONE);
 			ivBoy.setVisibility(View.VISIBLE);
 		}else{

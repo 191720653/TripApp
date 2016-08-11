@@ -26,6 +26,7 @@
     <color name="list_divider">#D3D3D3</color>
     <color name="transparent">#00000000</color>
     <color name="transparent_bg">#88838B8B</color>
+    <color name="loading_dialog_bg">#77000000</color>
 
 	<color name="main_blue">#63B8FF</color>
 	<color name="main_qing">#2ae0c8</color>
